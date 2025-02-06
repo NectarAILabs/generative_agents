@@ -1,21 +1,9 @@
 from utils import debug
 from typing import Any
 
-from ..common import ActionLoc, openai_config, get_prompt_file_path
+from ..common import ActionLoc, openai_config
 from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
-
-# Variables:
-# !<INPUT 0>! -- Persona name
-# !<INPUT 1>! -- Maze all possible sectors
-# !<INPUT 2>! -- Persona name
-# !<INPUT 3>! -- Persona living sector
-# !<INPUT 4>! -- Persona living sector arenas
-# !<INPUT 5>! -- Persona name
-# !<INPUT 6>! -- Persona current sector
-# !<INPUT 7>! -- Persona current sector arenas
-# !<INPUT 8>! -- curr action description
-# !<INPUT 9>! -- Persona name
 
 def create_prompt(prompt_input: dict[str, Any]):
   persona_name = prompt_input["persona_name"]
@@ -45,9 +33,9 @@ Area options: [Oak Hill College Student Dormatory, The Rose and Crown Pub, Hobbs
 * Must be one of the "Area options," verbatim.
 For eating dinner, Jane Anderson should go to the following area: Hobbs Cafe
 ---
-{persona_name} lives in [{living_sector}] that has [{living_sector_arenas}].
-{persona_name} is currently in [{current_sector}] that has [{current_sector_arenas}]. {daily_plan_requirement}
-Area options: [{available_sectors}].
+!<INPUT 0>! lives in {!<INPUT 1>!} that has !<INPUT 2>!.
+!<INPUT 3>! is currently in {!<INPUT 4>!} that has !<INPUT 5>!. !<INPUT 6>!
+Area options: {!<INPUT 7>!}.
 * Stay in the current area if the activity can be done there. Only go out if the activity needs to take place in another place.
 * Must be one of the "Area options," verbatim.
 {persona_name} is {broad_action}. For {specific_action}, {persona_name} should go to the following area:

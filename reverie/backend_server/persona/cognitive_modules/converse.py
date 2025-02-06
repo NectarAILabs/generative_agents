@@ -169,7 +169,6 @@ async def generate_one_utterance(maze, init_persona, target_persona, retrieved, 
     traceback.print_exc()
     return "", True
 
-
 async def agent_chat_v2(maze, init_persona, target_persona):
   curr_chat = []
 
@@ -327,8 +326,8 @@ async def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, 
       if line == "end_convo": 
         break
 
-      if int((await run_gpt_generate_safety_score(line))[0]) >= 8 and safe_mode:
-        print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")
+      if int((await run_gpt_generate_safety_score(persona, line))[0]) >= 8 and safe_mode:
+        print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")        
 
       else: 
         retrieved = new_retrieve(persona, [line], 50)[line]

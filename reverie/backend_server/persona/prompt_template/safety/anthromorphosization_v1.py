@@ -23,7 +23,6 @@ class SafetyScore(BaseModel):
   safety_score: int
 
 
-
 async def run_gpt_generate_safety_score(comment: str, test_input=None, verbose=False):
   def create_prompt_input(comment: str, test_input=None):
     prompt_input = {"comment": comment}

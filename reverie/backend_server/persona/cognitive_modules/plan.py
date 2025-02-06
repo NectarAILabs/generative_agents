@@ -152,10 +152,11 @@ async def generate_hourly_schedule(persona, wake_up_hour):
     if len(n_m1_activity_set) < 5:
       n_m1_activity = []
 
-      if all_in_one:
-        n_m1_activity = (await run_gpt_prompt_generate_hourly_schedule(
-          persona, n_m1_activity, hour_strings, all_in_one=True
-        ))[0]
+      if not all_in_one:
+        for count, curr_hour_str in enumerate(hour_str):
+          n_m1_activity += [(await run_gpt_prompt_generate_hourly_schedule(
+            persona, curr_hour_str, n_m1_activity, hour_str, all_in_one=False
+          ))[0]]
       else:
         for _i in range(len(hour_strings)):
           n_m1_activity += [(await run_gpt_prompt_generate_hourly_schedule(
@@ -630,10 +631,8 @@ async def _determine_action(persona, maze):
     OUTPUT: 
       a boolean. True if we need to decompose, False otherwise. 
     """
-    act_desp = act_desp.strip().lower()
-    if act_desp == "fill in":
-      act_desp = "sleeping"
-    if "sleep" not in act_desp and "bed" not in act_desp: 
+
+    if "sleep" not in act_desp and "bed" not in act_desp:
       return True
     elif "sleeping" in act_desp or "asleep" in act_desp or "in bed" in act_desp or "fill in" in act_desp:
       return False
