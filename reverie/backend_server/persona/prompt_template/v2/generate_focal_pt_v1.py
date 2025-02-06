@@ -56,7 +56,7 @@ def run_gpt_prompt_focal_pt_v1(persona, statements, n, test_input=None, verbose=
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe(n)
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, FocalPoint, 5, fail_safe, __func_validate, __func_clean_up
   )
 
