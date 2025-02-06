@@ -327,7 +327,7 @@ async def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, 
         break
 
       if int((await run_gpt_generate_safety_score(persona, line))[0]) >= 8 and safe_mode:
-        print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")        
+        print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")
 
       else: 
         retrieved = new_retrieve(persona, [line], 50)[line]

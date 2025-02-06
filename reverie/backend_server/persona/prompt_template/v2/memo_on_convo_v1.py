@@ -65,7 +65,7 @@ def run_gpt_prompt_memo_on_convo_v1(
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     ConvoTakeaways,

@@ -4,7 +4,7 @@ import datetime
 from typing import Any
 
 from ..common import openai_config, get_prompt_file_path
-from ..gpt_structure import safe_generate_structured_response
+from ..gpt_structure import generate_prompt, safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
 
