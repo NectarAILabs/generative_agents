@@ -27,7 +27,7 @@ Stay in the current area if the activity can be done there. Never go into other 
 For getting coffee, Tom Watson should go to the following area in Hobbs Cafe:
 Answer: cafe
 ---
-{persona_name} is going to {action_sector} that has the following areas: {accessible_arenas}
+{persona_name} is going to {action_sector} that has the following areas: [{accessible_arenas}]
 * Stay in the current area if the activity can be done there.
 * NEVER go into other people's rooms unless necessary.
 {persona_name} is {broad_action}. For {specific_action}, {persona_name} should go to the following area in {action_sector} (MUST pick one of [{accessible_arenas}]):
