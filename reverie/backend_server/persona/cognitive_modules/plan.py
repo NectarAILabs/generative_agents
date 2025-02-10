@@ -478,14 +478,15 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
   end_time_hour = (datetime.datetime(2022, 10, 31, 0, 0) 
                    + datetime.timedelta(hours=end_hour))
 
-  if debug: print ("GNS FUNCTION: <generate_new_decomp_schedule>")
+  if debug:
+    print ("GNS FUNCTION: <generate_new_decomp_schedule>")
   result = await run_gpt_prompt_new_decomp_schedule(persona,
-                                            main_act_dur,
-                                            truncated_act_dur,
-                                            start_time_hour,
-                                            end_time_hour,
-                                            inserted_act,
-                                            inserted_act_dur)
+                                                    main_act_dur,
+                                                    truncated_act_dur,
+                                                    start_time_hour,
+                                                    end_time_hour,
+                                                    inserted_act,
+                                                    inserted_act_dur)
   return result[0]
 
 
