@@ -94,7 +94,7 @@ if openai_config["client"] == "azure":
 elif openai_config["client"] == "openai":
   client = setup_client("openai", { "key": openai_config["model-key"] })
 
-if openai_config["embeddings-client"] == "azure":  
+if openai_config["embeddings-client"] == "azure":
   embeddings_client = setup_client("azure", {
     "endpoint": openai_config["embeddings-endpoint"],
     "key": openai_config["embeddings-key"],

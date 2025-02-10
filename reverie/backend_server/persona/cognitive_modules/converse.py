@@ -159,7 +159,6 @@ async def generate_one_utterance(maze, init_persona, target_persona, retrieved, 
 
   convo_response = await run_gpt_generate_iterative_chat_utt(
     maze, init_persona, target_persona, retrieved, curr_context, curr_chat
-  )
   convo_response = convo_response[0]
 
   try:
@@ -236,14 +235,14 @@ async def generate_summarize_ideas(persona, nodes, question):
 
 
 async def generate_next_line(persona, interlocutor_desc, curr_convo, summarized_idea):
-  # Original chat -- line by line generation 
+  # Original chat -- line by line generation
   prev_convo = ""
   for row in curr_convo:
     prev_convo += f'{row[0]}: {row[1]}\n'
 
   next_line = await run_gpt_prompt_generate_next_convo_line(persona,
-                                                      interlocutor_desc, 
-                                                      prev_convo, 
+                                                      interlocutor_desc,
+                                                      prev_convo,
                                                       summarized_idea)
   return next_line[0]
 
@@ -264,7 +263,7 @@ async def generate_action_event_triple(act_desp, persona):
     "🧈🍞"
   """
   if debug: print ("GNS FUNCTION: <generate_action_event_triple>")
-  return await run_gpt_prompt_event_triple(act_desp, persona)[0]
+  return (await run_gpt_prompt_event_triple(act_desp, persona))[0]
 
 
 async def generate_poig_score(persona, event_type, description):

@@ -152,11 +152,10 @@ async def generate_hourly_schedule(persona, wake_up_hour):
     if len(n_m1_activity_set) < 5:
       n_m1_activity = []
 
-      if not all_in_one:
-        for count, curr_hour_str in enumerate(hour_str):
-          n_m1_activity += [(await run_gpt_prompt_generate_hourly_schedule(
-            persona, curr_hour_str, n_m1_activity, hour_str, all_in_one=False
-          ))[0]]
+      if all_in_one:
+        n_m1_activity = (await run_gpt_prompt_generate_hourly_schedule(
+          persona, n_m1_activity, hour_strings, all_in_one=True
+        ))[0]
       else:
         for _i in range(len(hour_strings)):
           n_m1_activity += [(await run_gpt_prompt_generate_hourly_schedule(
