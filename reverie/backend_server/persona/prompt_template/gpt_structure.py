@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: gpt_structure.py
 Description: Wrapper functions for calling OpenAI APIs.
 """
+import asyncio
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -118,8 +119,6 @@ cost_logger = OpenAICostLogger_Singleton(
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
 
-
-import asyncio
 
 async def ChatGPT_single_request(prompt):
   await temp_sleep()
@@ -605,7 +604,6 @@ if __name__ == '__main__':
   def __func_clean_up(gpt_response,prompt=""):
     cleaned_response = gpt_response.strip()
     return cleaned_response
-  print(client.api_key)
   output = asyncio.run(safe_generate_response(prompt, 
                                  gpt_parameter,
                                  3,
