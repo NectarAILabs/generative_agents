@@ -153,7 +153,7 @@ def extract_recency(persona, nodes):
   return recency_out
 
 
-def extract_importance(persona, nodes):
+async def extract_importance(persona, nodes):
   """
   Gets the current Persona object and a list of nodes that are in a 
   chronological order, and outputs a dictionary that has the importance score
@@ -236,7 +236,7 @@ def new_retrieve(persona, focal_points, n_count=30):
     nodes = [i for created, i in nodes]
 
     # Calculating the component dictionaries and normalizing them.
-    recency_out = extract_recency(persona, nodes)
+    recency_out =  extract_recency(persona, nodes)
     recency_out = normalize_dict_floats(recency_out, 0, 1)
     importance_out = extract_importance(persona, nodes)
     importance_out = normalize_dict_floats(importance_out, 0, 1)  
