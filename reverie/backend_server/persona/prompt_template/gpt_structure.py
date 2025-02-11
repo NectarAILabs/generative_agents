@@ -592,7 +592,7 @@ if __name__ == '__main__':
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['\n']}
   curr_input = ["driving to a friend's house"]
-  prompt_lib_file = "/Users/vuanhduc/Documents/duke_nectar/generative_agents/reverie/backend_server/persona/prompt_template/v1/unused/test_prompt_July5.txt"
+  prompt_lib_file = Path(__file__).parent / "v1" / "unused" / "test_prompt_July5.txt"
   prompt = generate_prompt(curr_input, prompt_lib_file)
 
   def __func_validate(gpt_response,prompt=""): 
