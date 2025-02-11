@@ -570,11 +570,11 @@ async def safe_generate_structured_response(
   return fail_safe_response
 
 
-def get_embedding(text, model=openai_config["embeddings"]):
+async def get_embedding(text, model=openai_config["embeddings"]):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  response = embeddings_client.embeddings.create(input=[text], model=model)
+  response = await embeddings_client.embeddings.create(input=[text], model=model)
   cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
   return response.data[0].embedding
 
