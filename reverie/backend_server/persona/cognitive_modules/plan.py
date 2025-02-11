@@ -38,7 +38,7 @@ from persona.cognitive_modules.converse import agent_chat_v2
 # CHAPTER 2: Generate
 ##############################################################################
 
-def generate_wake_up_hour(persona):
+async def generate_wake_up_hour(persona):
   """
   Generates the time when the persona wakes up. This becomes an integral part
   of our process for generating the persona's daily plan.
@@ -54,10 +54,10 @@ def generate_wake_up_hour(persona):
   """
   if debug:
     print("GNS FUNCTION: <generate_wake_up_hour>")
-  return int(run_gpt_prompt_wake_up_hour(persona)[0])
+  return int(await run_gpt_prompt_wake_up_hour(persona)[0])
 
 
-def generate_first_daily_plan(persona, wake_up_hour):
+async def generate_first_daily_plan(persona, wake_up_hour):
   """
   Generates the daily plan for the persona.
   Basically the long term planning that spans a day. Returns a list of actions
@@ -85,10 +85,10 @@ def generate_first_daily_plan(persona, wake_up_hour):
   """
   if debug:
     print("GNS FUNCTION: <generate_first_daily_plan>")
-  return run_gpt_prompt_daily_plan(persona, wake_up_hour)[0]
+  return await run_gpt_prompt_daily_plan(persona, wake_up_hour)[0]
 
 
-def generate_hourly_schedule(persona, wake_up_hour):
+async def generate_hourly_schedule(persona, wake_up_hour):
   """
   Based on the daily req, creates an hourly schedule -- one hour at a time.
   The form of the action for each of the hour is something like below:
@@ -151,9 +151,9 @@ def generate_hourly_schedule(persona, wake_up_hour):
       n_m1_activity = []
 
       if all_in_one:
-        n_m1_activity = run_gpt_prompt_generate_hourly_schedule(
+        n_m1_activity = (await run_gpt_prompt_generate_hourly_schedule(
           persona, n_m1_activity, hour_strings, all_in_one=True
-        )[0]
+        ))[0]
       else:
         for _i in range(len(hour_strings)):
           n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
@@ -190,7 +190,7 @@ def generate_hourly_schedule(persona, wake_up_hour):
   return n_m1_hourly_compressed
 
 
-def generate_task_decomp(persona, task, duration):
+async def generate_task_decomp(persona, task, duration):
   """
   A few shot decomposition of a task given the task description
 
@@ -217,7 +217,7 @@ def generate_task_decomp(persona, task, duration):
   return run_gpt_prompt_task_decomp(persona, task, duration)[0]
 
 
-def generate_action_sector(act_desp, persona, maze):
+async def generate_action_sector(act_desp, persona, maze):
   """TODO
   Given the persona and the task description, choose the action_sector.
 
@@ -233,10 +233,10 @@ def generate_action_sector(act_desp, persona, maze):
   """
   if debug:
     print("GNS FUNCTION: <generate_action_sector>")
-  return run_gpt_prompt_action_sector(act_desp, persona, maze)[0]
+  return await run_gpt_prompt_action_sector(act_desp, persona, maze)[0]
 
 
-def generate_action_arena(act_desp, persona, maze, act_world, act_sector):
+async def generate_action_arena(act_desp, persona, maze, act_world, act_sector):
   """TODO
   Given the persona and the task description, choose the action_arena.
 
@@ -252,12 +252,12 @@ def generate_action_arena(act_desp, persona, maze, act_world, act_sector):
   """
   if debug:
     print("GNS FUNCTION: <generate_action_arena>")
-  return run_gpt_prompt_action_arena(act_desp, persona, act_world, act_sector)[
+  return (await run_gpt_prompt_action_arena(act_desp, persona, maze, act_world, act_sector))[
     0
   ]
 
 
-def generate_action_game_object(act_desp, act_address, persona, maze):
+async def generate_action_game_object(act_desp, act_address, persona, maze):
   """TODO
   Given the action description and the act address (the address where
   we expect the action to task place), choose one of the game objects.
@@ -280,10 +280,10 @@ def generate_action_game_object(act_desp, act_address, persona, maze):
     print("ERROR: act_address not valid. Returning '<random>' as game object.")
     print("act_address:", act_address)
     return "<random>"
-  return run_gpt_prompt_action_game_object(act_desp, persona, act_address)[0]
+  return (await run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address))[0]
 
 
-def generate_action_pronunciatio(act_desp, persona):
+async def generate_action_pronunciatio(act_desp, persona):
   """TODO
   Given an action description, creates an emoji string description via a few
   shot prompt.
@@ -301,7 +301,7 @@ def generate_action_pronunciatio(act_desp, persona):
   if debug:
     print("GNS FUNCTION: <generate_action_pronunciatio>")
   try:
-    response = run_gpt_prompt_pronunciatio(act_desp, persona)
+    response = await run_gpt_prompt_pronunciatio(act_desp, persona)
     if response:
       emoji = response[0]
   except Exception:
@@ -313,7 +313,7 @@ def generate_action_pronunciatio(act_desp, persona):
   return "🙂"
 
 
-def generate_action_event_triple(act_desp, persona):
+async def generate_action_event_triple(act_desp, persona):
   """TODO
 
   INPUT:
@@ -326,10 +326,10 @@ def generate_action_event_triple(act_desp, persona):
   """
   if debug:
     print("GNS FUNCTION: <generate_action_event_triple>")
-  return run_gpt_prompt_event_triple(act_desp, persona)[0]
+  return await run_gpt_prompt_event_triple(act_desp, persona)[0]
 
 
-def generate_act_obj_desc(act_game_object, act_desp, persona):
+async def generate_act_obj_desc(act_game_object, act_desp, persona):
   if debug:
     print("GNS FUNCTION: <generate_act_obj_desc>")
 
@@ -339,23 +339,23 @@ def generate_act_obj_desc(act_game_object, act_desp, persona):
   #     return act_obj_desp
   # else:
   #     return {}
-  return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)
+  return await run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)
 
 
-def generate_act_obj_event_triple(act_game_object, act_obj_desc, persona):
+async def generate_act_obj_event_triple(act_game_object, act_obj_desc, persona):
   if debug:
     print("GNS FUNCTION: <generate_act_obj_event_triple>")
-  return run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona)[
-    0
-  ]
+  return await run_gpt_prompt_act_obj_event_triple(
+    act_game_object, act_obj_desc, persona
+  )[0]
 
 
-def generate_convo(maze, init_persona, target_persona):
+async def generate_convo(maze, init_persona, target_persona):
   curr_loc = maze.access_tile(init_persona.scratch.curr_tile)
 
   # convo = run_gpt_prompt_create_conversation(init_persona, target_persona, curr_loc)[0]
   # convo = agent_chat_v1(maze, init_persona, target_persona)
-  convo = agent_chat_v2(maze, init_persona, target_persona)
+  convo = await agent_chat_v2(maze, init_persona, target_persona)
   all_utt = ""
 
   for row in convo:
@@ -370,8 +370,8 @@ def generate_convo(maze, init_persona, target_persona):
   return convo, convo_length
 
 
-def generate_convo_summary(persona, convo):
-  response = run_gpt_prompt_summarize_conversation(persona, convo)
+async def generate_convo_summary(persona, convo):
+  response = await run_gpt_prompt_summarize_conversation(persona, convo)
   if response:
     convo_summary = response[0]
     return convo_summary
@@ -380,8 +380,8 @@ def generate_convo_summary(persona, convo):
     return ""
 
 
-def generate_decide_to_talk(init_persona, target_persona, retrieved):
-  x = run_gpt_prompt_decide_to_talk(init_persona, target_persona, retrieved)[0]
+async def generate_decide_to_talk(init_persona, target_persona, retrieved):
+  x = await run_gpt_prompt_decide_to_talk(init_persona, target_persona, retrieved)[0]
   if debug:
     print("GNS FUNCTION: <generate_decide_to_talk>")
 
@@ -391,12 +391,12 @@ def generate_decide_to_talk(init_persona, target_persona, retrieved):
     return False
 
 
-def generate_decide_to_react(init_persona, target_persona, retrieved): 
+async def generate_decide_to_react(init_persona, target_persona, retrieved):
   if debug: print ("GNS FUNCTION: <generate_decide_to_react>")
-  return run_gpt_prompt_decide_to_react(init_persona, target_persona, retrieved)[0]
+  return await run_gpt_prompt_decide_to_react(init_persona, target_persona, retrieved)[0]
 
 
-def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start_hour, end_hour): 
+async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start_hour, end_hour):
   # Step 1: Setting up the core variables for the function. 
 
   # <today_min_pass> indicates the number of minutes that have passed today. 
@@ -468,30 +468,26 @@ def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start
   end_time_hour = (datetime.datetime(2022, 10, 31, 0, 0) 
                    + datetime.timedelta(hours=end_hour))
 
-  if debug:
-    print ("GNS FUNCTION: <generate_new_decomp_schedule>")
-
-  return run_gpt_prompt_new_decomp_schedule(
-    persona,
-    main_act_dur,
-    truncated_act_dur,
-    start_time_hour,
-    end_time_hour,
-    inserted_act,
-    inserted_act_dur
-  )[0]
+  if debug: print ("GNS FUNCTION: <generate_new_decomp_schedule>")
+  return (await run_gpt_prompt_new_decomp_schedule(persona,
+                                            main_act_dur, 
+                                            truncated_act_dur, 
+                                            start_time_hour,
+                                            end_time_hour,
+                                            inserted_act,
+                                            inserted_act_dur))[0]
 
 
 ##############################################################################
 # CHAPTER 3: Plan
 ##############################################################################
 
-def revise_identity(persona): 
+async def revise_identity(persona):
   p_name = persona.scratch.name
 
   focal_points = [f"{p_name}'s plan for {persona.scratch.get_str_curr_date_str()}.",
                   f"Important recent events for {p_name}'s life."]
-  retrieved = new_retrieve(persona, focal_points)
+  retrieved = await new_retrieve(persona, focal_points)
 
   statements = "[Statements]\n"
   for key, val in retrieved.items():
@@ -504,13 +500,13 @@ def revise_identity(persona):
   plan_prompt += f" *{persona.scratch.curr_time.strftime('%A %B %d')}*? "
   plan_prompt += f"If there is any scheduling information, be as specific as possible (include date, time, and location if stated in the statement)\n\n"
   plan_prompt += f"Write the response from {p_name}'s perspective."
-  plan_note = ChatGPT_single_request(plan_prompt)
+  plan_note = await ChatGPT_single_request(plan_prompt)
   # print (plan_note)
 
   thought_prompt = statements + "\n"
   thought_prompt += f"Given the statements above, how might we summarize {p_name}'s feelings about their days up to now?\n\n"
   thought_prompt += f"Write the response from {p_name}'s perspective."
-  thought_note = ChatGPT_single_request(thought_prompt)
+  thought_note = await ChatGPT_single_request(thought_prompt)
   # print (thought_note)
 
   currently_prompt = f"{p_name}'s status from {(persona.scratch.curr_time - datetime.timedelta(days=1)).strftime('%A %B %d')}:\n"
@@ -522,7 +518,7 @@ def revise_identity(persona):
   currently_prompt += "Follow this format below:\nStatus: <new status>"
   # print ("DEBUG ;adjhfno;asdjao;asdfsidfjo;af", p_name)
   # print (currently_prompt)
-  new_currently = ChatGPT_single_request(currently_prompt)
+  new_currently = await ChatGPT_single_request(currently_prompt)
   # print (new_currently)
   # print (new_currently[10:])
 
@@ -533,13 +529,13 @@ def revise_identity(persona):
   daily_req_prompt += f"Follow this format (the list should have 4~6 items but no more):\n"
   daily_req_prompt += f"1. wake up and complete the morning routine at <time>, 2. ..."
 
-  new_daily_req = ChatGPT_single_request(daily_req_prompt)
+  new_daily_req = await ChatGPT_single_request(daily_req_prompt)
   new_daily_req = new_daily_req.replace('\n', ' ')
   print ("DEBUG new_daily_req:", new_daily_req)
   persona.scratch.daily_plan_req = new_daily_req
 
 
-def _long_term_planning(persona, new_day): 
+async def _long_term_planning(persona, new_day):
   """
   Formulates the persona's daily long-term plan if it is the start of a new 
   day. This basically has two components: first, we create the wake-up hour, 
@@ -550,7 +546,7 @@ def _long_term_planning(persona, new_day):
              create the personas' long term planning on the new day. 
   """
   # We start by creating the wake up hour for the persona. 
-  wake_up_hour = generate_wake_up_hour(persona)
+  wake_up_hour = await generate_wake_up_hour(persona)
 
   # When it is a new day, we start by creating the daily_req of the persona.
   # Note that the daily_req is a list of strings that describe the persona's
@@ -560,10 +556,10 @@ def _long_term_planning(persona, new_day):
     # if this is the start of generation (so there is no previous day's 
     # daily requirement, or if we are on a new day, we want to create a new
     # set of daily requirements.
-    persona.scratch.daily_req = generate_first_daily_plan(persona, 
+    persona.scratch.daily_req = await generate_first_daily_plan(persona,
                                                           wake_up_hour)
   elif new_day == "New day":
-    revise_identity(persona)
+    await revise_identity(persona)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - TODO
     # We need to create a new daily_req here...
@@ -572,7 +568,7 @@ def _long_term_planning(persona, new_day):
   # Based on the daily_req, we create an hourly schedule for the persona, 
   # which is a list of todo items with a time duration (in minutes) that 
   # add up to 24 hours.
-  persona.scratch.f_daily_schedule = generate_hourly_schedule(persona, 
+  persona.scratch.f_daily_schedule = await generate_hourly_schedule(persona,
                                                               wake_up_hour)
   persona.scratch.f_daily_schedule_hourly_org = (persona.scratch
                                                    .f_daily_schedule[:])
@@ -588,7 +584,7 @@ def _long_term_planning(persona, new_day):
   s, p, o = (persona.scratch.name, "plan", persona.scratch.curr_time.strftime('%A %B %d'))
   keywords = set(["plan"])
   thought_poignancy = 5
-  thought_embedding_pair = (thought, get_embedding(thought))
+  thought_embedding_pair = (thought, await get_embedding(thought))
   persona.a_mem.add_thought(created, expiration, s, p, o, 
                             thought, keywords, thought_poignancy, 
                             thought_embedding_pair, None)
@@ -599,7 +595,7 @@ def _long_term_planning(persona, new_day):
 
 
 
-def _determine_action(persona, maze): 
+async def _determine_action(persona, maze):
   """
   Creates the next action sequence for the persona. 
   The main goal of this function is to run "add_new_action" on the persona's 
@@ -704,20 +700,20 @@ def _determine_action(persona, maze):
   # variables.
   act_world = maze.access_tile(persona.scratch.curr_tile)["world"]
   # act_sector = maze.access_tile(persona.scratch.curr_tile)["sector"]
-  act_sector = generate_action_sector(act_desp, persona, maze)
-  act_arena = generate_action_arena(act_desp, persona, maze, act_world, act_sector)
+  act_sector = await generate_action_sector(act_desp, persona, maze)
+  act_arena = await generate_action_arena(act_desp, persona, maze, act_world, act_sector)
   act_address = f"{act_world}:{act_sector}:{act_arena}"
-  act_game_object = generate_action_game_object(act_desp, act_address,
+  act_game_object = await generate_action_game_object(act_desp, act_address,
                                                 persona, maze)
   new_address = f"{act_world}:{act_sector}:{act_arena}:{act_game_object}"
-  act_pron = generate_action_pronunciatio(act_desp, persona)
-  act_event = generate_action_event_triple(act_desp, persona)
+  act_pron = await generate_action_pronunciatio(act_desp, persona)
+  act_event = await generate_action_event_triple(act_desp, persona)
   # Persona's actions also influence the object states. We set those up here.
-  act_obj_desp_response = generate_act_obj_desc(act_game_object, act_desp, persona)
+  act_obj_desp_response = await generate_act_obj_desc(act_game_object, act_desp, persona)
   act_obj_desp = act_obj_desp_response[0] if act_obj_desp_response else None
 
-  act_obj_pron = generate_action_pronunciatio(act_obj_desp, persona)
-  act_obj_event = generate_act_obj_event_triple(act_game_object, 
+  act_obj_pron = await generate_action_pronunciatio(act_obj_desp, persona)
+  act_obj_event = await generate_act_obj_event_triple(act_game_object,
                                                 act_obj_desp, persona)
 
   # Adding the action to persona's queue. 
@@ -779,7 +775,7 @@ def _choose_retrieved(persona, retrieved):
   return None
 
 
-def _should_react(persona, retrieved, personas): 
+async def _should_react(persona, retrieved, personas):
   """
   Determines what form of reaction the persona should exihibit given the 
   retrieved values. 
@@ -795,7 +791,7 @@ def _should_react(persona, retrieved, personas):
     personas: A dictionary that contains all persona names as keys, and the 
               <Persona> instance as values. 
   """
-  def lets_talk(init_persona, target_persona, retrieved):
+  async def lets_talk(init_persona, target_persona, retrieved):
     if (not target_persona.scratch.act_address 
         or not target_persona.scratch.act_description
         or not init_persona.scratch.act_address
@@ -820,13 +816,13 @@ def _should_react(persona, retrieved, personas):
       if init_persona.scratch.chatting_with_buffer[target_persona.name] > 0: 
         return False
 
-    if generate_decide_to_talk(init_persona, target_persona, retrieved): 
+    if await generate_decide_to_talk(init_persona, target_persona, retrieved):
 
       return True
 
     return False
 
-  def lets_react(init_persona, target_persona, retrieved): 
+  async def lets_react(init_persona, target_persona, retrieved):
     if (not target_persona.scratch.act_address 
         or not target_persona.scratch.act_description
         or not init_persona.scratch.act_address
@@ -850,7 +846,7 @@ def _should_react(persona, retrieved, personas):
         != target_persona.scratch.act_address): 
       return False
 
-    react_mode = generate_decide_to_react(init_persona, 
+    react_mode = await generate_decide_to_react(init_persona,
                                           target_persona, retrieved)
 
     if react_mode == "1": 
@@ -886,7 +882,7 @@ def _should_react(persona, retrieved, personas):
   return False
 
 
-def _create_react(persona, inserted_act, inserted_act_dur,
+async def _create_react(persona, inserted_act, inserted_act_dur,
                   act_address, act_event, chatting_with, chat, chatting_with_buffer,
                   chatting_end_time, 
                   act_pronunciatio, act_obj_description, act_obj_pronunciatio, 
@@ -922,7 +918,7 @@ def _create_react(persona, inserted_act, inserted_act_dur,
     dur_sum += dur
     count += 1
 
-  ret = generate_new_decomp_schedule(p, inserted_act, inserted_act_dur, 
+  ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
                                        start_hour, end_hour)
   p.scratch.f_daily_schedule[start_index:end_index] = ret
   p.scratch.add_new_action(act_address,
@@ -940,7 +936,7 @@ def _create_react(persona, inserted_act, inserted_act_dur,
                            act_start_time)
 
 
-def _chat_react(maze, persona, focused_event, reaction_mode, personas):
+async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # There are two personas -- the persona who is initiating the conversation
   # and the persona who is the target. We get the persona instances here.
   init_persona = persona
@@ -948,8 +944,8 @@ def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # curr_personas = [init_persona, target_persona]
 
   # Actually creating the conversation here.
-  convo, duration_min = generate_convo(maze, init_persona, target_persona)
-  convo_summary = generate_convo_summary(init_persona, convo)
+  convo, duration_min = await generate_convo(maze, init_persona, target_persona)
+  convo_summary = await generate_convo_summary(init_persona, convo)
   inserted_act = convo_summary
   inserted_act_dur = duration_min
 
@@ -981,13 +977,13 @@ def _chat_react(maze, persona, focused_event, reaction_mode, personas):
     act_obj_pronunciatio = None
     act_obj_event = (None, None, None)
 
-    _create_react(p, inserted_act, inserted_act_dur,
+    await _create_react(p, inserted_act, inserted_act_dur,
       act_address, act_event, chatting_with, convo, chatting_with_buffer, chatting_end_time,
       act_pronunciatio, act_obj_description, act_obj_pronunciatio, 
       act_obj_event, act_start_time)
 
 
-def _wait_react(persona, reaction_mode): 
+async def _wait_react(persona, reaction_mode):
   p = persona
 
   inserted_act = f'waiting to start {p.scratch.act_description.split("(")[-1][:-1]}'
@@ -1006,12 +1002,12 @@ def _wait_react(persona, reaction_mode):
   act_obj_pronunciatio = None
   act_obj_event = (None, None, None)
 
-  _create_react(p, inserted_act, inserted_act_dur,
+  await _create_react(p, inserted_act, inserted_act_dur,
     act_address, act_event, chatting_with, chat, chatting_with_buffer, chatting_end_time,
     act_pronunciatio, act_obj_description, act_obj_pronunciatio, act_obj_event)
 
 
-def plan(persona, maze, personas, new_day, retrieved): 
+async def plan(persona, maze, personas, new_day, retrieved):
   """
   Main cognitive function of the chain. It takes the retrieved memory and 
   perception, as well as the maze and the first day state to conduct both 
@@ -1035,11 +1031,11 @@ def plan(persona, maze, personas, new_day, retrieved):
   """ 
   # PART 1: Generate the hourly schedule. 
   if new_day: 
-    _long_term_planning(persona, new_day)
+    await _long_term_planning(persona, new_day)
 
   # PART 2: If the current action has expired, we want to create a new plan.
   if persona.scratch.act_check_finished(): 
-    _determine_action(persona, maze)
+    await _determine_action(persona, maze)
 
   # PART 3: If you perceived an event that needs to be responded to (saw 
   # another persona), and retrieved relevant information. 
@@ -1052,7 +1048,7 @@ def plan(persona, maze, personas, new_day, retrieved):
   #                     ["thoughts"] = [<ConceptNode>, ...]}
   focused_event = False
   if retrieved.keys(): 
-    focused_event = _choose_retrieved(persona, retrieved)
+    focused_event = await _choose_retrieved(persona, retrieved)
   
   # Step 2: Once we choose an event, we need to determine whether the
   #         persona will take any actions for the perceived event. There are
@@ -1061,7 +1057,7 @@ def plan(persona, maze, personas, new_day, retrieved):
   #         b) "react"
   #         c) False
   if focused_event: 
-    reaction_mode = _should_react(persona, focused_event, personas)
+    reaction_mode = await _should_react(persona, focused_event, personas)
     if reaction_mode: 
       # If we do want to chat, then we generate conversation 
       if reaction_mode[:9] == "chat with":
