@@ -27,7 +27,7 @@ class PlanningThought(BaseModel):
   planning_thought: str
 
 
-def run_gpt_prompt_planning_thought_on_convo(
+async def run_gpt_prompt_planning_thought_on_convo(
   persona, all_utterances, test_input=None, verbose=False
 ):
   def create_prompt_input(persona, all_utterances, test_input=None):
@@ -69,7 +69,7 @@ def run_gpt_prompt_planning_thought_on_convo(
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     PlanningThought,

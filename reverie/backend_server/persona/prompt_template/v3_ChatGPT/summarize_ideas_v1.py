@@ -24,7 +24,7 @@ Summarize the statements above that are most relevant to the interviewer's line.
   return prompt
 
 
-def run_gpt_prompt_summarize_ideas(
+async def run_gpt_prompt_summarize_ideas(
   persona, statements, question, test_input=None, verbose=False
 ):
   def create_prompt_input(persona, statements, question, test_input=None):
@@ -80,7 +80,7 @@ def run_gpt_prompt_summarize_ideas(
   prompt = create_prompt(prompt_input)
   example_output = "Jane Doe is working on a project"
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = awaitChatGPT_safe_generate_structured_response(
     prompt,
     StatementsSummary,
     example_output,

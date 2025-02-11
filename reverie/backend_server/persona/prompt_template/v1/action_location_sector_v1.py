@@ -5,6 +5,17 @@ from ..common import ActionLoc, openai_config, get_prompt_file_path
 from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
+# Variables:
+# !<INPUT 0>! -- Persona name
+# !<INPUT 1>! -- Maze all possible sectors
+# !<INPUT 2>! -- Persona name
+# !<INPUT 3>! -- Persona living sector
+# !<INPUT 4>! -- Persona living sector arenas
+# !<INPUT 5>! -- Persona name
+# !<INPUT 6>! -- Persona current sector
+# !<INPUT 7>! -- Persona current sector arenas
+# !<INPUT 8>! -- curr action description
+# !<INPUT 9>! -- Persona name
 
 def create_prompt(prompt_input: dict[str, Any]):
   persona_name = prompt_input["persona_name"]
@@ -44,7 +55,7 @@ Area options: [{available_sectors}].
   return prompt
 
 
-def run_gpt_prompt_action_sector(
+async def run_gpt_prompt_action_sector(
   action_description, persona, maze, test_input=None, verbose=False
 ):
   def create_prompt_input(action_description, persona, maze, test_input=None):
@@ -152,7 +163,7 @@ def run_gpt_prompt_action_sector(
   prompt_input = create_prompt_input(action_description, persona, maze)
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     ActionLoc,

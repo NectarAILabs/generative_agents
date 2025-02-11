@@ -18,7 +18,7 @@ Given only the information above, what are the {num_questions} most salient high
   return prompt
 
 
-def run_gpt_prompt_focal_pt(
+async def run_gpt_prompt_focal_pt(
   persona, statements, num_questions, test_input=None, verbose=False
 ):
   def create_prompt_input(statements, num_questions, test_input=None):
@@ -63,7 +63,7 @@ def run_gpt_prompt_focal_pt(
     '["What should Jane do for lunch", "Does Jane like strawberry", "Who is Jane"]'
   )
   fail_safe = get_fail_safe(num_questions)
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     FocalPoint,
     example_output,
@@ -83,6 +83,6 @@ def run_gpt_prompt_focal_pt(
   # ChatGPT Plugin ===========================================================
 
   # Fall back to the old version
-  return run_gpt_prompt_focal_pt_v1(
+  return await run_gpt_prompt_focal_pt_v1(
     persona, statements, num_questions, test_input, verbose
   )

@@ -6,11 +6,10 @@ Description: Wrapper functions for calling OpenAI APIs.
 """
 
 import json
-from pathlib import Path
 import time
 import traceback
-from openai import AzureOpenAI, OpenAI
-from utils import openai_api_key, use_openai, api_model
+import asyncio
+from openai import AzureOpenAI, OpenAI, AsyncOpenAI
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 
@@ -79,7 +78,7 @@ def setup_client(type: str, config: dict):
       api_version=config["api-version"],
     )
   elif type == "openai":
-    client = OpenAI(
+    client = AsyncOpenAI(
       api_key=config["key"],
     )
   else:
@@ -123,7 +122,7 @@ def ChatGPT_single_request(prompt):
   print("--- ChatGPT_single_request() ---")
   print("Prompt:", prompt, flush=True)
 
-  completion = client.chat.completions.create(
+  completion = await client.chat.completions.create(
     model=openai_config["model"],
     messages=[{"role": "user", "content": prompt}],
   )
@@ -138,25 +137,7 @@ def ChatGPT_single_request(prompt):
     print("Error: No message content from LLM.", flush=True)
     return ""
 
-  # completion = openai.ChatCompletion.create(
-  #   model= "gpt-3.5-turbo" if use_openai else model, 
-  #   messages=[{"role": "user", "content": prompt}]
-  # )
-  # return completion["choices"][0]["message"]["content"]
-
-  # try:
-  #   response = llm( prompt)
-  # except:
-  #   print("Requested tokens exceed context window")
-  #   ### TODO: Add map-reduce or splitter to handle this error.
-  #   prompt = prompt.split(" ")[-1400:]
-  #   prompt = str(' '.join(prompt))
-  #   response = llm(prompt)
-  #   response = response.json()
-  # return response
-
-
-def ChatGPT_request(prompt):
+async def ChatGPT_request(prompt):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -168,12 +149,12 @@ def ChatGPT_request(prompt):
   RETURNS: 
     a str of GPT-3's response. 
   """
-  # temp_sleep()
+  # await temp_sleep()
   print("--- ChatGPT_request() ---")
   print("Prompt:", prompt, flush=True)
 
   try: 
-    completion = client.chat.completions.create(
+    completion = await client.chat.completions.create(
       model=openai_config["model"],
       messages=[{"role": "user", "content": prompt}]
     )
@@ -191,7 +172,7 @@ def ChatGPT_request(prompt):
     traceback.print_exc()
     return "LLM ERROR"
 
-def ChatGPT_structured_request(prompt, response_format):
+async def ChatGPT_structured_request(prompt, response_format):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -208,7 +189,7 @@ def ChatGPT_structured_request(prompt, response_format):
   print("Prompt:", prompt, flush=True)
 
   try: 
-    completion = client.beta.chat.completions.parse(
+    completion = await client.beta.chat.completions.parse(
       model=openai_config["model"],
       response_format=response_format,
       messages=[{"role": "user", "content": prompt}]
@@ -281,7 +262,7 @@ def ChatGPT_structured_request(prompt, response_format):
 #   return False
 
 
-def ChatGPT_safe_generate_response(
+async def ChatGPT_safe_generate_response(
   prompt,
   example_output="",
   special_instruction="",
@@ -306,7 +287,7 @@ def ChatGPT_safe_generate_response(
       print("Attempt", i + 1, flush=True)
 
       try:
-        chatgpt_response = ChatGPT_request(prompt)
+        chatgpt_response = await ChatGPT_request(prompt)
         if not chatgpt_response:
           raise Exception("Error: No valid response from LLM.")
         curr_gpt_response = chatgpt_response.strip()
@@ -326,7 +307,7 @@ def ChatGPT_safe_generate_response(
   return fail_safe_response
 
 
-def ChatGPT_safe_generate_structured_response(
+async def ChatGPT_safe_generate_structured_response(
   prompt,
   response_format,
   example_output="",
@@ -357,7 +338,7 @@ def ChatGPT_safe_generate_structured_response(
       print("Attempt", i + 1, flush=True)
 
       try:
-        curr_gpt_response = ChatGPT_structured_request(prompt, response_format)
+        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format)
         if not curr_gpt_response:
           raise ValueError("Error: No valid response from LLM.")
 
@@ -381,7 +362,7 @@ def ChatGPT_safe_generate_structured_response(
 # ============================================================================
 # ###################[SECTION 2: ORIGINAL GPT-3 STRUCTURE] ###################
 # ============================================================================
-def GPT_request(prompt, gpt_parameter):
+async def GPT_request(prompt, gpt_parameter):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -400,7 +381,7 @@ def GPT_request(prompt, gpt_parameter):
       messages = [{
         "role": "system", "content": prompt
       }]
-      response = client.chat.completions.create(
+      response = await client.chat.completions.create(
                   model=gpt_parameter["engine"],
                   messages=messages,
                   temperature=gpt_parameter["temperature"],
@@ -412,7 +393,7 @@ def GPT_request(prompt, gpt_parameter):
                   stop=gpt_parameter["stop"],
               )
     else:
-      response = client.completions.create(model=model, prompt=prompt)
+      response = await client.completions.create(model=model, prompt=prompt)
 
     print("Response: ", response, flush=True)
     content = response.choices[0].message.content
@@ -424,7 +405,7 @@ def GPT_request(prompt, gpt_parameter):
     return "REQUEST ERROR"
 
 
-def GPT_structured_request(prompt, gpt_parameter, response_format):
+async def GPT_structured_request(prompt, gpt_parameter, response_format):
   """
   Given a prompt, a dictionary of GPT parameters, and a response format, make a request to OpenAI
   server and returns the response.
@@ -444,7 +425,7 @@ def GPT_structured_request(prompt, gpt_parameter, response_format):
       messages = [{
         "role": "system", "content": prompt
       }]
-      response = client.beta.chat.completions.parse(
+      response = await client.beta.chat.completions.parse(
         model=gpt_parameter["engine"],
         messages=messages,
         response_format=response_format,
@@ -457,7 +438,7 @@ def GPT_structured_request(prompt, gpt_parameter, response_format):
         stop=gpt_parameter["stop"],
       )
     else:
-      response = client.completions.create(model=model, prompt=prompt)
+      response = await client.completions.create(model=model, prompt=prompt)
 
     print("Response: ", response, flush=True)
     message = response.choices[0].message
@@ -509,7 +490,7 @@ def generate_prompt(curr_input, prompt_lib_file='', prompt_template_str=''):
   return prompt.strip()
 
 
-def safe_generate_response(prompt,
+async def safe_generate_response(prompt,
                            gpt_parameter,
                            repeat=5,
                            fail_safe_response="error",
@@ -523,7 +504,7 @@ def safe_generate_response(prompt,
   if func_validate and func_clean_up:
     for i in range(repeat):
       print("Attempt", i + 1, flush=True)
-      curr_gpt_response = GPT_request(prompt, gpt_parameter)
+      curr_gpt_response = await GPT_request(prompt, gpt_parameter)
 
       try:
         if func_validate(curr_gpt_response, prompt=prompt):
@@ -539,7 +520,7 @@ def safe_generate_response(prompt,
   return fail_safe_response
 
 
-def safe_generate_structured_response(
+async def safe_generate_structured_response(
   prompt,
   gpt_parameter,
   response_format,
@@ -556,7 +537,7 @@ def safe_generate_structured_response(
   if func_validate and func_clean_up:
     for i in range(repeat):
       print("Attempt", i + 1, flush=True)
-      curr_gpt_response = GPT_structured_request(prompt, gpt_parameter, response_format)
+      curr_gpt_response = await GPT_structured_request(prompt, gpt_parameter, response_format)
 
       try:
         if not isinstance(curr_gpt_response, str) and func_validate(

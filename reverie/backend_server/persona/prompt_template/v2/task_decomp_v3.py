@@ -57,7 +57,7 @@ class TaskDecomposition(BaseModel):
   subtasks: list[Subtask]
 
 
-def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose=False):
+async def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose=False):
   def create_prompt_input(persona, task, duration, test_input=None, debug=False):
     """
     Today is Saturday June 25. From 00:00 ~ 06:00am, Maeve is
@@ -211,7 +211,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     TaskDecomposition,

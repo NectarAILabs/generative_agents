@@ -26,7 +26,7 @@ class ConversationSummary(BaseModel):
   summary: str
 
 
-def run_gpt_prompt_summarize_conversation(
+async def run_gpt_prompt_summarize_conversation(
   persona, conversation, test_input=None, verbose=False
 ):
   def create_prompt_input(conversation, test_input=None):
@@ -91,7 +91,7 @@ def run_gpt_prompt_summarize_conversation(
   example_output = "Isabella is talking to Klaus about what to eat for lunch."
   special_instruction = "Do not miss any important details, including who is chatting."
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ConversationSummary,
     example_output,
