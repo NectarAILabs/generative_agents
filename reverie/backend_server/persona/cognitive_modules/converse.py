@@ -25,7 +25,7 @@ from persona.prompt_template.run_gpt_prompt import (
 )
 from persona.prompt_template.gpt_structure import get_embedding
 
-def generate_agent_chat_summarize_ideas(init_persona, 
+async def generate_agent_chat_summarize_ideas(init_persona, 
                                         target_persona, 
                                         retrieved, 
                                         curr_context): 
@@ -38,7 +38,7 @@ def generate_agent_chat_summarize_ideas(init_persona,
     all_embedding_key_str += f"{i}\n"
 
     try:
-      response = run_gpt_prompt_agent_chat_summarize_ideas(
+      response = await run_gpt_prompt_agent_chat_summarize_ideas(
         init_persona, target_persona, all_embedding_key_str, curr_context
       )
       if response:
@@ -53,7 +53,7 @@ def generate_agent_chat_summarize_ideas(init_persona,
     return summarized_idea
 
 
-def generate_summarize_agent_relationship(init_persona, 
+async def generate_summarize_agent_relationship(init_persona, 
                                           target_persona, 
                                           retrieved): 
   all_embedding_keys = list()
@@ -64,7 +64,7 @@ def generate_summarize_agent_relationship(init_persona,
   for i in all_embedding_keys: 
     all_embedding_key_str += f"{i}\n"
 
-    response = run_gpt_prompt_agent_chat_summarize_relationship(
+    response = await run_gpt_prompt_agent_chat_summarize_relationship(
       init_persona, target_persona, all_embedding_key_str
     )
     if response:
@@ -141,7 +141,7 @@ def generate_summarize_agent_relationship(init_persona,
 #   )
 
 
-def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat):
+async def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat):
   # Chat version optimized for speed via batch generation
   curr_context = (
     f"{init_persona.scratch.name} "
@@ -156,7 +156,7 @@ def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_c
     + f"{target_persona.scratch.name}."
   )
 
-  x = run_gpt_generate_iterative_chat_utt(
+  x = await run_gpt_generate_iterative_chat_utt(
     maze, init_persona, target_persona, retrieved, curr_context, curr_chat
   )[0]
 
@@ -168,7 +168,7 @@ def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_c
     print("ERROR: <generate_one_utterance>: Could not get utterance")
     return "", True
 
-def agent_chat_v2(maze, init_persona, target_persona): 
+async def agent_chat_v2(maze, init_persona, target_persona): 
   curr_chat = []
   print ("July 23")
 
@@ -188,7 +188,7 @@ def agent_chat_v2(maze, init_persona, target_persona):
       focal_points = [f"{relationship}", 
                       f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
     retrieved = new_retrieve(init_persona, focal_points, 15)
-    utt, end = generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
+    utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
 
     curr_chat += [[init_persona.scratch.name, utt]]
     if end:
@@ -210,7 +210,7 @@ def agent_chat_v2(maze, init_persona, target_persona):
       focal_points = [f"{relationship}", 
                       f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
     retrieved = new_retrieve(target_persona, focal_points, 15)
-    utt, end = generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
+    utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
 
     curr_chat += [[target_persona.scratch.name, utt]]
     if end:
@@ -228,11 +228,11 @@ def agent_chat_v2(maze, init_persona, target_persona):
 
 
 
-def generate_summarize_ideas(persona, nodes, question):
+async def generate_summarize_ideas(persona, nodes, question):
   statements = ""
   for n in nodes:
     statements += f"{n.embedding_key}\n"
-  response = run_gpt_prompt_summarize_ideas(persona, statements, question)
+  response = await run_gpt_prompt_summarize_ideas(persona, statements, question)
   if response:
     summarized_idea = response[0]
   else:
@@ -241,24 +241,24 @@ def generate_summarize_ideas(persona, nodes, question):
   return summarized_idea
 
 
-def generate_next_line(persona, interlocutor_desc, curr_convo, summarized_idea):
+async def generate_next_line(persona, interlocutor_desc, curr_convo, summarized_idea):
   # Original chat -- line by line generation 
   prev_convo = ""
   for row in curr_convo: 
     prev_convo += f'{row[0]}: {row[1]}\n'
 
-  next_line = run_gpt_prompt_generate_next_convo_line(persona, 
+  next_line = await run_gpt_prompt_generate_next_convo_line(persona, 
                                                       interlocutor_desc, 
                                                       prev_convo, 
                                                       summarized_idea)[0]  
   return next_line
 
 
-def generate_inner_thought(persona, whisper):
-  inner_thought = run_gpt_prompt_generate_whisper_inner_thought(persona, whisper)[0]
+async def generate_inner_thought(persona, whisper):
+  inner_thought = await run_gpt_prompt_generate_whisper_inner_thought(persona, whisper)[0]
   return inner_thought
 
-def generate_action_event_triple(act_desp, persona): 
+async def generate_action_event_triple(act_desp, persona): 
   """TODO 
 
   INPUT: 
@@ -270,17 +270,17 @@ def generate_action_event_triple(act_desp, persona):
     "🧈🍞"
   """
   if debug: print ("GNS FUNCTION: <generate_action_event_triple>")
-  return run_gpt_prompt_event_triple(act_desp, persona)[0]
+  return await run_gpt_prompt_event_triple(act_desp, persona)[0]
 
 
-def generate_poig_score(persona, event_type, description): 
+async def generate_poig_score(persona, event_type, description): 
   if debug: print ("GNS FUNCTION: <generate_poig_score>")
 
   if "is idle" in description: 
     return 1
 
   if event_type == "event" or event_type == "thought":
-    response = run_gpt_prompt_event_poignancy(persona, description)
+    response = await run_gpt_prompt_event_poignancy(persona, description)
     if response:
       return response[0]
     else:
@@ -289,7 +289,7 @@ def generate_poig_score(persona, event_type, description):
       )
       return 0
   elif event_type == "chat":
-    response = run_gpt_prompt_chat_poignancy(
+    response = await run_gpt_prompt_chat_poignancy(
       persona, persona.scratch.act_description
     )
     if response:
@@ -299,25 +299,25 @@ def generate_poig_score(persona, event_type, description):
       return 0
 
 
-def load_history_via_whisper(personas, whispers, curr_time):
+async def load_history_via_whisper(personas, whispers, curr_time):
   for count, row in enumerate(whispers):
     persona = personas[row[0]]
     whisper = row[1]
 
-    thought = generate_inner_thought(persona, whisper)
+    thought = await generate_inner_thought(persona, whisper)
 
     created = persona.scratch.curr_time if persona.scratch.curr_time else curr_time
     expiration = created + datetime.timedelta(days=30)
-    s, p, o = generate_action_event_triple(thought, persona)
+    s, p, o = await generate_action_event_triple(thought, persona)
     keywords = set([s, p, o])
-    thought_poignancy = generate_poig_score(persona, "event", whisper)
+    thought_poignancy = await generate_poig_score(persona, "event", whisper)
     thought_embedding_pair = (thought, get_embedding(thought))
     persona.a_mem.add_thought(created, expiration, s, p, o,
                               thought, keywords, thought_poignancy,
                               thought_embedding_pair, None)
 
 
-def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, question: str=None): 
+async def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, question: str=None): 
   if direct and question is None:
     raise ValueError("If direct is True, question must be provided.")
   if convo_mode == "analysis": 
@@ -332,15 +332,15 @@ def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, questi
       if line == "end_convo": 
         break
 
-      if int(run_gpt_generate_safety_score(persona, line)[0]) >= 8 and safe_mode: 
+      if int(await run_gpt_generate_safety_score(persona, line)[0]) >= 8 and safe_mode: 
         print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")        
 
       else: 
         retrieved = new_retrieve(persona, [line], 50)[line]
-        summarized_idea = generate_summarize_ideas(persona, retrieved, line)
+        summarized_idea = await generate_summarize_ideas(persona, retrieved, line)
         curr_convo += [[interlocutor_desc, line]]
 
-        next_line = generate_next_line(persona, interlocutor_desc, curr_convo, summarized_idea)
+        next_line = await generate_next_line(persona, interlocutor_desc, curr_convo, summarized_idea)
         curr_convo += [[persona.scratch.name, next_line]]
         if direct: 
           return curr_convo
@@ -348,13 +348,13 @@ def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, questi
 
   elif convo_mode == "whisper": 
     whisper = input("Enter Input: ")
-    thought = generate_inner_thought(persona, whisper)
+    thought = await generate_inner_thought(persona, whisper)
 
     created = persona.scratch.curr_time
     expiration = persona.scratch.curr_time + datetime.timedelta(days=30)
-    s, p, o = generate_action_event_triple(thought, persona)
+    s, p, o = await generate_action_event_triple(thought, persona)
     keywords = set([s, p, o])
-    thought_poignancy = generate_poig_score(persona, "event", whisper)
+    thought_poignancy = await generate_poig_score(persona, "event", whisper)
     thought_embedding_pair = (thought, get_embedding(thought))
     persona.a_mem.add_thought(created, expiration, s, p, o, 
                               thought, keywords, thought_poignancy, 

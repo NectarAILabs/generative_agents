@@ -129,10 +129,10 @@ async def run_reflect(persona):
     None
   """
   # Reflection requires certain focal points. Generate that first. 
-  focal_points = generate_focal_points(persona, 3)
+  focal_points = await generate_focal_points(persona, 3)
   # Retrieve the relevant Nodes object for each of the focal points. 
   # <retrieved> has keys of focal points, and values of the associated Nodes. 
-  retrieved = new_retrieve(persona, focal_points)
+  retrieved = await new_retrieve(persona, focal_points)
 
   # For each of the focal points, generate thoughts and save it in the 
   # agent's memory. 
@@ -154,7 +154,7 @@ async def run_reflect(persona):
                                 thought_embedding_pair, evidence)
 
 
-async def reflection_trigger(persona): 
+def reflection_trigger(persona): 
   """
   Given the current persona, determine whether the persona should run a 
   reflection. 
@@ -175,7 +175,7 @@ async def reflection_trigger(persona):
   return False
 
 
-async def reset_reflection_counter(persona): 
+def reset_reflection_counter(persona): 
   """
   We reset the counters used for the reflection trigger. 
 
@@ -200,9 +200,9 @@ async def reflect(persona):
   Output: 
     None
   """
-  if await reflection_trigger(persona): 
+  if reflection_trigger(persona): 
     await run_reflect(persona)
-    await reset_reflection_counter(persona)
+    reset_reflection_counter(persona)
 
 
 
@@ -241,7 +241,7 @@ async def reflect(persona):
       s, p, o = await generate_action_event_triple(planning_thought, persona)
       keywords = set([s, p, o])
       thought_poignancy = await generate_poig_score(persona, "thought", planning_thought)
-      thought_embedding_pair = (planning_thought, get_embedding(planning_thought))
+      thought_embedding_pair = (planning_thought, await get_embedding(planning_thought))
 
       persona.a_mem.add_thought(created, expiration, s, p, o, 
                                 planning_thought, keywords, thought_poignancy, 
@@ -257,7 +257,7 @@ async def reflect(persona):
       s, p, o = await generate_action_event_triple(memo_thought, persona)
       keywords = set([s, p, o])
       thought_poignancy = await generate_poig_score(persona, "thought", memo_thought)
-      thought_embedding_pair = (memo_thought, get_embedding(memo_thought))
+      thought_embedding_pair = (memo_thought, await get_embedding(memo_thought))
 
       persona.a_mem.add_thought(created, expiration, s, p, o, 
                                 memo_thought, keywords, thought_poignancy, 
