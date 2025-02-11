@@ -51,7 +51,7 @@ class ChatUtterance(BaseModel):
   did_conversation_end: bool
 
 
-def run_gpt_generate_iterative_chat_utt(
+async def run_gpt_generate_iterative_chat_utt(
   maze,
   init_persona,
   target_persona,
@@ -155,7 +155,7 @@ def run_gpt_generate_iterative_chat_utt(
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
   print(prompt)
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ChatUtterance,
     repeat=3,

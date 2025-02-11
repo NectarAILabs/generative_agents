@@ -18,7 +18,7 @@ Given only the information above, what are !<INPUT 1>! most salient high-level q
 """
 
 
-def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=False):
+async def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=False):
   def create_prompt_input(persona, statements, n, test_input=None):
     prompt_input = [statements, str(n)]
     return prompt_input
@@ -57,7 +57,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
   example_output = '["What should Jane do for lunch", "Does Jane like strawberry", "Who is Jane"]'  ########
   special_instruction = "Output must be a list of str."  ########
   fail_safe = get_fail_safe(n)  ########
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     FocalPoint,
     example_output,

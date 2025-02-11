@@ -4,21 +4,23 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: gpt_structure.py
 Description: Wrapper functions for calling OpenAI APIs.
 """
-
-import json
+import sys
 from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent.parent))
+import os
+from utils import openai_api_key, use_openai, api_model
+import json
 import time
 import traceback
-from openai import AzureOpenAI, OpenAI
-from utils import openai_api_key, use_openai, api_model
+import asyncio
+from openai import AzureOpenAI, OpenAI, AsyncOpenAI
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
-
-config_path = Path("../../openai_config.json")
+# Fix config path to be relative to current file location
+config_path = Path(__file__).parent.parent.parent.parent.parent / "openai_config.json"
 with open(config_path, "r") as f:
   openai_config = json.load(f) 
-
-client = OpenAI(api_key=openai_api_key)
+#client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 if not use_openai:
   # TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url=api_base)'
@@ -79,7 +81,7 @@ def setup_client(type: str, config: dict):
       api_version=config["api-version"],
     )
   elif type == "openai":
-    client = OpenAI(
+    client = AsyncOpenAI(
       api_key=config["key"],
     )
   else:
@@ -94,7 +96,7 @@ if openai_config["client"] == "azure":
   })
 elif openai_config["client"] == "openai":
   client = setup_client("openai", { "key": openai_config["model-key"] })
-
+  client.base_url = "https://openrouter.ai/api/v1"
 if openai_config["embeddings-client"] == "azure":  
   embeddings_client = setup_client("azure", {
     "endpoint": openai_config["embeddings-endpoint"],
@@ -117,13 +119,15 @@ def temp_sleep(seconds=0.1):
   time.sleep(seconds)
 
 
-def ChatGPT_single_request(prompt):
-  temp_sleep()
+import asyncio
+
+async def ChatGPT_single_request(prompt):
+  await temp_sleep()
 
   print("--- ChatGPT_single_request() ---")
   print("Prompt:", prompt)
 
-  completion = client.chat.completions.create(
+  completion = await client.chat.completions.create(
     model=openai_config["model"],
     messages=[{"role": "user", "content": prompt}],
   )
@@ -138,25 +142,7 @@ def ChatGPT_single_request(prompt):
     print("ERROR: No message content from LLM.")
     return ""
 
-  # completion = openai.ChatCompletion.create(
-  #   model= "gpt-3.5-turbo" if use_openai else model, 
-  #   messages=[{"role": "user", "content": prompt}]
-  # )
-  # return completion["choices"][0]["message"]["content"]
-
-  # try:
-  #   response = llm( prompt)
-  # except:
-  #   print("Requested tokens exceed context window")
-  #   ### TODO: Add map-reduce or splitter to handle this error.
-  #   prompt = prompt.split(" ")[-1400:]
-  #   prompt = str(' '.join(prompt))
-  #   response = llm(prompt)
-  #   response = response.json()
-  # return response
-
-
-def ChatGPT_request(prompt):
+async def ChatGPT_request(prompt):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -168,12 +154,12 @@ def ChatGPT_request(prompt):
   RETURNS: 
     a str of GPT-3's response. 
   """
-  # temp_sleep()
+  # await temp_sleep()
   print("--- ChatGPT_request() ---")
   print("Prompt:", prompt)
 
   try: 
-    completion = client.chat.completions.create(
+    completion = await client.chat.completions.create(
       model=openai_config["model"],
       messages=[{"role": "user", "content": prompt}]
     )
@@ -191,7 +177,7 @@ def ChatGPT_request(prompt):
     traceback.print_exc()
     return "LLM ERROR"
 
-def ChatGPT_structured_request(prompt, response_format):
+async def ChatGPT_structured_request(prompt, response_format):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -203,12 +189,11 @@ def ChatGPT_structured_request(prompt, response_format):
   RETURNS: 
     a str of GPT-3's response. 
   """
-  # temp_sleep()
   print("--- ChatGPT_request() ---")
   print("Prompt:", prompt)
 
   try: 
-    completion = client.beta.chat.completions.parse(
+    completion = await client.beta.chat.completions.parse(
       model=openai_config["model"],
       response_format=response_format,
       messages=[{"role": "user", "content": prompt}]
@@ -281,7 +266,7 @@ def ChatGPT_structured_request(prompt, response_format):
 #   return False
 
 
-def ChatGPT_safe_generate_response(
+async def ChatGPT_safe_generate_response(
   prompt,
   example_output="",
   special_instruction="",
@@ -308,7 +293,7 @@ def ChatGPT_safe_generate_response(
 
     for i in range(repeat):
       try:
-        chatgpt_response = ChatGPT_request(prompt)
+        chatgpt_response = await ChatGPT_request(prompt)
         if not chatgpt_response:
           raise Exception("Error: No valid response from LLM.")
         curr_gpt_response = chatgpt_response.strip()
@@ -334,7 +319,7 @@ def ChatGPT_safe_generate_response(
   return fail_safe_response
 
 
-def ChatGPT_safe_generate_structured_response(
+async def ChatGPT_safe_generate_structured_response(
   prompt,
   response_format,
   example_output="",
@@ -346,7 +331,6 @@ def ChatGPT_safe_generate_structured_response(
   verbose=False,
 ):
   if func_validate and func_clean_up:
-    # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
     prompt = '"""\n' + prompt + '\n"""\n'
     if example_output or special_instruction:
       prompt += (
@@ -362,7 +346,7 @@ def ChatGPT_safe_generate_structured_response(
 
     for i in range(repeat):
       try:
-        curr_gpt_response = ChatGPT_structured_request(prompt, response_format)
+        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format)
         if not curr_gpt_response:
           raise ValueError("No valid response from LLM.")
 
@@ -391,7 +375,7 @@ def ChatGPT_safe_generate_structured_response(
 # ============================================================================
 # ###################[SECTION 2: ORIGINAL GPT-3 STRUCTURE] ###################
 # ============================================================================
-def GPT_request(prompt, gpt_parameter):
+async def GPT_request(prompt, gpt_parameter):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -410,7 +394,7 @@ def GPT_request(prompt, gpt_parameter):
       messages = [{
         "role": "system", "content": prompt
       }]
-      response = client.chat.completions.create(
+      response = await client.chat.completions.create(
                   model=gpt_parameter["engine"],
                   messages=messages,
                   temperature=gpt_parameter["temperature"],
@@ -422,7 +406,7 @@ def GPT_request(prompt, gpt_parameter):
                   stop=gpt_parameter["stop"],
               )
     else:
-      response = client.completions.create(model=model, prompt=prompt)
+      response = await client.completions.create(model=model, prompt=prompt)
 
     print("Response: ", response)
     content = response.choices[0].message.content
@@ -435,7 +419,7 @@ def GPT_request(prompt, gpt_parameter):
     return "REQUEST ERROR"
 
 
-def GPT_structured_request(prompt, gpt_parameter, response_format):
+async def GPT_structured_request(prompt, gpt_parameter, response_format):
   """
   Given a prompt, a dictionary of GPT parameters, and a response format, make a request to OpenAI
   server and returns the response.
@@ -455,7 +439,7 @@ def GPT_structured_request(prompt, gpt_parameter, response_format):
       messages = [{
         "role": "system", "content": prompt
       }]
-      response = client.beta.chat.completions.parse(
+      response = await client.beta.chat.completions.parse(
         model=gpt_parameter["engine"],
         messages=messages,
         response_format=response_format,
@@ -468,7 +452,7 @@ def GPT_structured_request(prompt, gpt_parameter, response_format):
         stop=gpt_parameter["stop"],
       )
     else:
-      response = client.completions.create(model=model, prompt=prompt)
+      response = await client.completions.create(model=model, prompt=prompt)
 
     print("Response: ", response)
     message = response.choices[0].message
@@ -520,7 +504,7 @@ def generate_prompt(curr_input, prompt_lib_file='', prompt_template_str=''):
   return prompt.strip()
 
 
-def safe_generate_response(prompt, 
+async def safe_generate_response(prompt, 
                            gpt_parameter,
                            repeat=5,
                            fail_safe_response="error",
@@ -532,7 +516,7 @@ def safe_generate_response(prompt,
 
   if func_validate and func_clean_up:
     for i in range(repeat):
-      curr_gpt_response = GPT_request(prompt, gpt_parameter)
+      curr_gpt_response = await GPT_request(prompt, gpt_parameter)
       try:
         if func_validate(curr_gpt_response, prompt=prompt):
           return func_clean_up(curr_gpt_response, prompt=prompt)
@@ -551,7 +535,7 @@ def safe_generate_response(prompt,
   return fail_safe_response
 
 
-def safe_generate_structured_response(
+async def safe_generate_structured_response(    
   prompt,
   gpt_parameter,
   response_format,
@@ -566,7 +550,7 @@ def safe_generate_structured_response(
 
   if func_validate and func_clean_up:
     for i in range(repeat):
-      curr_gpt_response = GPT_structured_request(prompt, gpt_parameter, response_format)
+      curr_gpt_response = await GPT_structured_request(prompt, gpt_parameter, response_format)
       try:
         if not isinstance(curr_gpt_response, str) and func_validate(
           curr_gpt_response,
@@ -604,30 +588,30 @@ def get_embedding(text, model=openai_config["embeddings"]):
 
 
 if __name__ == '__main__':
-  gpt_parameter = {"engine": openai_config["model"], "max_tokens": 50, 
+  gpt_parameter = {"engine": openai_config["model"], "max_tokens": 100, 
                    "temperature": 0, "top_p": 1, "stream": False,
                    "frequency_penalty": 0, "presence_penalty": 0, 
-                   "stop": ['"']}
+                   "stop": ['\n']}
   curr_input = ["driving to a friend's house"]
-  prompt_lib_file = "prompt_template/v1/test_prompt_July5.txt"
+  prompt_lib_file = "/Users/vuanhduc/Documents/duke_nectar/generative_agents/reverie/backend_server/persona/prompt_template/v1/unused/test_prompt_July5.txt"
   prompt = generate_prompt(curr_input, prompt_lib_file)
 
-  def __func_validate(gpt_response): 
+  def __func_validate(gpt_response,prompt=""): 
     if len(gpt_response.strip()) <= 1:
       return False
     if len(gpt_response.strip().split(" ")) > 1: 
       return False
     return True
-  def __func_clean_up(gpt_response):
+  def __func_clean_up(gpt_response,prompt=""):
     cleaned_response = gpt_response.strip()
     return cleaned_response
-
-  output = safe_generate_response(prompt, 
+  print(client.api_key)
+  output = asyncio.run(safe_generate_response(prompt, 
                                  gpt_parameter,
-                                 5,
+                                 3,
                                  "rest",
                                  __func_validate,
                                  __func_clean_up,
-                                 True)
+                                 True))
 
-  print (output)
+  print(output)

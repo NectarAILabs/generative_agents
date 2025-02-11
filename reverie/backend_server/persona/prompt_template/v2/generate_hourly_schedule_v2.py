@@ -36,7 +36,7 @@ class HourlySchedule(BaseModel):
   hourly_schedule: list[Activity]
 
 
-def run_gpt_prompt_generate_hourly_schedule(
+async def run_gpt_prompt_generate_hourly_schedule(
   persona,
   curr_hour_str,
   p_f_ds_hourly_org,
@@ -162,7 +162,7 @@ def run_gpt_prompt_generate_hourly_schedule(
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, HourlySchedule, 5, fail_safe, __func_validate, __func_clean_up
   )
 
