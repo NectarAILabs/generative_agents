@@ -23,7 +23,7 @@ class Pronunciatio(BaseModel):
   emoji: str
 
 
-def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
+async def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
   def create_prompt_input(action_description):
     if "(" in action_description:
       action_description = action_description.split("(")[-1].split(")")[0]
@@ -73,7 +73,7 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
     "The value for the output must ONLY contain the emojis."  ########
   )
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     Pronunciatio,
     example_output,

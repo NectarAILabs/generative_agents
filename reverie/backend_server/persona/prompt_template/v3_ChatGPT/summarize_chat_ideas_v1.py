@@ -25,7 +25,7 @@ Summarize the most relevant statements above that can inform !<INPUT 4>! in his 
 """
 
 
-def run_gpt_prompt_agent_chat_summarize_ideas(
+async def run_gpt_prompt_agent_chat_summarize_ideas(
   persona, target_persona, statements, curr_context, test_input=None, verbose=False
 ):
   def create_prompt_input(
@@ -88,7 +88,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
     "The output should be a string that responds to the question."  ########
   )
   fail_safe = get_fail_safe()  ########
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     IdeaSummary,
     example_output,

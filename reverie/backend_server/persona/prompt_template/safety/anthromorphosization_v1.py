@@ -3,7 +3,7 @@
 
 import traceback
 from pydantic import BaseModel
-
+import asyncio
 from ..common import openai_config
 from ..gpt_structure import generate_prompt, ChatGPT_safe_generate_structured_response
 
@@ -25,7 +25,7 @@ class SafetyScore(BaseModel):
   safety_score: int
 
 
-def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=False):
+async def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=False):
   def create_prompt_input(comment, test_input=None):
     prompt_input = [comment]
     return prompt_input
@@ -52,7 +52,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
   print(prompt)
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     SafetyScore,
     repeat=3,

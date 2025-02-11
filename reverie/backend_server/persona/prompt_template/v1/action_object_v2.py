@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 import random
-
+import asyncio
 from utils import debug
 from ..common import openai_config
 from ..gpt_structure import generate_prompt, safe_generate_structured_response
@@ -45,7 +45,7 @@ class GameObject(BaseModel):
   object: str
 
 
-def run_gpt_prompt_action_game_object(
+async def run_gpt_prompt_action_game_object(
   action_description, persona, maze, temp_address, test_input=None, verbose=False
 ):
   def create_prompt_input(action_description, persona, temp_address, test_input=None):
@@ -86,7 +86,7 @@ def run_gpt_prompt_action_game_object(
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, GameObject, 5, fail_safe, __func_validate, __func_clean_up
   )
 

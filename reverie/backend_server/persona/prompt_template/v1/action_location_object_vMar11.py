@@ -2,7 +2,7 @@ from utils import debug
 from ..common import ActionLoc, openai_config
 from ..gpt_structure import generate_prompt, safe_generate_structured_response
 from ..print_prompt import print_run_prompts
-
+import asyncio
 # Variables:
 # !<INPUT 0>! -- Persona name
 # !<INPUT 1>! -- Persona's current arena
@@ -36,7 +36,7 @@ Answer: {
 """
 
 
-def run_gpt_prompt_action_arena(
+async def run_gpt_prompt_action_arena(
   action_description,
   persona,
   maze,
@@ -125,7 +125,7 @@ def run_gpt_prompt_action_arena(
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     ActionLoc,

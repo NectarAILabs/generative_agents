@@ -29,7 +29,7 @@ class InsightGuidance(BaseModel):
   insights: list[Insight]
 
 
-def run_gpt_prompt_insight_and_guidance(
+async def run_gpt_prompt_insight_and_guidance(
   persona, statements, n, test_input=None, verbose=False
 ):
   def create_prompt_input(persona, statements, n, test_input=None):
@@ -68,7 +68,7 @@ def run_gpt_prompt_insight_and_guidance(
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
 
   fail_safe = get_fail_safe(n)
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, InsightGuidance, 5, fail_safe, __func_validate, __func_clean_up
   )
 

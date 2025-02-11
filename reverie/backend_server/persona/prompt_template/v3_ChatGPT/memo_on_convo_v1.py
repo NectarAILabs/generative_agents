@@ -22,7 +22,7 @@ Write down if there is anything from the conversation that !<INPUT 1>! might hav
 """
 
 
-def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=False):
+async def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=False):
   def create_prompt_input(persona, all_utt, test_input=None):
     prompt_input = [
       all_utt,
