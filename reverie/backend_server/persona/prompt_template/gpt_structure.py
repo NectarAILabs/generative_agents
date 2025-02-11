@@ -116,8 +116,8 @@ def temp_sleep(seconds=0.1):
   time.sleep(seconds)
 
 
-def ChatGPT_single_request(prompt):
-  temp_sleep()
+async def ChatGPT_single_request(prompt):
+  await temp_sleep()
 
   print("--- ChatGPT_single_request() ---")
   print("Prompt:", prompt, flush=True)
@@ -572,7 +572,7 @@ def get_embedding(text, model=openai_config["embeddings"]):
 
 
 if __name__ == '__main__':
-  gpt_parameter = {"engine": openai_config["model"], "max_tokens": 50, 
+  gpt_parameter = {"engine": openai_config["model"], "max_tokens": 50,
                    "temperature": 0, "top_p": 1, "stream": False,
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['"']}
@@ -580,7 +580,7 @@ if __name__ == '__main__':
   prompt_lib_file = "prompt_template/v1/test_prompt_July5.txt"
   prompt = generate_prompt(curr_input, prompt_lib_file)
 
-  def __func_validate(gpt_response): 
+  def __func_validate(gpt_response):
     if len(gpt_response.strip()) <= 1:
       return False
     if len(gpt_response.strip().split(" ")) > 1: 
@@ -590,7 +590,7 @@ if __name__ == '__main__':
     cleaned_response = gpt_response.strip()
     return cleaned_response
 
-  output = safe_generate_response(prompt, 
+  output = asyncio.run(safe_generate_response(prompt,
                                  gpt_parameter,
                                  5,
                                  "rest",
