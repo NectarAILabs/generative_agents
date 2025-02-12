@@ -412,13 +412,13 @@ class ReverieServer:
                 self.personas_tile[persona_name],
                 self.curr_time,
               )
-            tasks.append(task)
+              tasks.append(task)
             results = await asyncio.gather(*(task for task in tasks))
             return results
 
 
           results = asyncio.run(run_all_move())
-          for (persona_name, _), (next_tile, pronunciatio, description) in zip(tasks, results):
+          for (persona_name, _), (next_tile, pronunciatio, description) in zip(self.personas.items(), results):
             movements["persona"][persona_name] = {
               "movement": next_tile,
               "pronunciatio": pronunciatio,

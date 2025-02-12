@@ -330,7 +330,7 @@ async def generate_action_event_triple(act_desp, persona):
   """
   if debug:
     print("GNS FUNCTION: <generate_action_event_triple>")
-  result = await run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)
+  result = await run_gpt_prompt_event_triple(act_desp, persona)
   return result[0]
 
 
@@ -634,9 +634,12 @@ async def _determine_action(persona, maze):
     OUTPUT: 
       a boolean. True if we need to decompose, False otherwise. 
     """
+    act_desp = act_desp.strip().lower()
+    if act_desp == "fill in":
+      act_desp = "sleeping"
     if "sleep" not in act_desp and "bed" not in act_desp: 
       return True
-    elif "sleeping" in act_desp or "asleep" in act_desp or "in bed" in act_desp:
+    elif "sleeping" in act_desp or "asleep" in act_desp or "in bed" in act_desp or "fill in" in act_desp:
       return False
     elif "sleep" in act_desp or "bed" in act_desp: 
       if act_dura > 60: 
@@ -746,7 +749,7 @@ async def _determine_action(persona, maze):
                                  act_obj_event)
 
 
-def _choose_retrieved(persona, retrieved): 
+async def _choose_retrieved(persona, retrieved):
   """
   Retrieved elements have multiple core "curr_events". We need to choose one
   event to which we are going to react to. We pick that event here. 
