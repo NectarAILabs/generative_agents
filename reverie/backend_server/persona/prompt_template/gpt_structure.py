@@ -97,7 +97,6 @@ if openai_config["client"] == "azure":
   })
 elif openai_config["client"] == "openai":
   client = setup_client("openai", { "key": openai_config["model-key"] })
-  #client.base_url = "https://openrouter.ai/api/v1"
 if openai_config["embeddings-client"] == "azure":  
   embeddings_client = setup_client("azure", {
     "endpoint": openai_config["embeddings-endpoint"],
@@ -106,7 +105,6 @@ if openai_config["embeddings-client"] == "azure":
   })
 elif openai_config["embeddings-client"] == "openai":
   embeddings_client = setup_client("openai", { "key": openai_config["embeddings-key"] })
-  embeddings_client.base_url = "https://api.openai.com/v1"
 else:
   raise ValueError("Invalid embeddings client")
 
