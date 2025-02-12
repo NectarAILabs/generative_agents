@@ -3,7 +3,7 @@
 FRONTEND_SCRIPT_PATH="environment/frontend_server"
 FRONTEND_SCRIPT_FILE="manage.py"
 CONDA_ENV="simulacra"
-CONDA_PATH="/opt/homebrew/Caskroom/miniconda/base"
+CONDA_PATH="/home/${USER}/anaconda3/bin/activate"
 
 FILE_NAME="Bash-Script-Frontend"
 echo "(${FILE_NAME}): Running frontend server"
@@ -26,12 +26,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 cd ${FRONTEND_SCRIPT_PATH}
-source "${CONDA_PATH}/etc/profile.d/conda.sh" || {
-    echo "Failed to source conda.sh. Please check your conda path."
-    exit 1
-}
-conda activate "${CONDA_ENV}" || {
-    echo "Failed to activate conda environment. Please check the environment name."
+source "${CONDA_PATH}" "${CONDA_ENV}" || {
+    echo "Failed to activate conda environment. Please check your conda path and environment name."
     exit 1
 }
 
