@@ -46,6 +46,8 @@ def run_gpt_prompt_insight_and_guidance(
     return prompt_input
 
   def __func_clean_up(gpt_response: InsightGuidance, prompt=""):
+    for item in gpt_response.insights:
+      item.insight = item.insight.split("(because of ")[0]
     ret = {item.insight: item.because_of for item in gpt_response.insights}
     return ret
 
