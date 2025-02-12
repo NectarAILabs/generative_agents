@@ -31,7 +31,7 @@ class DecideToTalk(BaseModel):
   decision: bool
 
 
-def run_gpt_prompt_decide_to_talk(
+async def run_gpt_prompt_decide_to_talk(
   persona, target_persona, retrieved, test_input=None, verbose=False
 ):
   def create_prompt_input(init_persona, target_persona, retrieved, test_input=None):
@@ -124,7 +124,7 @@ def run_gpt_prompt_decide_to_talk(
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, DecideToTalk, 5, fail_safe, __func_validate, __func_clean_up
   )
 

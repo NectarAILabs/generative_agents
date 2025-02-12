@@ -36,7 +36,7 @@ class HourlySchedule(BaseModel):
     hourly_schedule: list[Activity]
 
 
-def run_gpt_prompt_generate_hourly_schedule(
+async def run_gpt_prompt_generate_hourly_schedule(
     persona,
     curr_hour_str,
     p_f_ds_hourly_org,

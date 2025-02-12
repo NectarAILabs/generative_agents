@@ -24,7 +24,7 @@ class InnerThought(BaseModel):
   thought: str
 
 
-def run_gpt_prompt_generate_whisper_inner_thought(
+async def run_gpt_prompt_generate_whisper_inner_thought(
   persona, whisper, test_input=None, verbose=False
 ):
   def create_prompt_input(persona, whisper, test_input=None):
@@ -60,7 +60,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     InnerThought,

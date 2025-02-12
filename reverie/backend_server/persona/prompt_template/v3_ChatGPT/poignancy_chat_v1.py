@@ -28,7 +28,7 @@ class IntPoignancy(BaseModel):
   poignancy: int
 
 
-def run_gpt_prompt_chat_poignancy(
+async def run_gpt_prompt_chat_poignancy(
   persona, event_description, test_input=None, verbose=False
 ):
   def create_prompt_input(persona, event_description, test_input=None):
@@ -85,7 +85,7 @@ def run_gpt_prompt_chat_poignancy(
   example_output = "5"  ########
   special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10."  ########
   fail_safe = get_fail_safe()  ########
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     IntPoignancy,
     example_output,
