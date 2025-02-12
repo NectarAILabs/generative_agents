@@ -144,7 +144,7 @@ async def run_reflect(persona):
     for thought, evidence in thoughts.items(): 
       created = persona.scratch.curr_time
       expiration = persona.scratch.curr_time + datetime.timedelta(days=30)
-      s, p, o = await generate_action_event_triple(thought, persona)
+      s, p, o = await generate_action_event_triple(thought, persona)  
       keywords = set([s, p, o])
       thought_poignancy = await generate_poig_score(persona, "thought", thought)
       thought_embedding_pair = (thought, get_embedding(thought))
