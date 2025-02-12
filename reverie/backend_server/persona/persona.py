@@ -73,7 +73,7 @@ class Persona:
     self.scratch.save(f_scratch)
 
 
-  def perceive(self, maze):
+  async def perceive(self, maze):
     """
     This function takes the current maze, and returns events that are 
     happening around the persona. Importantly, perceive is guided by 
@@ -99,10 +99,10 @@ class Persona:
         See associative_memory.py -- but to get you a sense of what it 
         receives as its input: "s, p, o, desc, persona.scratch.curr_time"
     """
-    return perceive(self, maze)
+    return await perceive(self, maze)
 
 
-  def retrieve(self, perceived):
+  async def retrieve(self, perceived):
     """
     This function takes the events that are perceived by the persona as input
     and returns a set of related events and thoughts that the persona would 
@@ -115,10 +115,10 @@ class Persona:
                  while the latter layer specifies the "curr_event", "events", 
                  and "thoughts" that are relevant.
     """
-    return retrieve(self, perceived)
+    return await retrieve(self, perceived)
 
 
-  def plan(self, maze, personas, new_day, retrieved):
+  async def plan(self, maze, personas, new_day, retrieved):
     """
     Main cognitive function of the chain. It takes the retrieved memory and 
     perception, as well as the maze and the first day state to conduct both 
@@ -140,7 +140,7 @@ class Persona:
     OUTPUT 
       The target action address of the persona (persona.scratch.act_address).
     """
-    return plan(self, maze, personas, new_day, retrieved)
+    return await plan(self, maze, personas, new_day, retrieved)
 
 
   def execute(self, maze, personas, plan):
@@ -165,7 +165,7 @@ class Persona:
     return execute(self, maze, personas, plan)
 
 
-  def reflect(self):
+  async def reflect(self):
     """
     Reviews the persona's memory and create new thoughts based on it. 
 
@@ -174,10 +174,10 @@ class Persona:
     OUTPUT: 
       None
     """
-    reflect(self)
+    await reflect(self)
 
 
-  def move(self, maze, personas, curr_tile, curr_time):
+  async def move(self, maze, personas, curr_tile, curr_time):
     """
     This is the main cognitive function where our main sequence is called. 
 
@@ -212,10 +212,10 @@ class Persona:
     self.scratch.curr_time = curr_time
 
     # Main cognitive sequence begins here. 
-    perceived = self.perceive(maze)
-    retrieved = self.retrieve(perceived)
-    plan = self.plan(maze, personas, new_day, retrieved)
-    self.reflect()
+    perceived = await self.perceive(maze)
+    retrieved = await self.retrieve(perceived)
+    plan = await self.plan(maze, personas, new_day, retrieved)
+    await self.reflect()
 
     # <execution> is a triple set that contains the following components: 
     # <next_tile> is a x,y coordinate. e.g., (58, 9)

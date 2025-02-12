@@ -18,7 +18,7 @@ term "personas" to refer to generative agents, "associative memory" to refer
 to the memory stream, and "reverie" to refer to the overarching simulation 
 framework.
 """
-
+import asyncio
 import json
 import datetime
 import time
@@ -398,29 +398,33 @@ class ReverieServer:
           movements = {"persona": dict(), "meta": dict()}
           # This will only be used in headless mode
           next_env = {}
+          tasks = []
+          async def run_all_move():
+            for persona_name, persona in self.personas.items():
+              # <next_tile> is a x,y coordinate. e.g., (58, 9)
+              # <pronunciatio> is an emoji. e.g., "\ud83d\udca4"
+              # <description> is a string description of the movement. e.g.,
+              #   writing her next novel (editing her novel)
+              #   @ double studio:double studio:common room:sofa
+              task = persona.move(
+                self.maze,
+                self.personas,
+                self.personas_tile[persona_name],
+                self.curr_time,
+              )
+            tasks.append(task)
+            results = await asyncio.gather(*(task for task in tasks))
+            return results
 
-          for persona_name, persona in self.personas.items():
-            # <next_tile> is a x,y coordinate. e.g., (58, 9)
-            # <pronunciatio> is an emoji. e.g., "\ud83d\udca4"
-            # <description> is a string description of the movement. e.g.,
-            #   writing her next novel (editing her novel)
-            #   @ double studio:double studio:common room:sofa
-            next_tile, pronunciatio, description = persona.move(
-              self.maze,
-              self.personas,
-              self.personas_tile[persona_name],
-              self.curr_time,
-            )
-            movements["persona"][persona_name] = {}
-            movements["persona"][persona_name]["movement"] = next_tile
-            movements["persona"][persona_name][
-              "pronunciatio"
-            ] = pronunciatio
-            movements["persona"][persona_name]["description"] = description
-            movements["persona"][persona_name][
-              "chat"
-            ] = persona.scratch.chat
 
+          results = asyncio.run(run_all_move())
+          for (persona_name, _), (next_tile, pronunciatio, description) in zip(tasks, results):
+            movements["persona"][persona_name] = {
+              "movement": next_tile,
+              "pronunciatio": pronunciatio,
+              "description": description,
+              "chat": self.personas[persona_name].scratch.chat
+            }
             if headless:
               next_env[persona_name] = {
                 "x": next_tile[0],

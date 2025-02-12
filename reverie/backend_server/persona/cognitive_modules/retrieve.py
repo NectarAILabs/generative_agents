@@ -11,7 +11,7 @@ import sys
 sys.path.append('../../')
 from persona.prompt_template.gpt_structure import get_embedding
 
-def retrieve(persona, perceived): 
+async def retrieve(persona, perceived):
   """
   This function takes the events that are perceived by the persona as input
   and returns a set of related events and thoughts that the persona would 
@@ -176,7 +176,7 @@ async def extract_importance(persona, nodes):
   return importance_out
 
 
-def extract_relevance(persona, nodes, focal_pt): 
+async def extract_relevance(persona, nodes, focal_pt):
   """
   Gets the current Persona object, a list of nodes that are in a 
   chronological order, and the focal_pt string and outputs a dictionary 
@@ -190,7 +190,7 @@ def extract_relevance(persona, nodes, focal_pt):
     relevance_out: A dictionary whose keys are the node.node_id and whose values
                  are the float that represents the relevance score. 
   """
-  focal_embedding = get_embedding(focal_pt)
+  focal_embedding = await get_embedding(focal_pt)
 
   relevance_out = dict()
   for count, node in enumerate(nodes): 
@@ -200,7 +200,7 @@ def extract_relevance(persona, nodes, focal_pt):
   return relevance_out
 
 
-def new_retrieve(persona, focal_points, n_count=30):
+async def new_retrieve(persona, focal_points, n_count=30):
   """
   Given the current persona and focal points (focal points are events or 
   thoughts for which we are retrieving), we retrieve a set of nodes for each
@@ -240,7 +240,7 @@ def new_retrieve(persona, focal_points, n_count=30):
     recency_out = normalize_dict_floats(recency_out, 0, 1)
     importance_out = extract_importance(persona, nodes)
     importance_out = normalize_dict_floats(importance_out, 0, 1)  
-    relevance_out = extract_relevance(persona, nodes, focal_pt)
+    relevance_out = await extract_relevance(persona, nodes, focal_pt)
     relevance_out = normalize_dict_floats(relevance_out, 0, 1)
 
     # Computing the final scores that combines the component values. 

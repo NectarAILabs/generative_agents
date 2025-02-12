@@ -147,7 +147,7 @@ async def run_reflect(persona):
       s, p, o = await generate_action_event_triple(thought, persona)  
       keywords = set([s, p, o])
       thought_poignancy = await generate_poig_score(persona, "thought", thought)
-      thought_embedding_pair = (thought, get_embedding(thought))
+      thought_embedding_pair = (thought, await get_embedding(thought))
 
       persona.a_mem.add_thought(created, expiration, s, p, o, 
                                 thought, keywords, thought_poignancy, 
