@@ -69,10 +69,10 @@ def run_gpt_prompt_generate_hourly_schedule(
     for i in range(4):
       hour = hour_strings[i]
       schedule_format += f'{{"datetime":"{curr_date_str}, {hour}",'
-      schedule_format += '"activity":"[Fill in]"},'
+      schedule_format += '"activity":"<to_be_determined>"},'
     schedule_format += " ... continue ... , "
     schedule_format += f'{{"datetime":"{curr_date_str}, 11:00 PM"}}",'
-    schedule_format += '"activity":"[Fill in]"}]}'
+    schedule_format += '"activity":"<to_be_determined>"}]}'
 
     if all_in_one:
       instructions = "Create an hourly schedule for the following person to fill out their whole day."
@@ -92,11 +92,11 @@ def run_gpt_prompt_generate_hourly_schedule(
         existing_schedule += f" {hour_strings[count]}] Activity:"
         existing_schedule += f" {persona_firstname}"
         existing_schedule += f" is {task}\n"
-
+    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}. You should assume their task is "sleeping" before and after their bedtime. \n'
     if all_in_one:
-      prompt_ending = "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
+      prompt_ending += "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
     else:
-      prompt_ending = "Completed hourly schedule (start from the hour after the existing schedule ends, and use present progressive tense, e.g. 'waking up and completing the morning routine'):"
+      prompt_ending += "Completed hourly schedule (start from the hour after the existing schedule ends, and use present progressive tense, e.g. 'waking up and completing the morning routine'):"
 
     prompt_input = {
       "persona_name": persona_firstname,
