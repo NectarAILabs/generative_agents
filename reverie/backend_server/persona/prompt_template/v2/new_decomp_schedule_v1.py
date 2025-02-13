@@ -44,7 +44,7 @@ class NewSchedule(BaseModel):
   schedule: list[NewActivity]
 
 
-def run_gpt_prompt_new_decomp_schedule(
+async def run_gpt_prompt_new_decomp_schedule(
   persona,
   main_act_dur,
   truncated_act_dur,
@@ -204,7 +204,7 @@ def run_gpt_prompt_new_decomp_schedule(
   )
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe(main_act_dur, truncated_act_dur)
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, NewSchedule, 5, fail_safe, __func_validate, __func_clean_up
   )
 

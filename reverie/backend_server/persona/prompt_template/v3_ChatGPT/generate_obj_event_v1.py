@@ -26,7 +26,7 @@ class ObjDesc(BaseModel):
   description: str
 
 
-def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False):
+async def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False):
   def create_prompt_input(act_game_object, act_desp, persona):
     prompt_input = {
       "object": act_game_object,
@@ -80,7 +80,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   example_output = "being fixed"
   special_instruction = "The output should ONLY contain the phrase that should go in <fill in>. It should be 15 tokens or less."
   fail_safe = get_fail_safe(act_game_object)
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ObjDesc,
     example_output,

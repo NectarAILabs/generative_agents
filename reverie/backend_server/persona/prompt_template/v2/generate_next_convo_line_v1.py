@@ -36,7 +36,7 @@ class NextConversationLine(BaseModel):
   next_conversation_line: str
 
 
-def run_gpt_prompt_generate_next_convo_line(
+async def run_gpt_prompt_generate_next_convo_line(
   persona,
   interlocutor_desc,
   prev_convo,
@@ -116,7 +116,7 @@ def run_gpt_prompt_generate_next_convo_line(
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     NextConversationLine,

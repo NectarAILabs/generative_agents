@@ -5,7 +5,6 @@ from ..common import ActionLoc, openai_config, get_prompt_file_path
 from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
-
 def create_prompt(prompt_input: dict[str, Any]):
   persona_name = prompt_input["persona_name"]
   living_sector = prompt_input["living_sector"]
@@ -34,9 +33,9 @@ Area options: [Oak Hill College Student Dormatory, The Rose and Crown Pub, Hobbs
 * Must be one of the "Area options," verbatim.
 For eating dinner, Jane Anderson should go to the following area: Hobbs Cafe
 ---
-{persona_name} lives in [{living_sector}] that has [{living_sector_arenas}].
-{persona_name} is currently in [{current_sector}] that has [{current_sector_arenas}]. {daily_plan_requirement}
-Area options: [{available_sectors}].
+!<INPUT 0>! lives in {!<INPUT 1>!} that has !<INPUT 2>!.
+!<INPUT 3>! is currently in {!<INPUT 4>!} that has !<INPUT 5>!. !<INPUT 6>!
+Area options: {!<INPUT 7>!}.
 * Stay in the current area if the activity can be done there. Only go out if the activity needs to take place in another place.
 * Must be one of the "Area options," verbatim.
 {persona_name} is {broad_action}. For {specific_action}, {persona_name} should go to the following area:
@@ -44,7 +43,7 @@ Area options: [{available_sectors}].
   return prompt
 
 
-def run_gpt_prompt_action_sector(
+async def run_gpt_prompt_action_sector(
   action_description, persona, maze, test_input=None, verbose=False
 ):
   def create_prompt_input(action_description, persona, maze, test_input=None):
@@ -152,7 +151,7 @@ def run_gpt_prompt_action_sector(
   prompt_input = create_prompt_input(action_description, persona, maze)
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     ActionLoc,

@@ -23,7 +23,7 @@ class SafetyScore(BaseModel):
   safety_score: int
 
 
-def run_gpt_generate_safety_score(comment: str, test_input=None, verbose=False):
+async def run_gpt_generate_safety_score(comment: str, test_input=None, verbose=False):
   def create_prompt_input(comment: str, test_input=None):
     prompt_input = {"comment": comment}
     return prompt_input
@@ -49,7 +49,7 @@ def run_gpt_generate_safety_score(comment: str, test_input=None, verbose=False):
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     SafetyScore,
     repeat=3,

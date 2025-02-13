@@ -4,6 +4,7 @@ from typing import Any
 from ..common import ActionLoc, openai_config, get_prompt_file_path
 from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
+import asyncio
 
 
 def create_prompt(prompt_input: dict[str, Any]):
@@ -35,7 +36,7 @@ Answer:
   return prompt
 
 
-def run_gpt_prompt_action_arena(
+async def run_gpt_prompt_action_arena(
   action_description,
   persona,
   act_world,
@@ -107,7 +108,7 @@ def run_gpt_prompt_action_arena(
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     ActionLoc,

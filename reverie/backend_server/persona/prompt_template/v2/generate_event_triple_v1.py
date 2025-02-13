@@ -45,7 +45,7 @@ class EventTriple(BaseModel):
   object: str
 
 
-def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
+async def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   def create_prompt_input(action_description, persona):
     if "(" in action_description:
       action_description = action_description.split("(")[-1].split(")")[0]
@@ -117,7 +117,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   prompt_input = create_prompt_input(action_description, persona)
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, EventTriple, 5, fail_safe, __func_validate, __func_clean_up
   )
   output = (persona.name, output[0], output[1])
@@ -128,7 +128,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_act_obj_event_triple(
+async def run_gpt_prompt_act_obj_event_triple(
   act_game_object, act_obj_desc, persona, verbose=False
 ):
   def create_prompt_input(act_game_object, act_obj_desc):
@@ -170,7 +170,7 @@ def run_gpt_prompt_act_obj_event_triple(
   prompt_input = create_prompt_input(act_game_object, act_obj_desc)
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, EventTriple, 5, fail_safe, __func_validate, __func_clean_up
   )
   output = (act_game_object, output[0], output[1])

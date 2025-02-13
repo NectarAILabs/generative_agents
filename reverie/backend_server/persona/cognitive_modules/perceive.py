@@ -18,7 +18,7 @@ from persona.prompt_template.run_gpt_prompt import (
 )
 
 
-def generate_poig_score(persona, event_type, description):
+async def generate_poig_score(persona, event_type, description):
   if "is idle" in description:
     return 1
 
@@ -32,7 +32,7 @@ def generate_poig_score(persona, event_type, description):
       )
       return 0
   elif event_type == "chat":
-    response = run_gpt_prompt_chat_poignancy(
+    response = await run_gpt_prompt_chat_poignancy(
       persona, persona.scratch.act_description
     )
     if response:
@@ -44,7 +44,7 @@ def generate_poig_score(persona, event_type, description):
       return 0
 
 
-def perceive(persona, maze):
+async def perceive(persona, maze):
   """
   Perceives events around the persona and saves it to the memory, both events
   and spaces.
@@ -167,11 +167,11 @@ def perceive(persona, maze):
       if desc_embedding_in in persona.a_mem.embeddings:
         event_embedding = persona.a_mem.embeddings[desc_embedding_in]
       else:
-        event_embedding = get_embedding(desc_embedding_in)
+        event_embedding = await get_embedding(desc_embedding_in)
       event_embedding_pair = (desc_embedding_in, event_embedding)
 
       # Get event poignancy.
-      event_poignancy = generate_poig_score(persona, "event", desc_embedding_in)
+      event_poignancy = await generate_poig_score(persona, "event", desc_embedding_in)
 
       # If we observe the persona's self chat, we include that in the memory
       # of the persona here.
@@ -183,9 +183,9 @@ def perceive(persona, maze):
             persona.scratch.act_description
           ]
         else:
-          chat_embedding = get_embedding(persona.scratch.act_description)
+          chat_embedding = await get_embedding(persona.scratch.act_description)
         chat_embedding_pair = (persona.scratch.act_description, chat_embedding)
-        chat_poignancy = generate_poig_score(
+        chat_poignancy = await generate_poig_score(
           persona, "chat", persona.scratch.act_description
         )
         chat_node = persona.a_mem.add_chat(

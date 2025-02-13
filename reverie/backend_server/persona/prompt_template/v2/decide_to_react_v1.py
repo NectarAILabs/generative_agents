@@ -69,7 +69,7 @@ class DecideToReact(BaseModel):
   decision: DecideToReactEnum
 
 
-def run_gpt_prompt_decide_to_react(
+async def run_gpt_prompt_decide_to_react(
   persona,
   target_persona,
   retrieved,
@@ -184,7 +184,7 @@ def run_gpt_prompt_decide_to_react(
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt,
     gpt_param,
     DecideToReact,

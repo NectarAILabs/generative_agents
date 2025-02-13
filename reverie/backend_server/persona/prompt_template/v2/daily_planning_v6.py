@@ -28,7 +28,7 @@ class DailyPlan(BaseModel):
   daily_plan: list[str]
 
 
-def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verbose=False):
+async def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verbose=False):
   """
   Basically the long term planning that spans a day. Returns a list of actions
   that the persona will take today. Usually comes in the following form:
@@ -94,7 +94,7 @@ def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verbose=Fa
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, DailyPlan, 5, fail_safe, __func_validate, __func_clean_up
   )
 

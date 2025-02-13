@@ -26,7 +26,7 @@ class WakeUpHour(BaseModel):
   wake_up_hour: int
 
 
-def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
+async def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
   """
   Given the persona, returns an integer that indicates the hour when the
   persona wakes up.
@@ -80,7 +80,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_structured_response(
+  output = await safe_generate_structured_response(
     prompt, gpt_param, WakeUpHour, 5, fail_safe, __func_validate, __func_clean_up
   )
 

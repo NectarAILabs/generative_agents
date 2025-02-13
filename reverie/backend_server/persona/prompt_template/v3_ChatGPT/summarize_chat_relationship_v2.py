@@ -26,7 +26,7 @@ class RelationshipSummary(BaseModel):
   summary: str
 
 
-def run_gpt_prompt_agent_chat_summarize_relationship(
+async def run_gpt_prompt_agent_chat_summarize_relationship(
   persona, target_persona, statements, test_input=None, verbose=False
 ):
   def create_prompt_input(persona, target_persona, statements, test_input=None):
@@ -81,7 +81,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(
   prompt_input = create_prompt_input(persona, target_persona, statements)
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     RelationshipSummary,
     "",
