@@ -238,7 +238,7 @@ async def new_retrieve(persona, focal_points, n_count=30):
     # Calculating the component dictionaries and normalizing them.
     recency_out =  extract_recency(persona, nodes)
     recency_out = normalize_dict_floats(recency_out, 0, 1)
-    importance_out = extract_importance(persona, nodes)
+    importance_out = await extract_importance(persona, nodes)
     importance_out = normalize_dict_floats(importance_out, 0, 1)  
     relevance_out = await extract_relevance(persona, nodes, focal_pt)
     relevance_out = normalize_dict_floats(relevance_out, 0, 1)

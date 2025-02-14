@@ -78,7 +78,7 @@ async def run_gpt_prompt_insight_and_guidance(
   prompt_input = create_prompt_input(statements, num_insights)
   prompt = create_prompt(prompt_input)
 
-  fail_safe = get_fail_safe(n)
+  fail_safe = get_fail_safe()
   output = await safe_generate_structured_response(
     prompt, gpt_param, InsightGuidance, 5, fail_safe, __func_validate, __func_clean_up
   )

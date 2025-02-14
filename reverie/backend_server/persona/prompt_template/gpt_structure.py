@@ -4,7 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: gpt_structure.py
 Description: Wrapper functions for calling OpenAI APIs.
 """
-
+import os
 import json
 import time
 import traceback
@@ -80,7 +80,7 @@ def setup_client(type: str, config: dict):
   elif type == "openai":
     client = AsyncOpenAI(
       api_key=config["key"],
-      timeout=httpx.Timeout(150.0, read=150.0, write=100.0, connect=30.0)
+      timeout=httpx.Timeout(30.0, read=30.0, write=30.0, connect=3.0)
     )
   else:
     raise ValueError("Invalid client")
@@ -187,6 +187,7 @@ async def ChatGPT_structured_request(prompt, response_format):
   """
   # temp_sleep()
   #temp_sleep(3)
+  global client
   try: 
     completion = await client.beta.chat.completions.parse(
       model=openai_config["model"],
@@ -194,6 +195,7 @@ async def ChatGPT_structured_request(prompt, response_format):
       messages=[{"role": "user", "content": prompt}],
       timeout=30
     )
+    time.sleep(0.5)
     print("--- ChatGPT_structured_request() ---")
     print("Prompt:", prompt, flush=True)
     print("Response:", completion, flush=True)
@@ -222,6 +224,7 @@ async def ChatGPT_structured_request(prompt, response_format):
       except:
         f.write(f"Error: {e}\n")
       f.write("*********************\n")
+
     time.sleep(3)
     traceback.print_exc()
     return "LLM ERROR"
@@ -428,7 +431,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
   RETURNS:
     a str of GPT-3's response.
   """
-
+  global client
   try:
     if use_openai:
       messages = [{
@@ -449,7 +452,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       )
     else:
       response = await client.completions.create(model=model, prompt=prompt)
-
+    time.sleep(0.5)
     # Make sure the prompt continue the response in the log
     print("Prompt: ", prompt, flush=True)
     print("Response: ", response.choices[0].message, flush=True)
@@ -472,6 +475,8 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       except:
         f.write(f"Error:{e}\n")
       f.write("*********************\n")
+    print("Resetting client")
+    client = setup_client("openai", { "key": openai_config["model-key"] })
     time.sleep(3)
     return "REQUEST ERROR"
 
@@ -583,6 +588,7 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
   response = None
   if not text:
     text = "this is blank"
+  global client
   for _ in range(attemps):
     try:
       response = await client.embeddings.create(input=[text], model=model)
@@ -594,6 +600,8 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
         f.write(f"Text: {text}\n")
         f.write(f"Error: {e}\n")
         f.write("*********************\n")
+      print("Resetting client")
+      client = setup_client("openai", { "key": openai_config["model-key"] })
       time.sleep(2)
   if response != None:
     cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])

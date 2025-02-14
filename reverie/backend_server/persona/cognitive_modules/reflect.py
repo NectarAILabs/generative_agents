@@ -40,7 +40,7 @@ async def generate_focal_points(persona, n=3):
   for node in nodes[-1*persona.scratch.importance_ele_n:]: 
     statements += node.embedding_key + "\n"
 
-  return await run_gpt_prompt_focal_pt(persona, statements, n)[0]
+  return (await run_gpt_prompt_focal_pt(persona, statements, n))[0]
 
 
 async def generate_insights_and_evidence(persona, nodes, n=5): 
@@ -50,7 +50,7 @@ async def generate_insights_and_evidence(persona, nodes, n=5):
   for count, node in enumerate(nodes): 
     statements += f'{str(count)}. {node.embedding_key}\n'
 
-  ret = await run_gpt_prompt_insight_and_guidance(persona, statements, n)[0]
+  ret = (await run_gpt_prompt_insight_and_guidance(persona, statements, n))[0]
 
   print(ret)
   try:
@@ -77,7 +77,7 @@ async def generate_action_event_triple(act_desp, persona):
     "🧈🍞"
   """
   if debug: print ("GNS FUNCTION: <generate_action_event_triple>")
-  return await run_gpt_prompt_event_triple(act_desp, persona)[0]
+  return (await run_gpt_prompt_event_triple(act_desp, persona))[0]
 
 
 async def generate_poig_score(persona, event_type, description): 
@@ -108,12 +108,12 @@ async def generate_poig_score(persona, event_type, description):
 
 async def generate_planning_thought_on_convo(persona, all_utt):
   if debug: print ("GNS FUNCTION: <generate_planning_thought_on_convo>")
-  return await run_gpt_prompt_planning_thought_on_convo(persona, all_utt)[0]
+  return (await run_gpt_prompt_planning_thought_on_convo(persona, all_utt))[0]
 
 
 async def generate_memo_on_convo(persona, all_utt):
   if debug: print ("GNS FUNCTION: <generate_memo_on_convo>")
-  return await run_gpt_prompt_memo_on_convo(persona, all_utt)[0]
+  return (await run_gpt_prompt_memo_on_convo(persona, all_utt))[0]
 
 
 
