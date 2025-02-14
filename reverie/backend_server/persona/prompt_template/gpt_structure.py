@@ -17,6 +17,7 @@ from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 from pathlib import Path
 config_path = Path("../../openai_config.json")
+
 with open(config_path, "r") as f:
   openai_config = json.load(f) 
 if not use_openai:
@@ -409,7 +410,7 @@ async def GPT_request(prompt, gpt_parameter):
                   stop=gpt_parameter["stop"],
               )
     else:
-      response = await client.completions.create(model=model, prompt=prompt)
+      response = await client.completions.create(model=gpt_parameter["engine"], prompt=prompt)
 
     print("Response: ", response, flush=True)
     content = response.choices[0].message.content
