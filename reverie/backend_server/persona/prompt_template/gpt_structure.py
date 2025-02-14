@@ -12,7 +12,7 @@ import asyncio
 
 import httpx
 from openai import AzureOpenAI, OpenAI, AsyncOpenAI
-from utils import use_openai
+from utils import use_openai,api_model
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 from pathlib import Path
@@ -20,7 +20,10 @@ config_path = Path("../../openai_config.json")
 
 with open(config_path, "r") as f:
   openai_config = json.load(f) 
-
+if not use_openai:
+  # TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url=api_base)'
+  # openai.api_base = api_base
+  model = api_model
 
 # from langchain.llms import Ollama
 # from langchain.llms import OpenAI
@@ -440,8 +443,8 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       response = await client.completions.create(model=gpt_parameter["engine"], prompt=prompt)
 
     # Make sure the prompt continue the response in the log
-    print(prompt)
-    print("Response: ", response, flush=True)
+    print("Prompt: ", prompt, flush=True)
+    print("Response: ", response.choices[0].message, flush=True)
     message = response.choices[0].message
 
     if message.parsed:
