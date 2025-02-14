@@ -470,6 +470,8 @@ class ReverieServer:
             return results
 
 
+          with open("queue_log.txt", "w") as f:
+            f.write(f"{self.step=}\n")
           results = asyncio.run(run_all_move())
           print(results)
           
