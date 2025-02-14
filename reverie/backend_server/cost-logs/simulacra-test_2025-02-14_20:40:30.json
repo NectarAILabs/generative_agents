@@ -1,0 +1,298 @@
+{
+    "experiment_name": "simulacra-test",
+    "creation_datetime": "2025-02-14 20:40:30",
+    "total_cost": 0.0007220799999999999,
+    "total_responses": 29,
+    "breakdown": [
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:40:59"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 1.0000000000000001e-07,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 5,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:40:59"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 8e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 4,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:40:59"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:00"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 1.0000000000000001e-07,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 5,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:01"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:01"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:03"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:03"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 8e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 4,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:04"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 8e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 4,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:04"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 1.0000000000000001e-07,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 5,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:05"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:05"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 8e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 4,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:06"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 8e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 4,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:06"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 8e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 4,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:06"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:08"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 6e-08,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 3,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:08"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 3.58e-06,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 179,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:21"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 3.58e-06,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 179,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:22"
+        },
+        {
+            "model": "text-embedding-3-small",
+            "cost": 4.66e-06,
+            "input_cost_per_million": 0.02,
+            "output_cost_per_million": 0.0,
+            "input_tokens": 233,
+            "output_tokens": 0,
+            "content": "content-not-supported-for-this-model",
+            "datetime": "2025-02-14 20:41:25"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 6.9e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 111,
+            "output_tokens": 9,
+            "content": "{\"emoji\":\"\ud83d\ude34\ud83d\udca4\"}",
+            "datetime": "2025-02-14 20:41:27"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 9.25e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 149,
+            "output_tokens": 12,
+            "content": "{\"description\":\"occupied and slightly disheveled\"}",
+            "datetime": "2025-02-14 20:41:29"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 7.05e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 111,
+            "output_tokens": 10,
+            "content": "{\"emoji\":\"\ud83d\ude34\ud83d\udecc\"}",
+            "datetime": "2025-02-14 20:41:30"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 7.35e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 117,
+            "output_tokens": 10,
+            "content": "{\"emoji\":\"\ud83d\ude05\ud83e\udde5\"}",
+            "datetime": "2025-02-14 20:41:30"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 6.9e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 111,
+            "output_tokens": 9,
+            "content": "{\"emoji\":\"\ud83d\udca4\ud83d\ude34\"}",
+            "datetime": "2025-02-14 20:41:31"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 8.8e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 149,
+            "output_tokens": 9,
+            "content": "{\"description\":\"occupied by Klaus Mueller\"}",
+            "datetime": "2025-02-14 20:41:31"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 7.35e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 114,
+            "output_tokens": 11,
+            "content": "{\"emoji\":\"\ud83d\udc64\ud83d\udee0\ufe0f\"}",
+            "datetime": "2025-02-14 20:41:32"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 9.549999999999999e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 149,
+            "output_tokens": 14,
+            "content": "{\"description\":\"occupied and unmade with pillows and blanket used\"}",
+            "datetime": "2025-02-14 20:41:32"
+        },
+        {
+            "model": "gpt-4o-mini-2024-07-18",
+            "cost": 7.75e-05,
+            "input_cost_per_million": 0.5,
+            "output_cost_per_million": 1.5,
+            "input_tokens": 119,
+            "output_tokens": 12,
+            "content": "{\"emoji\":\"\ud83d\udecf\ufe0f\ud83d\udecc\"}",
+            "datetime": "2025-02-14 20:41:33"
+        }
+    ]
+}

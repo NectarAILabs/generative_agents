@@ -17,7 +17,6 @@ from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 from pathlib import Path
 config_path = Path("../../openai_config.json")
-
 with open(config_path, "r") as f:
   openai_config = json.load(f) 
 if not use_openai:
@@ -119,6 +118,7 @@ def temp_sleep(seconds=0.1):
 
 
 async def ChatGPT_single_request(prompt):
+  temp_sleep(0.2)
   temp_sleep(0.2)
 
   print("--- ChatGPT_single_request() ---")
@@ -410,7 +410,7 @@ async def GPT_request(prompt, gpt_parameter):
                   stop=gpt_parameter["stop"],
               )
     else:
-      response = await client.completions.create(model=gpt_parameter["engine"], prompt=prompt)
+      response = await client.completions.create(model=model, prompt=prompt)
 
     print("Response: ", response, flush=True)
     content = response.choices[0].message.content
@@ -587,7 +587,8 @@ async def safe_generate_structured_response(
   return fail_safe_response
 
 
-async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
+async def get_embedding(text, model=openai_config["embeddings"],attemps=1):
+  temp_sleep(0.5)
   text = text.replace("\n", " ")
   response = None
   if not text:
