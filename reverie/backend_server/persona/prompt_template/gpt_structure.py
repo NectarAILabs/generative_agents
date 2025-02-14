@@ -578,14 +578,15 @@ async def safe_generate_structured_response(
   return fail_safe_response
 
 
-async def get_embedding(text, model=openai_config["embeddings"],attemps=1):
-  temp_sleep(0.5)
+async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
+  temp_sleep(1)
   text = text.replace("\n", " ")
   if not text:
     text = "this is blank"
   for _ in range(attemps):
     try:
-      response = await embeddings_client.embeddings.create(input=[text], model=model)
+      response = await client.embeddings.create(input=[text], model=model)
+      break
     except Exception as e:
       error_folder = find_latest_folder("error_logging")
       with open(f"{error_folder}/embeddings_error.txt", "a") as f:
