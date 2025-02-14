@@ -329,11 +329,10 @@ async def ChatGPT_safe_generate_structured_response(
         prompt += str(example_output)
 
     if verbose:
-      pass
-      #print("--- ChatGPT_safe_generate_structured_response() ---")
-      #print("LLM PROMPT")
-      #print(prompt, flush=True)
-
+      print("--- ChatGPT_safe_generate_structured_response() ---")
+      print("LLM PROMPT")
+      print(prompt, flush=True)
+      
     for i in range(repeat):
       try:
         curr_gpt_response = await ChatGPT_structured_request(prompt, response_format)
