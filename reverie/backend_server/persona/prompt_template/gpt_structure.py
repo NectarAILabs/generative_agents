@@ -587,8 +587,8 @@ async def safe_generate_structured_response(
   return fail_safe_response
 
 
-async def get_embedding(text, model=openai_config["embeddings"],attemps=1):
-  temp_sleep(0.5)
+async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
+  temp_sleep(1)
   text = text.replace("\n", " ")
   response = None
   if not text:
