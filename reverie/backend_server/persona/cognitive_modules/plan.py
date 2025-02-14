@@ -256,7 +256,7 @@ async def generate_action_arena(act_desp, persona, maze, act_world, act_sector):
   """
   if debug:
     print("GNS FUNCTION: <generate_action_arena>")
-  result =  await run_gpt_prompt_action_arena(act_desp, persona, maze, act_world, act_sector)
+  result =  await run_gpt_prompt_action_arena(act_desp, persona,act_world, act_sector)
   return result[
     0
   ]
@@ -285,7 +285,7 @@ async def generate_action_game_object(act_desp, act_address, persona, maze):
     print("ERROR: act_address not valid. Returning '<random>' as game object.")
     print("act_address:", act_address)
     return "<random>"
-  result = await run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)
+  result = await run_gpt_prompt_action_game_object(act_desp, persona, act_address)
   return result[0]
 
 
@@ -722,8 +722,8 @@ async def _determine_action(persona, maze):
   act_pron = await generate_action_pronunciatio(act_desp, persona)
   act_event = await generate_action_event_triple(act_desp, persona)
   # Persona's actions also influence the object states. We set those up here.
-  act_obj_desp_response = await generate_act_obj_desc(act_game_object, act_desp, persona)
-  act_obj_desp = act_obj_desp_response[0] if act_obj_desp_response else None
+  act_obj_desp = await generate_act_obj_desc(act_game_object, act_desp, persona)
+  #act_obj_desp = act_obj_desp_response[0] if act_obj_desp_response else None
 
   act_obj_pron = await generate_action_pronunciatio(act_obj_desp, persona)
   act_obj_event = await generate_act_obj_event_triple(act_game_object,

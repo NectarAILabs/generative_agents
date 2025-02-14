@@ -77,6 +77,7 @@ class MemoryTree:
     curr_world, curr_sector = sector.split(":")
     if not curr_sector: 
       return ""
+    print(sector)
     x = ", ".join(list(self.tree[curr_world][curr_sector].keys()))
     return x
 

@@ -13,7 +13,22 @@ from typing import TextIO
 
 from os import listdir
 
-
+def find_latest_folder(directory):
+    """Find the latest folder inside the given directory."""
+    # List all entries in the directory
+    entries = os.listdir(directory)
+    
+    # Filter out only directories
+    folders = [os.path.join(directory, entry) for entry in entries if os.path.isdir(os.path.join(directory, entry))]
+    
+    # Check if there are no folders
+    if not folders:
+        return None
+    
+    # Find the latest folder based on the modification time
+    latest_folder = max(folders, key=os.path.getmtime)
+    
+    return latest_folder
 def create_folder_if_not_there(curr_path):
   """
   Checks if a folder in the curr_path exists. If it does not exist, creates

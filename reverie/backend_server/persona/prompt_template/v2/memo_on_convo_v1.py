@@ -23,7 +23,7 @@ Start the sentence with {persona_1_name}'s name.
   return template
 
 
-def run_gpt_prompt_memo_on_convo_v1(
+async def run_gpt_prompt_memo_on_convo_v1(
   persona, all_utterances, test_input=None, verbose=False
 ):
   def create_prompt_input(persona, all_utterances, test_input=None):

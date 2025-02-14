@@ -143,7 +143,7 @@ class Persona:
     return await plan(self, maze, personas, new_day, retrieved)
 
 
-  def execute(self, maze, personas, plan):
+  async def execute(self, maze, personas, plan):
     """
     This function takes the agent's current plan and outputs a concrete 
     execution (what object to use, and what tile to travel to). 
@@ -162,7 +162,7 @@ class Persona:
         writing her next novel (editing her novel) 
         @ double studio:double studio:common room:sofa
     """
-    return execute(self, maze, personas, plan)
+    return await execute(self, maze, personas, plan)
 
 
   async def reflect(self):
@@ -223,7 +223,7 @@ class Persona:
     # <description> is a string description of the movement. e.g., 
     #   writing her next novel (editing her novel) 
     #   @ double studio:double studio:common room:sofa
-    return self.execute(maze, personas, plan)
+    return await self.execute(maze, personas, plan)
 
 
   def open_convo_session(self, convo_mode, safe_mode=True, direct=False, question=None): 

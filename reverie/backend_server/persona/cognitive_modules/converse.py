@@ -158,7 +158,7 @@ async def generate_one_utterance(maze, init_persona, target_persona, retrieved, 
   )
 
   convo_response = await run_gpt_generate_iterative_chat_utt(
-    maze, init_persona, target_persona, retrieved, curr_context, curr_chat
+    maze, init_persona, target_persona, retrieved, curr_context, curr_chat)
   convo_response = convo_response[0]
 
   try:
