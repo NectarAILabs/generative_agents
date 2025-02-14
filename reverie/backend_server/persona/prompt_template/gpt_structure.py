@@ -17,7 +17,6 @@ from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 from pathlib import Path
 config_path = Path("../../openai_config.json")
-
 with open(config_path, "r") as f:
   openai_config = json.load(f) 
 if not use_openai:
@@ -119,7 +118,7 @@ def temp_sleep(seconds=0.1):
 
 
 async def ChatGPT_single_request(prompt):
-  await temp_sleep()
+  temp_sleep(0.2)
 
   print("--- ChatGPT_single_request() ---")
   print("Prompt:", prompt, flush=True)
@@ -187,7 +186,7 @@ async def ChatGPT_structured_request(prompt, response_format):
     a str of GPT-3's response. 
   """
   # temp_sleep()
-
+  #temp_sleep(3)
   try: 
     completion = await client.beta.chat.completions.parse(
       model=openai_config["model"],
@@ -214,6 +213,13 @@ async def ChatGPT_structured_request(prompt, response_format):
 
   except Exception as e: 
     print(f"Error: {e}", flush=True)
+    with open("chatgpt_error.txt", "a") as f:
+      f.write(f"Prompt: {prompt}\n")
+      try:
+        f.write(f"Resonse: {completion.choices[0].message}\n")
+      except:
+        f.write(f"Error: {e}\n")
+    time.sleep(3)
     traceback.print_exc()
     return "LLM ERROR"
 
@@ -394,7 +400,7 @@ async def GPT_request(prompt, gpt_parameter):
                   stop=gpt_parameter["stop"],
               )
     else:
-      response = await client.completions.create(model=gpt_parameter["engine"], prompt=prompt)
+      response = await client.completions.create(model=model, prompt=prompt)
 
     print("Response: ", response, flush=True)
     content = response.choices[0].message.content
@@ -419,7 +425,6 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
   RETURNS:
     a str of GPT-3's response.
   """
-  temp_sleep()
 
   try:
     if use_openai:
@@ -440,7 +445,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         timeout = 30,
       )
     else:
-      response = await client.completions.create(model=gpt_parameter["engine"], prompt=prompt)
+      response = await client.completions.create(model=model, prompt=prompt)
 
     # Make sure the prompt continue the response in the log
     print("Prompt: ", prompt, flush=True)
@@ -455,6 +460,13 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
   except Exception as e:
     print("Error:", e, flush=True)
     traceback.print_exc()
+    with open("gpt_error.txt", "a") as f:
+      f.write(f"Prompt: {prompt}\n")
+      try:
+        f.write(f"Resonse: {response.choices[0].message}\n")
+      except:
+        f.write(f"Error:{e}\n")
+    time.sleep(3)
     return "REQUEST ERROR"
 
 
@@ -560,7 +572,8 @@ async def safe_generate_structured_response(
   return fail_safe_response
 
 
-async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
+async def get_embedding(text, model=openai_config["embeddings"],attemps=1):
+  temp_sleep(0.5)
   text = text.replace("\n", " ")
   if not text:
     text = "this is blank"
@@ -568,7 +581,11 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
     try:
       response = await embeddings_client.embeddings.create(input=[text], model=model)
     except:
-      return [0] * 1536 #quickly fix because testing with adan 3 small
+      with open("embeddings_error.txt", "a") as f:
+        f.write("*********************\n")
+        f.write(f"Text: {text}\n")
+        f.write("*********************\n")
+      return [0] * 1536 #quickly fix because testing with adam 3 small
   cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
   return response.data[0].embedding
 
