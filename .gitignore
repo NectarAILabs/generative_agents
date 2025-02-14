@@ -131,17 +131,3 @@ ENV/
 .ropeproject
 
 .history/
-
-# IDE and Editor files
-.vscode/
-.idea/
-.cursor/
-
-# Log files
-reverie/backend_server/queue_log.txt
-reverie/backend_server/chatgpt_error.txt
-reverie/backend_server/gpt_error.txt
-reverie/backend_server/embeddings_error.txt
-reverie/backend_server/error_logging/
-logs/*
-!logs/skip-morning_2024-05-15_13-54-44.txt

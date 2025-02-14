@@ -407,31 +407,33 @@ class ReverieServer:
           async def run_all_move():
             task_queue = asyncio.Queue() #Process the task to add to the queue
             results = {} #Dictionary to track the results of each agents
+            semaphore = asyncio.Semaphore(10)
             async def process_task(persona_name, task_type, input_data=None):
               #log_info(f"Starting task: {task_type} for persona: {persona_name}")
-              persona = self.personas[persona_name]
-              if task_type == "perceive":
-                result = await persona.perceive(self.maze)
-                results[persona_name]['perceived'] = result
-                await task_queue.put((persona_name, "retrieve", result))
-              elif task_type == "retrieve":
-                result = await persona.retrieve(input_data)
-                results[persona_name]['retrieved'] = result
-                await task_queue.put((persona_name, "plan", result))
-              elif task_type == "plan":
-                result = await persona.plan(self.maze, self.personas, results[persona_name]["new_day"], input_data)
-                results[persona_name]["plan"] = result
-                ## Check the plan to have handling conflict with other agents
+              async with semaphore:
+                persona = self.personas[persona_name]
+                if task_type == "perceive":
+                  result = await persona.perceive(self.maze)
+                  results[persona_name]['perceived'] = result
+                  await task_queue.put((persona_name, "retrieve", result))
+                elif task_type == "retrieve":
+                  result = await persona.retrieve(input_data)
+                  results[persona_name]['retrieved'] = result
+                  await task_queue.put((persona_name, "plan", result))
+                elif task_type == "plan":
+                  result = await persona.plan(self.maze, self.personas, results[persona_name]["new_day"], input_data)
+                  results[persona_name]["plan"] = result
+                  ## Check the plan to have handling conflict with other agents
 
 
 
-                await task_queue.put((persona_name, "reflect", None))
-              elif task_type == "reflect":
-                await persona.reflect()
-                await task_queue.put((persona_name, "execute", results[persona_name]["plan"]))
-              elif task_type == "execute":
-                result = await persona.execute(self.maze, self.personas, input_data)
-                results[persona_name]["execution"] = result
+                  await task_queue.put((persona_name, "reflect", None))
+                elif task_type == "reflect":
+                  await persona.reflect()
+                  await task_queue.put((persona_name, "execute", results[persona_name]["plan"]))
+                elif task_type == "execute":
+                  result = await persona.execute(self.maze, self.personas, input_data)
+                  results[persona_name]["execution"] = result
               #log_info(f"Completed task: {task_type} for persona: {persona_name}")
             # Main pipeline
             for persona_name, persona in self.personas.items():
@@ -459,6 +461,7 @@ class ReverieServer:
             ## Main pipeline. Will work with handling conflict with other agents here
             while True:
               tasks = []
+              log_info(f"Task queue: {task_queue}")
               if all("execution" in results[persona_name].keys() for persona_name in self.personas.keys()):
                 break
               while not task_queue.empty():
