@@ -19,7 +19,7 @@ Given only the information above, what are the {num_questions} most salient high
   return prompt
 
 
-def run_gpt_prompt_focal_pt_v1(persona, statements, n, test_input=None, verbose=False):
+async def run_gpt_prompt_focal_pt_v1(persona, statements, n, test_input=None, verbose=False):
   def create_prompt_input(statements, n, test_input=None):
     prompt_input = {
       "statements": statements,

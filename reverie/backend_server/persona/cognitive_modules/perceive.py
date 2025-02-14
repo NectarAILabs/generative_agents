@@ -23,7 +23,7 @@ async def generate_poig_score(persona, event_type, description):
     return 1
 
   if event_type == "event":
-    response = run_gpt_prompt_event_poignancy(persona, description)
+    response = await run_gpt_prompt_event_poignancy(persona, description)
     if response:
       return response[0]
     else:

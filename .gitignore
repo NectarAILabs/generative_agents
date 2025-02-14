@@ -8,10 +8,14 @@ environment/frontend_server/temp_storage*/*
 environment/frontend_server/frontend_server/settings/local.py
 environment/frontend_server/static_dirs/*
 reverie/backend_server/cost-logs/*
+reverie/backend_server/error_logging/
 # Logs folder
 logs/*
 !logs/skip-morning_2024-05-15_13-54-44.txt
-
+reverie/backend_server/queue_log.txt
+reverie/backend_server/chatgpt_error.txt
+reverie/backend_server/gpt_error.txt
+reverie/backend_server/embeddings_error.txt
 ### Add simulations to keep here ###
 !environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/
 !environment/frontend_server/storage/base_the_ville_n25/*
