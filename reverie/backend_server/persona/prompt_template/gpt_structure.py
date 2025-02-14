@@ -9,20 +9,18 @@ import json
 import time
 import traceback
 import asyncio
+
+import httpx
 from openai import AzureOpenAI, OpenAI, AsyncOpenAI
+from utils import use_openai
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
-
+from pathlib import Path
 config_path = Path("../../openai_config.json")
+
 with open(config_path, "r") as f:
   openai_config = json.load(f) 
 
-client = OpenAI(api_key=openai_api_key)
-
-if not use_openai:
-  # TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url=api_base)'
-  # openai.api_base = api_base
-  model = api_model
 
 # from langchain.llms import Ollama
 # from langchain.llms import OpenAI
@@ -80,6 +78,7 @@ def setup_client(type: str, config: dict):
   elif type == "openai":
     client = AsyncOpenAI(
       api_key=config["key"],
+      timeout=httpx.Timeout(15.0, read=5.0, write=10.0, connect=3.0)
     )
   else:
     raise ValueError("Invalid client")
@@ -185,16 +184,16 @@ async def ChatGPT_structured_request(prompt, response_format):
     a str of GPT-3's response. 
   """
   # temp_sleep()
-  print("--- ChatGPT_structured_request() ---")
-  print("Prompt:", prompt, flush=True)
 
   try: 
     completion = await client.beta.chat.completions.parse(
       model=openai_config["model"],
       response_format=response_format,
-      messages=[{"role": "user", "content": prompt}]
+      messages=[{"role": "user", "content": prompt}],
+      timeout=30
     )
-
+    print("--- ChatGPT_structured_request() ---")
+    print("Prompt:", prompt, flush=True)
     print("Response:", completion, flush=True)
     message = completion.choices[0].message
 
@@ -330,15 +329,15 @@ async def ChatGPT_safe_generate_structured_response(
         prompt += str(example_output)
 
     if verbose:
-      print("--- ChatGPT_safe_generate_structured_response() ---")
-      print("LLM PROMPT")
-      print(prompt, flush=True)
+      pass
+      #print("--- ChatGPT_safe_generate_structured_response() ---")
+      #print("LLM PROMPT")
+      #print(prompt, flush=True)
 
     for i in range(repeat):
-      print("Attempt", i + 1, flush=True)
-
       try:
         curr_gpt_response = await ChatGPT_structured_request(prompt, response_format)
+        print("Attempt", i + 1, flush=True)
         if not curr_gpt_response:
           raise ValueError("Error: No valid response from LLM.")
 
@@ -393,7 +392,7 @@ async def GPT_request(prompt, gpt_parameter):
                   stop=gpt_parameter["stop"],
               )
     else:
-      response = await client.completions.create(model=model, prompt=prompt)
+      response = await client.completions.create(model=gpt_parameter["engine"], prompt=prompt)
 
     print("Response: ", response, flush=True)
     content = response.choices[0].message.content
@@ -436,10 +435,13 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         presence_penalty=gpt_parameter["presence_penalty"],
         # stream=gpt_parameter["stream"],
         stop=gpt_parameter["stop"],
+        timeout = 30,
       )
     else:
-      response = await client.completions.create(model=model, prompt=prompt)
+      response = await client.completions.create(model=gpt_parameter["engine"], prompt=prompt)
 
+    # Make sure the prompt continue the response in the log
+    print(prompt)
     print("Response: ", response, flush=True)
     message = response.choices[0].message
 
@@ -537,6 +539,7 @@ async def safe_generate_structured_response(
   if func_validate and func_clean_up:
     for i in range(repeat):
       print("Attempt", i + 1, flush=True)
+
       curr_gpt_response = await GPT_structured_request(prompt, gpt_parameter, response_format)
 
       try:
@@ -555,11 +558,15 @@ async def safe_generate_structured_response(
   return fail_safe_response
 
 
-async def get_embedding(text, model=openai_config["embeddings"]):
+async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
   text = text.replace("\n", " ")
   if not text:
     text = "this is blank"
-  response = await embeddings_client.embeddings.create(input=[text], model=model)
+  for _ in range(attemps):
+    try:
+      response = await embeddings_client.embeddings.create(input=[text], model=model)
+    except:
+      return [0] * 1536 #quickly fix because testing with adan 3 small
   cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
   return response.data[0].embedding
 
@@ -596,6 +603,5 @@ if __name__ == '__main__':
                                  "rest",
                                  __func_validate,
                                  __func_clean_up,
-                                 True)
-
+                                 True))
   print(output)

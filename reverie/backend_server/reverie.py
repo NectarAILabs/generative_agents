@@ -26,6 +26,7 @@ import math
 import os
 import shutil
 import traceback
+import logging
 
 from global_methods import read_file_to_list, check_if_file_exists, copyanything, freeze
 from utils import maze_assets_loc, fs_storage, fs_temp_storage
@@ -33,6 +34,7 @@ from maze import Maze
 from persona.persona import Persona
 from persona.cognitive_modules.converse import load_history_via_whisper
 from persona.prompt_template.run_gpt_prompt import run_plugin
+from logging_util import setup_logging, log_info
 
 current_file = os.path.abspath(__file__)
 
@@ -170,6 +172,7 @@ class ReverieServer:
     with open(f"{fs_temp_storage}/curr_step.json", "w") as outfile: 
       outfile.write(json.dumps(curr_step, indent=2))
 
+    setup_logging('queue_log.txt', logging.INFO)
 
   def save(self): 
     """
@@ -321,8 +324,8 @@ class ReverieServer:
     game_obj_cleanup = dict()
 
     # The main while loop of Reverie. 
-    while (True): 
-      
+    while (True):
+      print(f"Run {int_counter} steps")
       # Done with this iteration if <int_counter> reaches 0. 
       if int_counter == 0: 
         break
@@ -335,7 +338,8 @@ class ReverieServer:
       if check_if_file_exists(curr_env_file):
         # If we have an environment file, it means we have a new perception
         # input to our personas. So we first retrieve it.
-        try: 
+      #if True:
+        try:
           # Try and save block for robustness of the while loop.
           with open(curr_env_file) as json_file:
             new_env = json.load(json_file)
@@ -398,27 +402,78 @@ class ReverieServer:
           movements = {"persona": dict(), "meta": dict()}
           # This will only be used in headless mode
           next_env = {}
-          tasks = []
+          # handling of all functions through a queue
           async def run_all_move():
+            task_queue = asyncio.Queue() #Process the task to add to the queue
+            results = {} #Dictionary to track the results of each agents
+            async def process_task(persona_name, task_type, input_data=None):
+              #log_info(f"Starting task: {task_type} for persona: {persona_name}")
+              persona = self.personas[persona_name]
+              if task_type == "perceive":
+                result = await persona.perceive(self.maze)
+                results[persona_name]['perceived'] = result
+                await task_queue.put((persona_name, "retrieve", result))
+              elif task_type == "retrieve":
+                result = await persona.retrieve(input_data)
+                results[persona_name]['retrieved'] = result
+                await task_queue.put((persona_name, "plan", result))
+              elif task_type == "plan":
+                result = await persona.plan(self.maze, self.personas, results[persona_name]["new_day"], input_data)
+                results[persona_name]["plan"] = result
+                ## Check the plan to have handling conflict with other agents
+
+
+
+                await task_queue.put((persona_name, "reflect", None))
+              elif task_type == "reflect":
+                await persona.reflect()
+                await task_queue.put((persona_name, "execute", results[persona_name]["plan"]))
+              elif task_type == "execute":
+                result = await persona.execute(self.maze, self.personas, input_data)
+                results[persona_name]["execution"] = result
+              #log_info(f"Completed task: {task_type} for persona: {persona_name}")
+            # Main pipeline
             for persona_name, persona in self.personas.items():
               # <next_tile> is a x,y coordinate. e.g., (58, 9)
               # <pronunciatio> is an emoji. e.g., "\ud83d\udca4"
               # <description> is a string description of the movement. e.g.,
               #   writing her next novel (editing her novel)
               #   @ double studio:double studio:common room:sofa
-              task = persona.move(
-                self.maze,
-                self.personas,
-                self.personas_tile[persona_name],
-                self.curr_time,
-              )
-              tasks.append(task)
-            results = await asyncio.gather(*(task for task in tasks))
+
+              ## Set the new_day variable to check if the persona is on a new day or not
+              ## Update the current tile of the persona (based on the move function in persona.py)
+              persona.scratch.curr_tile = self.personas_tile[persona_name]
+              new_day = False
+              if not persona.scratch.curr_time: 
+                new_day = "First day"
+              elif (persona.scratch.curr_time.strftime('%A %B %d')
+                    != self.curr_time.strftime('%A %B %d')):
+                new_day = "New day"
+              results[persona_name] = {}
+              results[persona_name]["new_day"] = new_day
+              persona.scratch.curr_time = self.curr_time 
+            for persona_name in self.personas.keys():
+              task_queue.put_nowait((persona_name, "perceive",None))
+              
+            ## Main pipeline. Will work with handling conflict with other agents here
+            while True:
+              tasks = []
+              if all("execution" in results[persona_name].keys() for persona_name in self.personas.keys()):
+                break
+              while not task_queue.empty():
+                persona_name, task_type, input_data = await task_queue.get()
+                task = process_task(persona_name, task_type, input_data)
+                tasks.append(task)
+                log_info(f"Task {task_type} for persona: {persona_name} added to queue")
+              await asyncio.gather(*tasks)
             return results
 
 
           results = asyncio.run(run_all_move())
-          for (persona_name, _), (next_tile, pronunciatio, description) in zip(self.personas.items(), results):
+          print(results)
+          
+          for (persona_name, _) in self.personas.items():
+            next_tile, pronunciatio, description = results[persona_name]['execution']
             movements["persona"][persona_name] = {
               "movement": next_tile,
               "pronunciatio": pronunciatio,
@@ -494,6 +549,7 @@ class ReverieServer:
           # If we're running in headless mode, also create the environment file
           # to immediately trigger the next simulation step
           if headless:
+            print(f"Next env: {next_env}")
             with open(
               f"{sim_folder}/environment/{self.step + 1}.json", "w"
             ) as outfile:
@@ -563,9 +619,10 @@ class ReverieServer:
           # Example: save
           self.save()
 
-        elif sim_command[:3].lower() == "run":
+        elif sim_command[:3].lower().strip() == "run":
           # Runs the number of steps specified in the prompt.
           # Example: run 1000
+          print("RUNNING")
           if headless is None:
             headless = False
             print("Setting headless to False.")
@@ -724,7 +781,8 @@ class ReverieServer:
               clean_whispers += [[agent_name, whisper]]
 
           load_history_via_whisper(self.personas, clean_whispers, self.curr_time)
-
+        else:
+          print("DON'T MATCH")
         print(ret_str)
 
       except Exception as e:

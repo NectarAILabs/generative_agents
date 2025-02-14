@@ -33,9 +33,9 @@ Area options: [Oak Hill College Student Dormatory, The Rose and Crown Pub, Hobbs
 * Must be one of the "Area options," verbatim.
 For eating dinner, Jane Anderson should go to the following area: Hobbs Cafe
 ---
-!<INPUT 0>! lives in {!<INPUT 1>!} that has !<INPUT 2>!.
-!<INPUT 3>! is currently in {!<INPUT 4>!} that has !<INPUT 5>!. !<INPUT 6>!
-Area options: {!<INPUT 7>!}.
+{persona_name} lives in [{living_sector}] that has [{living_sector_arenas}].
+{persona_name} is currently in [{current_sector}] that has [{current_sector_arenas}]. {daily_plan_requirement}
+Area options: [{available_sectors}].
 * Stay in the current area if the activity can be done there. Only go out if the activity needs to take place in another place.
 * Must be one of the "Area options," verbatim.
 {persona_name} is {broad_action}. For {specific_action}, {persona_name} should go to the following area:
