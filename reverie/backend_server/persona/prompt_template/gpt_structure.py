@@ -227,6 +227,7 @@ async def ChatGPT_structured_request(prompt, response_format):
 
     print("Resetting client")
     client = setup_client("openai", { "key": openai_config["model-key"] })
+
     time.sleep(3)
     traceback.print_exc()
     return "LLM ERROR"
