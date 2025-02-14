@@ -581,6 +581,7 @@ async def safe_generate_structured_response(
 async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
   temp_sleep(1)
   text = text.replace("\n", " ")
+  response == None
   if not text:
     text = "this is blank"
   for _ in range(attemps):
@@ -594,9 +595,11 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
         f.write(f"Text: {text}\n")
         f.write(f"Error: {e}\n")
         f.write("*********************\n")
-      return [0] * 1536 #quickly fix because testing with adam 3 small
-  cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
-  return response.data[0].embedding
+  if response != None:
+    cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
+    return response.data[0].embedding
+  else:
+    return [0] * 1536 #quickly fix because testing  with adam 3 small
 
 # def get_embedding(documents):
 #   api_url = "http://<instance-ip>:8000/embed"
