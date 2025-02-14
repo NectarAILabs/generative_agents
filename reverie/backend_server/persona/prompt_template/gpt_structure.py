@@ -9,7 +9,7 @@ import json
 import time
 import traceback
 import asyncio
-
+from global_methods import find_latest_folder
 import httpx
 from openai import AzureOpenAI, OpenAI, AsyncOpenAI
 from utils import use_openai,api_model
@@ -80,7 +80,7 @@ def setup_client(type: str, config: dict):
   elif type == "openai":
     client = AsyncOpenAI(
       api_key=config["key"],
-      timeout=httpx.Timeout(15.0, read=5.0, write=10.0, connect=3.0)
+      timeout=httpx.Timeout(150.0, read=150.0, write=100.0, connect=30.0)
     )
   else:
     raise ValueError("Invalid client")
@@ -213,12 +213,15 @@ async def ChatGPT_structured_request(prompt, response_format):
 
   except Exception as e: 
     print(f"Error: {e}", flush=True)
-    with open("chatgpt_error.txt", "a") as f:
+    error_folder = find_latest_folder("error_logging")
+    with open(f"{error_folder}/chatgpt_error.txt", "a") as f:
+      f.write("*********************\n")
       f.write(f"Prompt: {prompt}\n")
       try:
         f.write(f"Resonse: {completion.choices[0].message}\n")
       except:
         f.write(f"Error: {e}\n")
+      f.write("*********************\n")
     time.sleep(3)
     traceback.print_exc()
     return "LLM ERROR"
@@ -460,12 +463,15 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
   except Exception as e:
     print("Error:", e, flush=True)
     traceback.print_exc()
-    with open("gpt_error.txt", "a") as f:
+    error_folder = find_latest_folder("error_logging")
+    with open(f"{error_folder}/gpt_error.txt", "a") as f:
+      f.write("*********************\n")
       f.write(f"Prompt: {prompt}\n")
       try:
         f.write(f"Resonse: {response.choices[0].message}\n")
       except:
         f.write(f"Error:{e}\n")
+      f.write("*********************\n")
     time.sleep(3)
     return "REQUEST ERROR"
 
@@ -580,10 +586,12 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=1):
   for _ in range(attemps):
     try:
       response = await embeddings_client.embeddings.create(input=[text], model=model)
-    except:
-      with open("embeddings_error.txt", "a") as f:
+    except Exception as e:
+      error_folder = find_latest_folder("error_logging")
+      with open(f"{error_folder}/embeddings_error.txt", "a") as f:
         f.write("*********************\n")
         f.write(f"Text: {text}\n")
+        f.write(f"Error: {e}\n")
         f.write("*********************\n")
       return [0] * 1536 #quickly fix because testing with adam 3 small
   cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])

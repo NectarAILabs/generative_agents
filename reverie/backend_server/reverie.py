@@ -60,7 +60,8 @@ class ReverieServer:
                sim_code):
     
     print ("(reverie): Temp storage: ", fs_temp_storage)
-        
+    self.start_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    os.makedirs(f"error_logging/{self.start_time}/")
     # FORKING FROM A PRIOR SIMULATION:
     # <fork_sim_code> indicates the simulation we are forking from. 
     # Interestingly, all simulations must be forked from some initial 
