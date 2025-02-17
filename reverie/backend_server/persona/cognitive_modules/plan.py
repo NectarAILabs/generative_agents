@@ -1019,6 +1019,10 @@ async def _wait_react(persona, reaction_mode):
     act_address, act_event, chatting_with, chat, chatting_with_buffer, chatting_end_time,
     act_pronunciatio, act_obj_description, act_obj_pronunciatio, act_obj_event)
 
+async def replan(persona, maze, personas):
+  curr_index = persona.scratch.get_f_daily_schedule_index()
+  
+  await _determine_action(persona, maze)
 
 async def plan(persona, maze, personas, new_day, retrieved):
   """

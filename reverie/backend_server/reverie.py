@@ -421,11 +421,9 @@ class ReverieServer:
               elif task_type == "plan":
                 result = await persona.plan(self.maze, self.personas, results[persona_name]["new_day"], input_data)
                 results[persona_name]["plan"] = result
-                ## Check the plan to have handling conflict with other agents
-
-
-
                 await task_queue.put((persona_name, "reflect", None))
+              elif task_type == "replan":
+                await persona.replan()
               elif task_type == "reflect":
                 await persona.reflect()
                 await task_queue.put((persona_name, "execute", results[persona_name]["plan"]))
