@@ -18,7 +18,8 @@ def create_prompt(prompt_input: dict[str, Any]):
 
   prompt = f"""
 Describe subtasks in 5 min increments.
-
+Do not generate overly specific details or subtasks, especially those involving interactions with other people 'ask John to bring a red pen' or 'wait for customer’s feedback,'  
+Focus on individual actions that you can do it by yourself to avoid conflicts with the real world happening.
 --- Example ---
 Name: Kelly Bronson
 Age: 35

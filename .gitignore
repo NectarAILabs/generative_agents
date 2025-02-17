@@ -31,7 +31,9 @@ reverie/backend_server/embeddings_error.txt
 environment/frontend_server/storage/*/environment/*
 !environment/frontend_server/storage/*/environment/0.json
 environment/frontend_server/storage/*/movement/
-
+environment/frontend_server/compressed_storage/*
+!environment/frontend_server/compressed_storage/July1_the_ville_isabella_maria_klaus-step-3-20
+!environment/frontend_server/compressed_storage/test
 bin/
 include/
 pip-selfcheck.json
