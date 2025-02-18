@@ -35,6 +35,7 @@ from utils import maze_assets_loc, fs_storage, fs_temp_storage
 from maze import Maze
 from persona.persona import Persona
 from persona.cognitive_modules.converse import load_history_via_whisper
+from persona.prompt_template.gpt_structure import client, setup_client, openai_config
 from persona.prompt_template.run_gpt_prompt import run_plugin
 from logging_util import setup_logging, log_info
 
@@ -412,7 +413,8 @@ class ReverieServer:
             task_queue = asyncio.Queue() #Process the task to add to the queue
             results = {} #Dictionary to track the results of each agents
             #openai.aiosession.set(ClientSession())
-
+            #Reinit openai client
+            client = setup_client("openai", { "key": openai_config["model-key"] })
             async def process_task(persona_name, task_type, input_data=None):
               #log_info(f"Starting task: {task_type} for persona: {persona_name}")
               persona = self.personas[persona_name]
