@@ -13,7 +13,7 @@ def create_prompt(prompt_input: dict[str, Any]):
 
   prompt = f"""
 Task: We want to understand the state of an object that is being used by someone.
-
+Remember to mention the person's name in the state description. Like '...is being used by {persona_name}'.
 Let's think step by step.
 We want to know about the state of the {object}.
 Step 1. {persona_name} is {persona_action}.

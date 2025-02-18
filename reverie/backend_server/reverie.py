@@ -18,6 +18,8 @@ term "personas" to refer to generative agents, "associative memory" to refer
 to the memory stream, and "reverie" to refer to the overarching simulation 
 framework.
 """
+import openai
+from aiohttp import ClientSession
 import asyncio
 import json
 import datetime
@@ -33,6 +35,7 @@ from utils import maze_assets_loc, fs_storage, fs_temp_storage
 from maze import Maze
 from persona.persona import Persona
 from persona.cognitive_modules.converse import load_history_via_whisper
+from persona.prompt_template.gpt_structure import client, setup_client, openai_config
 from persona.prompt_template.run_gpt_prompt import run_plugin
 from logging_util import setup_logging, log_info
 
@@ -330,7 +333,9 @@ class ReverieServer:
       # Done with this iteration if <int_counter> reaches 0. 
       if int_counter == 0: 
         break
-
+      if int_counter % 50 == 49:
+        print(f"Step {int_counter+1}: Saving....")
+        self.save()
       # <curr_env_file> file is the file that our frontend outputs. When the
       # frontend has done its job and moved the personas, then it will put a 
       # new environment file that matches our step count. That's when we run 
@@ -407,6 +412,7 @@ class ReverieServer:
           async def run_all_move():
             task_queue = asyncio.Queue() #Process the task to add to the queue
             results = {} #Dictionary to track the results of each agents
+            client = setup_client("openai", { "key": openai_config["model-key"] })
             async def process_task(persona_name, task_type, input_data=None):
               #log_info(f"Starting task: {task_type} for persona: {persona_name}")
               persona = self.personas[persona_name]
@@ -421,10 +427,6 @@ class ReverieServer:
               elif task_type == "plan":
                 result = await persona.plan(self.maze, self.personas, results[persona_name]["new_day"], input_data)
                 results[persona_name]["plan"] = result
-                ## Check the plan to have handling conflict with other agents
-
-
-
                 await task_queue.put((persona_name, "reflect", None))
               elif task_type == "reflect":
                 await persona.reflect()
@@ -473,7 +475,6 @@ class ReverieServer:
           with open("queue_log.txt", "w") as f:
             f.write(f"{self.step=}\n")
           results = asyncio.run(run_all_move())
-          print(results)
           
           for (persona_name, _) in self.personas.items():
             next_tile, pronunciatio, description = results[persona_name]['execution']
