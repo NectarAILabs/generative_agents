@@ -19,7 +19,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   prompt = f"""
 Describe subtasks in 5 min increments.
 Focus on individual actions that can be done independently, without requiring interactions with others (e.g., avoid subtasks like “ask someone for...”). 
-Keep the descriptions concise and avoid overly specific details that might not align with real-world scenarios
+Keep the descriptions concise and avoid overly specific details that might not align with real-world scenarios.
 The goal is to outline clear, actionable steps that can be completed solo, ensuring they are practical and free from dependencies on other people or external factors.
 --- Example ---
 Name: Kelly Bronson

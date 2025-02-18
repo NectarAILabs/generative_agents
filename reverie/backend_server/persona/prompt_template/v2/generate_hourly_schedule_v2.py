@@ -25,8 +25,7 @@ Hourly schedule format:
 {identity_stable_set}
 {instructions}
 Replace "[Fill in]" with the actual activity for each hour. Keep the actual activity general and not too specific. 
-Focuses on general activities rather than specific events or interactions. The schedule should include flexible tasks like work, exercise, meals, relaxation, and other productive or leisure activities, but avoid mentioning specific people, detailed events, or things {persona_name} can't control
-
+Focus on general activities rather than specific events or interactions. The schedule should include flexible tasks like work, exercise, meals, relaxation, and other productive or leisure activities, but avoid mentioning specific people, detailed events, or things {persona_name} can't control.
 Here is the originally intended hourly breakdown of {persona_name}'s schedule today:
 {broad_daily_plan}
 {existing_schedule}

@@ -412,8 +412,6 @@ class ReverieServer:
           async def run_all_move():
             task_queue = asyncio.Queue() #Process the task to add to the queue
             results = {} #Dictionary to track the results of each agents
-            #openai.aiosession.set(ClientSession())
-            #Reinit openai client
             client = setup_client("openai", { "key": openai_config["model-key"] })
             async def process_task(persona_name, task_type, input_data=None):
               #log_info(f"Starting task: {task_type} for persona: {persona_name}")
@@ -430,8 +428,6 @@ class ReverieServer:
                 result = await persona.plan(self.maze, self.personas, results[persona_name]["new_day"], input_data)
                 results[persona_name]["plan"] = result
                 await task_queue.put((persona_name, "reflect", None))
-              elif task_type == "replan":
-                await persona.replan()
               elif task_type == "reflect":
                 await persona.reflect()
                 await task_queue.put((persona_name, "execute", results[persona_name]["plan"]))
@@ -473,7 +469,6 @@ class ReverieServer:
                 tasks.append(task)
                 log_info(f"Task {task_type} for persona: {persona_name} added to queue")
               await asyncio.gather(*tasks)
-            #await openai.aiosession.get().close()
             return results
 
 
