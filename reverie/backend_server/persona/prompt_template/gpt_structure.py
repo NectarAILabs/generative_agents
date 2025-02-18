@@ -174,7 +174,7 @@ async def ChatGPT_request(prompt):
     traceback.print_exc()
     return "LLM ERROR"
 
-async def ChatGPT_structured_request(prompt, response_format):
+async def ChatGPT_structured_request(prompt, response_format, provider_parameter=None):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -190,12 +190,28 @@ async def ChatGPT_structured_request(prompt, response_format):
   #temp_sleep(3)
   global client
   try: 
-    completion = await client.beta.chat.completions.parse(
-      model=openai_config["model"],
-      response_format=response_format,
-      messages=[{"role": "user", "content": prompt}],
-      timeout=30
-    )
+    if provider_parameter:
+      curr_base_url = client.base_url
+      curr_api_key = client.api_key
+      client.base_url = provider_parameter["base_url"]
+      client.api_key = provider_parameter["api_key"]
+      json_schema = response_format.model_json_schema()
+      completion = await client.chat.completions.create(
+        model=openai_config["model"],
+        messages=[{"role": "user", "content": prompt}],
+        extra_body={"guided_json": json_schema},
+        timeout=30
+      )
+      # reset the base_url and api_key
+      client.base_url = curr_base_url
+      client.api_key = curr_api_key
+    else:
+      completion = await client.beta.chat.completions.parse(
+        model=openai_config["model"],
+        response_format=response_format,
+        messages=[{"role": "user", "content": prompt}],
+        timeout=30
+      )
     time.sleep(0.5)
     print("--- ChatGPT_structured_request() ---")
     print("Prompt:", prompt, flush=True)
@@ -335,6 +351,7 @@ async def ChatGPT_safe_generate_structured_response(
   func_validate=None,
   func_clean_up=None,
   verbose=False,
+  provider_parameter=None,
 ):
   if func_validate and func_clean_up:
     # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
@@ -354,7 +371,7 @@ async def ChatGPT_safe_generate_structured_response(
       
     for i in range(repeat):
       try:
-        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format)
+        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format, provider_parameter)
         print("Attempt", i + 1, flush=True)
         if not curr_gpt_response:
           raise ValueError("Error: No valid response from LLM.")
@@ -398,6 +415,7 @@ async def GPT_request(prompt, gpt_parameter):
       messages = [{
         "role": "system", "content": prompt
       }]
+      # If not OpenAI but different provider, we need to change the base_url and api_key
       response = await client.chat.completions.create(
                   model=gpt_parameter["engine"],
                   messages=messages,
@@ -441,12 +459,35 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       messages = [{
         "role": "system", "content": prompt
       }]
-      response = await client.beta.chat.completions.parse(
-        model=gpt_parameter["engine"],
-        messages=messages,
-        response_format=response_format,
-        temperature=gpt_parameter["temperature"],
-        max_tokens=gpt_parameter["max_tokens"],
+      if "base_url" in gpt_parameter.keys():
+        curr_base_url = client.base_url
+        curr_api_key = client.api_key
+
+        # Setting new endpoint url and api key
+        client.base_url = gpt_parameter["base_url"]
+        client.api_key = gpt_parameter["api_key"]
+        json_schema = response_format.model_json_schema()
+        response = await client.chat.completions.create(
+          model=gpt_parameter["engine"],
+          messages=messages,
+          response_format=response_format,
+          temperature=gpt_parameter["temperature"],
+          max_tokens=gpt_parameter["max_tokens"],
+          top_p=gpt_parameter["top_p"],
+          extra_body={"guided_json": json_schema},
+          timeout = 30 
+        )
+
+        # Reset the base_url and api_key
+        client.base_url = curr_base_url
+        client.api_key = curr_api_key
+      else:
+        response = await client.beta.chat.completions.parse(
+          model=gpt_parameter["engine"],
+          messages=messages,
+          response_format=response_format,
+          temperature=gpt_parameter["temperature"],
+          max_tokens=gpt_parameter["max_tokens"],
         top_p=gpt_parameter["top_p"],
         frequency_penalty=gpt_parameter["frequency_penalty"],
         presence_penalty=gpt_parameter["presence_penalty"],
