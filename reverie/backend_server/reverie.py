@@ -110,7 +110,6 @@ class ReverieServer:
     # e.g., Maze("double_studio")
     self.block_remaps = reverie_meta['block_remaps'] if 'block_remaps' in reverie_meta else None
     self.maze = Maze(reverie_meta['maze_name'], self.block_remaps)
-    
     # <step> denotes the number of steps that our game has taken. A step here
     # literally translates to the number of moves our personas made in terms
     # of the number of tiles. 
