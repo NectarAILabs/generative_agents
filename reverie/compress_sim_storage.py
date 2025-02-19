@@ -71,4 +71,8 @@ def compress(sim_code):
 
 
 if __name__ == "__main__":
-  compress("July1_the_ville_isabella_maria_klaus-step-3-9")
+  import sys
+  if len(sys.argv) != 2:
+      print("Usage: python compress_sim_storage.py <sim_code>")
+      sys.exit(1)
+  compress(sys.argv[1])

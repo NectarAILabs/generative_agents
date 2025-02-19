@@ -57,7 +57,7 @@ async def run_gpt_generate_iterative_chat_utt(
   curr_context,
   curr_chat,
   test_input=None,
-  verbose=True,
+  verbose=False,
 ):
   def create_prompt_input(
     maze,
@@ -122,7 +122,7 @@ async def run_gpt_generate_iterative_chat_utt(
 
   def __chat_func_clean_up(gpt_response: ChatUtterance, prompt=""):
     cleaned_dict = {
-      "utterance": gpt_response.utterance,
+      "utterance": gpt_response.utterance.strip(f"{init_persona.scratch.name}: "),
       "end": gpt_response.did_conversation_end,
     }
     return cleaned_dict

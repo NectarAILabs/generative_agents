@@ -390,7 +390,7 @@ async def generate_convo_summary(persona, convo):
 
 
 async def generate_decide_to_talk(init_persona, target_persona, retrieved):
-  x = await run_gpt_prompt_decide_to_talk(init_persona, target_persona, retrieved)[0]
+  x = (await run_gpt_prompt_decide_to_talk(init_persona, target_persona, retrieved))[0]
   if debug:
     print("GNS FUNCTION: <generate_decide_to_talk>")
 
@@ -887,9 +887,9 @@ async def _should_react(persona, retrieved, personas):
 
   if ":" not in curr_event.subject: 
     # this is a persona event. 
-    if lets_talk(persona, personas[curr_event.subject], retrieved):
+    if await lets_talk(persona, personas[curr_event.subject], retrieved):
       return f"chat with {curr_event.subject}"
-    react_mode = lets_react(persona, personas[curr_event.subject], 
+    react_mode = await lets_react(persona, personas[curr_event.subject], 
                             retrieved)
     return react_mode
   return False
@@ -934,20 +934,21 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
   ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
                                        start_hour, end_hour)
   p.scratch.f_daily_schedule[start_index:end_index] = ret
-  p.scratch.add_new_action(act_address,
-                           inserted_act_dur,
-                           inserted_act,
-                           act_pronunciatio,
-                           act_event,
-                           chatting_with,
-                           chat,
-                           chatting_with_buffer,
-                           chatting_end_time,
-                           act_obj_description,
-                           act_obj_pronunciatio,
-                           act_obj_event,
-                           act_start_time)
-
+  #Update the action description for the persona only if they are not chatting
+  if p.scratch.chatting_with == None:
+    p.scratch.add_new_action(act_address,
+                             inserted_act_dur,
+                             inserted_act,
+                             act_pronunciatio,
+                             act_event,
+                             chatting_with,
+                             chat,
+                             chatting_with_buffer,
+                             chatting_end_time,
+                             act_obj_description,
+                             act_obj_pronunciatio,
+                             act_obj_event,
+                             act_start_time)
 
 async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # There are two personas -- the persona who is initiating the conversation
@@ -979,6 +980,9 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
       chatting_with_buffer = {}
       chatting_with_buffer[target_persona.name] = 800
     elif role == "target": 
+      # Generate the action description for target persona
+      inserted_act =  await generate_convo_summary(target_persona, convo)
+
       act_address = f"<persona> {init_persona.name}"
       act_event = (p.name, "chat with", init_persona.name)
       chatting_with = init_persona.name
@@ -1071,11 +1075,12 @@ async def plan(persona, maze, personas, new_day, retrieved):
   if focused_event: 
     reaction_mode = await _should_react(persona, focused_event, personas)
     if reaction_mode: 
+      print(reaction_mode)
       # If we do want to chat, then we generate conversation 
       if reaction_mode[:9] == "chat with":
-        _chat_react(maze, persona, focused_event, reaction_mode, personas)
+        await _chat_react(maze, persona, focused_event, reaction_mode, personas)
       elif reaction_mode[:4] == "wait": 
-        _wait_react(persona, reaction_mode)
+        await _wait_react(persona, reaction_mode)
       # elif reaction_mode == "do other things": 
       #   _chat_react(persona, focused_event, reaction_mode, personas)
 

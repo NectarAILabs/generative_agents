@@ -190,28 +190,19 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
   #temp_sleep(3)
   global client
   try: 
-    if provider_parameter:
-      curr_base_url = client.base_url
-      curr_api_key = client.api_key
-      client.base_url = provider_parameter["base_url"]
-      client.api_key = provider_parameter["api_key"]
-      json_schema = response_format.model_json_schema()
-      completion = await client.chat.completions.create(
-        model=openai_config["model"],
-        messages=[{"role": "user", "content": prompt}],
-        extra_body={"guided_json": json_schema},
-        timeout=30
-      )
-      # reset the base_url and api_key
-      client.base_url = curr_base_url
-      client.api_key = curr_api_key
+    if provider_parameter != None:
+      client_used = setup_client("openai", {'key': provider_parameter["api_key"]})
+      client_used.base_url = provider_parameter["base_url"]
+      model = provider_parameter["model"]
     else:
-      completion = await client.beta.chat.completions.parse(
-        model=openai_config["model"],
-        response_format=response_format,
-        messages=[{"role": "user", "content": prompt}],
-        timeout=30
-      )
+      client_used = client
+      model = openai_config["model"]
+    completion = await client_used.beta.chat.completions.parse(
+      model=model,
+      response_format=response_format,
+      messages=[{"role": "user", "content": prompt}],
+      timeout=30
+    )
     time.sleep(0.5)
     print("--- ChatGPT_structured_request() ---")
     print("Prompt:", prompt, flush=True)
@@ -223,7 +214,6 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
       input_cost=openai_config["model-costs"]["input"],
       output_cost=openai_config["model-costs"]["output"],
     )
-
     if message.parsed:
       return message.parsed
     if message.refusal:
@@ -460,41 +450,23 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         "role": "system", "content": prompt
       }]
       if "base_url" in gpt_parameter.keys():
-        curr_base_url = client.base_url
-        curr_api_key = client.api_key
-
-        # Setting new endpoint url and api key
-        client.base_url = gpt_parameter["base_url"]
-        client.api_key = gpt_parameter["api_key"]
-        json_schema = response_format.model_json_schema()
-        response = await client.chat.completions.create(
-          model=gpt_parameter["engine"],
-          messages=messages,
-          response_format=response_format,
-          temperature=gpt_parameter["temperature"],
-          max_tokens=gpt_parameter["max_tokens"],
-          top_p=gpt_parameter["top_p"],
-          extra_body={"guided_json": json_schema},
-          timeout = 30 
-        )
-
-        # Reset the base_url and api_key
-        client.base_url = curr_base_url
-        client.api_key = curr_api_key
+        client_used = setup_client("openai", {'key': gpt_parameter["api_key"]})
+        client_used.base_url = gpt_parameter["base_url"]
       else:
-        response = await client.beta.chat.completions.parse(
-          model=gpt_parameter["engine"],
-          messages=messages,
-          response_format=response_format,
-          temperature=gpt_parameter["temperature"],
-          max_tokens=gpt_parameter["max_tokens"],
+        client_used = client
+      response = await client_used.beta.chat.completions.parse(
+        model=gpt_parameter["engine"],
+        messages=messages,
+        response_format=response_format,
+        temperature=gpt_parameter["temperature"],
+        max_tokens=gpt_parameter["max_tokens"],
         top_p=gpt_parameter["top_p"],
         frequency_penalty=gpt_parameter["frequency_penalty"],
         presence_penalty=gpt_parameter["presence_penalty"],
         # stream=gpt_parameter["stream"],
         stop=gpt_parameter["stop"],
         timeout = 30,
-      )
+        )
     else:
       response = await client.completions.create(model=model, prompt=prompt)
     time.sleep(0.5)
