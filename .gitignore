@@ -24,7 +24,9 @@ reverie/backend_server/embeddings_error.txt
 !environment/frontend_server/storage/base_the_ville_smol_elections_5_voters
 !environment/frontend_server/storage/base_the_ville_smol_elections_5_voters_swapped_personalities
 !environment/frontend_server/storage/base_hide_and_seek/
+!environment/frontend_server/storage/base_simulation_v1/
 !environment/frontend_server/storage/base_search_and_rescue/
+!environment/frontend_server/static_dirs/assets/characters
 ####################################
 
 # Ignore all environment and movement files except the starting environment file
