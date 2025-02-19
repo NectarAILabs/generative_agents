@@ -174,7 +174,7 @@ async def ChatGPT_request(prompt):
     traceback.print_exc()
     return "LLM ERROR"
 
-async def ChatGPT_structured_request(prompt, response_format):
+async def ChatGPT_structured_request(prompt, response_format, provider_parameter=None):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -190,8 +190,15 @@ async def ChatGPT_structured_request(prompt, response_format):
   #temp_sleep(3)
   global client
   try: 
-    completion = await client.beta.chat.completions.parse(
-      model=openai_config["model"],
+    if provider_parameter != None:
+      client_used = setup_client("openai", {'key': provider_parameter["api_key"]})
+      client_used.base_url = provider_parameter["base_url"]
+      model = provider_parameter["model"]
+    else:
+      client_used = client
+      model = openai_config["model"]
+    completion = await client_used.beta.chat.completions.parse(
+      model=model,
       response_format=response_format,
       messages=[{"role": "user", "content": prompt}],
       timeout=30
@@ -207,7 +214,6 @@ async def ChatGPT_structured_request(prompt, response_format):
       input_cost=openai_config["model-costs"]["input"],
       output_cost=openai_config["model-costs"]["output"],
     )
-
     if message.parsed:
       return message.parsed
     if message.refusal:
@@ -335,6 +341,7 @@ async def ChatGPT_safe_generate_structured_response(
   func_validate=None,
   func_clean_up=None,
   verbose=False,
+  provider_parameter=None,
 ):
   if func_validate and func_clean_up:
     # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
@@ -354,7 +361,7 @@ async def ChatGPT_safe_generate_structured_response(
       
     for i in range(repeat):
       try:
-        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format)
+        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format, provider_parameter)
         print("Attempt", i + 1, flush=True)
         if not curr_gpt_response:
           raise ValueError("Error: No valid response from LLM.")
@@ -398,6 +405,7 @@ async def GPT_request(prompt, gpt_parameter):
       messages = [{
         "role": "system", "content": prompt
       }]
+      # If not OpenAI but different provider, we need to change the base_url and api_key
       response = await client.chat.completions.create(
                   model=gpt_parameter["engine"],
                   messages=messages,
@@ -441,7 +449,12 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       messages = [{
         "role": "system", "content": prompt
       }]
-      response = await client.beta.chat.completions.parse(
+      if "base_url" in gpt_parameter.keys():
+        client_used = setup_client("openai", {'key': gpt_parameter["api_key"]})
+        client_used.base_url = gpt_parameter["base_url"]
+      else:
+        client_used = client
+      response = await client_used.beta.chat.completions.parse(
         model=gpt_parameter["engine"],
         messages=messages,
         response_format=response_format,
@@ -453,7 +466,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         # stream=gpt_parameter["stream"],
         stop=gpt_parameter["stop"],
         timeout = 30,
-      )
+        )
     else:
       response = await client.completions.create(model=model, prompt=prompt)
     time.sleep(0.5)

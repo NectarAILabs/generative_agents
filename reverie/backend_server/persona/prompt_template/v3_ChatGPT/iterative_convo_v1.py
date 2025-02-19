@@ -122,7 +122,7 @@ async def run_gpt_generate_iterative_chat_utt(
 
   def __chat_func_clean_up(gpt_response: ChatUtterance, prompt=""):
     cleaned_dict = {
-      "utterance": gpt_response.utterance,
+      "utterance": gpt_response.utterance.strip(f"{init_persona.scratch.name}:").strip(),
       "end": gpt_response.did_conversation_end,
     }
     return cleaned_dict
@@ -149,6 +149,10 @@ async def run_gpt_generate_iterative_chat_utt(
   )
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
+  if "iterative_chat_utt" in openai_config["other_providers"].keys():
+    provider_parameter = openai_config["other_providers"]["iterative_chat_utt"]
+  else:
+    provider_parameter = None
   output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ChatUtterance,
@@ -157,6 +161,7 @@ async def run_gpt_generate_iterative_chat_utt(
     func_validate=__chat_func_validate,
     func_clean_up=__chat_func_clean_up,
     verbose=verbose,
+    provider_parameter=provider_parameter,
   )
 
   gpt_param = {
