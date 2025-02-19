@@ -122,7 +122,7 @@ async def run_gpt_generate_iterative_chat_utt(
 
   def __chat_func_clean_up(gpt_response: ChatUtterance, prompt=""):
     cleaned_dict = {
-      "utterance": gpt_response.utterance.strip(f"{init_persona.scratch.name}: "),
+      "utterance": gpt_response.utterance.strip(f"{init_persona.scratch.name}:").strip(),
       "end": gpt_response.did_conversation_end,
     }
     return cleaned_dict

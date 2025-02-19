@@ -901,7 +901,7 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
                   act_pronunciatio, act_obj_description, act_obj_pronunciatio, 
                   act_obj_event, act_start_time=None): 
   p = persona 
-
+  
   min_sum = 0
   for i in range (p.scratch.get_f_daily_schedule_hourly_org_index()): 
     min_sum += p.scratch.f_daily_schedule_hourly_org[i][1]
@@ -930,12 +930,11 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
       end_index = count
     dur_sum += dur
     count += 1
-
-  ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
-                                       start_hour, end_hour)
-  p.scratch.f_daily_schedule[start_index:end_index] = ret
   #Update the action description for the persona only if they are not chatting
   if p.scratch.chatting_with == None:
+    ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
+                                        start_hour, end_hour)
+    p.scratch.f_daily_schedule[start_index:end_index] = ret
     p.scratch.add_new_action(act_address,
                              inserted_act_dur,
                              inserted_act,
