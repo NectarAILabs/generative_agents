@@ -866,7 +866,7 @@ async def _should_react(persona, retrieved, personas):
       wait_until = ((target_persona.scratch.act_start_time 
         + datetime.timedelta(minutes=target_persona.scratch.act_duration - 1))
         .strftime("%B %d, %Y, %H:%M:%S"))
-      return f"wait: {wait_until}"
+      return (f"wait: {wait_until}", target_persona.scratch.name)
     elif react_mode == "2":
       return False
       return "do other things"
@@ -899,7 +899,7 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
                   act_address, act_event, chatting_with, chat, chatting_with_buffer,
                   chatting_end_time, 
                   act_pronunciatio, act_obj_description, act_obj_pronunciatio, 
-                  act_obj_event, act_start_time=None): 
+                  act_obj_event, personas, act_start_time=None,wait_for=None): 
   p = persona 
   
   min_sum = 0
@@ -930,24 +930,26 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
       end_index = count
     dur_sum += dur
     count += 1
-  #Update the action description for the persona only if they are not chatting or waiting
-  if p.scratch.chatting_with == None and p.scratch.act_event[1] != "waiting to start":
-    ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
+  # Let all async functions done before we update the action description for the persona.
+  ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
                                         start_hour, end_hour)
-    p.scratch.f_daily_schedule[start_index:end_index] = ret
-    p.scratch.add_new_action(act_address,
-                             inserted_act_dur,
-                             inserted_act,
-                             act_pronunciatio,
-                             act_event,
-                             chatting_with,
-                             chat,
-                             chatting_with_buffer,
-                             chatting_end_time,
-                             act_obj_description,
-                             act_obj_pronunciatio,
-                             act_obj_event,
-                             act_start_time)
+  #Logic handling before actually adding the react action to the persona's schedule
+  if p.scratch.chatting_with is None:
+    if wait_for is None or personas[wait_for].scratch.act_event[1] != "waiting to start":
+      p.scratch.f_daily_schedule[start_index:end_index] = ret
+      p.scratch.add_new_action(act_address,
+                              inserted_act_dur,
+                              inserted_act,
+                              act_pronunciatio,
+                              act_event,
+                              chatting_with,
+                              chat,
+                              chatting_with_buffer,
+                              chatting_end_time,
+                              act_obj_description,
+                              act_obj_pronunciatio,
+                              act_obj_event,
+                              act_start_time)
 
 async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # There are two personas -- the persona who is initiating the conversation
@@ -996,23 +998,22 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
     await _create_react(p, inserted_act, inserted_act_dur,
       act_address, act_event, chatting_with, convo, chatting_with_buffer, chatting_end_time,
       act_pronunciatio, act_obj_description, act_obj_pronunciatio, 
-      act_obj_event, act_start_time)
+      act_obj_event, personas, act_start_time)
 
 
-async def _wait_react(persona, reaction_mode):
+async def _wait_react(persona, reaction_mode,personas):
   p = persona
 
   inserted_act = f'waiting to start {p.scratch.act_description.split("(")[-1][:-1]}'
-  end_time = datetime.datetime.strptime(reaction_mode[6:].strip(), "%B %d, %Y, %H:%M:%S")
+  end_time = datetime.datetime.strptime(reaction_mode[0][6:].strip(), "%B %d, %Y, %H:%M:%S")
   inserted_act_dur = (end_time.minute + end_time.hour * 60) - (p.scratch.curr_time.minute + p.scratch.curr_time.hour * 60) + 1
-
+  target_persona = personas[reaction_mode[1].strip()]
   act_address = f"<waiting> {p.scratch.curr_tile[0]} {p.scratch.curr_tile[1]}"
   act_event = (p.name, "waiting to start", p.scratch.act_description.split("(")[-1][:-1])
   chatting_with = None
   chat = None
   chatting_with_buffer = None
   chatting_end_time = None
-
   act_pronunciatio = "⌛" 
   act_obj_description = None
   act_obj_pronunciatio = None
@@ -1020,7 +1021,7 @@ async def _wait_react(persona, reaction_mode):
 
   await _create_react(p, inserted_act, inserted_act_dur,
     act_address, act_event, chatting_with, chat, chatting_with_buffer, chatting_end_time,
-    act_pronunciatio, act_obj_description, act_obj_pronunciatio, act_obj_event)
+    act_pronunciatio, act_obj_description, act_obj_pronunciatio, act_obj_event,personas,wait_for=reaction_mode[1].strip())
 
 async def plan(persona, maze, personas, new_day, retrieved):
   """
@@ -1078,8 +1079,8 @@ async def plan(persona, maze, personas, new_day, retrieved):
       # If we do want to chat, then we generate conversation 
       if reaction_mode[:9] == "chat with":
         await _chat_react(maze, persona, focused_event, reaction_mode, personas)
-      elif reaction_mode[:4] == "wait": 
-        await _wait_react(persona, reaction_mode)
+      elif isinstance(reaction_mode, tuple) and reaction_mode[0][:4] == "wait": 
+        await _wait_react(persona, reaction_mode,personas)
       # elif reaction_mode == "do other things": 
       #   _chat_react(persona, focused_event, reaction_mode, personas)
 
