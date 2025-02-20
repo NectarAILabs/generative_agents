@@ -37,7 +37,7 @@ Here is the originally intended hourly breakdown of {persona_name}'s schedule to
 
 
 class Activity(BaseModel):
-  datetime: str
+  start_datetime: str
   activity: str
 
 
@@ -93,7 +93,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
         existing_schedule += f" {hour_strings[count]}] Activity:"
         existing_schedule += f" {persona_firstname}"
         existing_schedule += f" is {task}\n"
-    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}. You should assume their task is "sleeping" in their bedtime.\n'
+    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}\nYour schedule should assume that their task is "sleeping" during their bedtime.\n'
     if all_in_one:
       prompt_ending += "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
     else:
@@ -147,7 +147,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
   gpt_param = {
     "engine": openai_config["model"],
     "max_tokens": 5000,
-    "temperature": 0.7,
+    "temperature": 0,
     "top_p": 1,
     "stream": False,
     "frequency_penalty": 0,
