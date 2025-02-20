@@ -174,7 +174,7 @@ class Scratch:
         self.curr_time = None
       self.curr_tile = scratch_load["curr_tile"]
       self.daily_plan_req = scratch_load["daily_plan_req"]
-      self.gender = scratch_load.get("gender", "Not determined")
+      self.gender = scratch_load["gender"]
       self.name = scratch_load["name"]
       self.first_name = scratch_load["first_name"]
       self.last_name = scratch_load["last_name"]
