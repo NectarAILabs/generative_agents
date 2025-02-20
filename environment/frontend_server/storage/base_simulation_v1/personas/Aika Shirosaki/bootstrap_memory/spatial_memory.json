@@ -57,7 +57,9 @@
       "garden": ["dorm garden"]
     },
     "Oak Hill College": {
-      "hallway": []
+      "hallway": [],
+      "library": ["library sofa", "library table", "bookshelf"],
+      "classroom": ["blackboard", "classroom podium", "classroom student seating"]
     },
     "Jennifer Robbie's apartment": {
       "bathroom": ["shower", "bathroom sink", "toilet"],
