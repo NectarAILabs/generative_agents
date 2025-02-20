@@ -9,7 +9,10 @@
       "garden": ["dorm garden"],
       "Mina Chang's room": ["bed", "game console", "closet", "desk"],
       "Iris Chang's room": ["bed", "game console", "closet", "desk"],
-      "common room": ["common room sofa", "pool table", "common room table"]
+      "common room": ["common room sofa", "pool table", "common room table"],
+      "woman's bathroom": ["toilet", "shower", "bathroom sink"],
+      "kitchen": ["toaster", "kitchen sink", "refrigerator", "cooking area"]
+
     },
     "The Willows Market and Pharmacy": {
       "store": ["grocery store shelf", "behind the grocery counter", "grocery store counter", "pharmacy store shelf", "pharmacy store counter", "behind the pharmacy counter"]
