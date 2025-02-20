@@ -7,8 +7,8 @@
     },
     "Dorm for Oak Hill College": {
       "garden": ["dorm garden"],
-      "Mina Chang and Iris Chang’s room": ["closet", "desk", "bed", "computer", "blackboard"],
-      "woman's bathroom": ["toilet", "shower", "bathroom sink"],
+      "Mina Chang's room": ["bed", "game console", "closet", "desk"],
+      "Iris Chang's room": ["bed", "game console", "closet", "desk"],
       "common room": ["common room sofa", "pool table", "common room table"]
     },
     "The Willows Market and Pharmacy": {

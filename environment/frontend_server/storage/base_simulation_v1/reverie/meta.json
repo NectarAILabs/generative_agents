@@ -19,7 +19,7 @@
   "block_remaps":{
     "sector": {
       "Isabella Rodriguez's apartment": "Noah Walker’s apartment",
-      "Giorgio Rossi's apartment": "Jennifer Robbie’s apartment",
+      "Moreno family's house": "Jennifer Robbie’s apartment",
       "Arthur Burton's apartment": "Katie Adams’s apartment",
       "Adam Smith's house": "Tiffany Yang’s house",
       "Yuriko Yamamoto's house": "Amelie Dupont’s house",
@@ -27,7 +27,9 @@
       "Ryan Park's apartment": "Alice Caelin’s apartment"
     },
     "arena": {
-      "Klaus Mueller's room": "Mina Chang and Iris Chang’s room"
+      "Klaus Mueller's room": "Mina Chang's room",
+      "Wolfgang Schulz's room": "Iris Chang's room",
+      "Tom and Jane Moreno's bedroom": "main room"
     },
     "game_object":{
 
