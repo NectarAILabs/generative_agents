@@ -25,7 +25,7 @@ Hourly schedule format:
 {identity_stable_set}
 {instructions}
 Replace "[Fill in]" with the actual activity for each hour. Keep the actual activity general and not too specific. 
-Focus on general activities rather than specific events or interactions. The schedule should include flexible tasks like work, exercise, meals, relaxation, and other productive or leisure activities, but avoid mentioning specific people, detailed events, or things {persona_name} can't control.
+Focus on general activities rather than specific events or interactions. The schedule should include flexible tasks like work, exercise, meals, relaxation, and other productive or leisure activities, but avoid mentioning other people, detailed events, or things {persona_name} can't control.
 Remember to include all 24 hours of the day.
 Here is the originally intended hourly breakdown of {persona_name}'s schedule today:
 {broad_daily_plan}
@@ -93,7 +93,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
         existing_schedule += f" {hour_strings[count]}] Activity:"
         existing_schedule += f" {persona_firstname}"
         existing_schedule += f" is {task}\n"
-    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}. You should assume their task is "sleeping" before and after their bedtime. \n'
+    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}. You should assume their task is "sleeping" in their bedtime.\n'
     if all_in_one:
       prompt_ending += "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
     else:

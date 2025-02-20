@@ -167,8 +167,8 @@ async def run_gpt_generate_iterative_chat_utt(
   gpt_param = {
     "engine": openai_config["model"],
     "max_tokens": 4096,
-    "temperature": 0,
-    "top_p": 1,
+    "temperature": 0.3,
+    "top_p": 0.1,
     "stream": False,
     "frequency_penalty": 0,
     "presence_penalty": 0,
