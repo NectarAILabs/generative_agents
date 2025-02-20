@@ -1,6 +1,6 @@
 {
   "the Ville": {
-    "Katie Adams’s apartment": {
+    "Katie Adams's apartment": {
       "bathroom": ["bathroom sink", "shower", "toilet"],
       "main room": ["closet", "bed", "desk", "cooking area", "kitchen sink", "refrigerator"]
     },
@@ -32,7 +32,7 @@
       "library": ["library sofa", "library table", "bookshelf"],
       "classroom": ["blackboard", "classroom podium", "classroom student seating"]
     },
-    "Tiffany Yang’s house": {
+    "Tiffany Yang's house": {
       "main room": []
     }
   }

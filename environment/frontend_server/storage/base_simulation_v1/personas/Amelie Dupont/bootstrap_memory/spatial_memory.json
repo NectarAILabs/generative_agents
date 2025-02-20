@@ -3,7 +3,7 @@
     "Johnson Park": {
       "park": ["park garden"]
     },
-    "Amelie Dupont’s house": {
+    "Amelie Dupont's house": {
       "main room": ["closet", "bed", "shelf", "desk", "cooking area", "kitchen sink", "refrigerator"],
       "bathroom": ["bathroom sink", "shower", "toilet"]
     },

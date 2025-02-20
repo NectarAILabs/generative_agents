@@ -1,7 +1,7 @@
 {
   "the Ville": {
-    "Jennifer Robbie’s apartment": {
-      "main room": ["bed", "blackboard", "desk", "cooking area", "kitchen sink", "closet", "refrigerator"],
+    "Jennifer Robbie's apartment": {
+      "Jennifer Robbie's bedroom": ["bed", "blackboard", "desk", "cooking area", "kitchen sink", "closet", "refrigerator"],
       "bathroom": ["shower", "bathroom sink", "toilet"]
     },
     "Hobbs Cafe": {
@@ -22,7 +22,7 @@
     "Johnson Park": {
       "park": ["park garden"]
     },
-    "Noah Walker’s apartment": {
+    "Noah Walker's apartment": {
       "main room": ["shelf"],
       "bathroom": ["shower", "bathroom sink", "toilet"]
     },
@@ -31,7 +31,7 @@
       "library": ["library sofa", "library table", "bookshelf"],
       "classroom": ["blackboard", "classroom podium", "classroom student seating"]
     },
-    "Aika Shirosaki’s apartment": {
+    "Aika Shirosaki's apartment": {
       "bathroom": ["shower", "bathroom sink", "toilet"],
       "main room": ["bed", "desk", "cooking area", "kitchen sink", "closet", "refrigerator"]
     }

@@ -1,6 +1,6 @@
 {
   "the Ville": {
-    "Alice Caelin’s apartment": {
+    "Alice Caelin's apartment": {
       "bathroom": ["shower", "bathroom sink", "toilet"],
       "main room": ["bed", "computer desk", "cooking area", "kitchen sink", "closet", "refrigerator"]
     },
@@ -22,7 +22,7 @@
     "Johnson Park": {
       "park": ["park garden"]
     },
-    "Katie Adams’s apartment": {
+    "Katie Adams's apartment": {
       "main room": ["shelf"],
       "bathroom": ["shower", "bathroom sink", "toilet"]
     },
@@ -31,7 +31,7 @@
       "library": ["library sofa", "library table", "bookshelf"],
       "classroom": ["blackboard", "classroom podium", "classroom student seating"]
     },
-    "Noah Walker’s apartment": {
+    "Noah Walker's apartment": {
       "main room": ["bed", "desk"]
     }
   }

@@ -10,7 +10,7 @@
         "piano"
       ]
     },
-    "Noah Walker’s apartment": {
+    "Noah Walker's apartment": {
       "main room": [
         "bed",
         "desk",
@@ -82,13 +82,13 @@
         "computer desk"
       ]
     },
-    "Jennifer Robbie’s apartment": {
+    "Jennifer Robbie's apartment": {
       "bathroom": [
         "shower",
         "bathroom sink",
         "toilet"
       ],
-      "main room": [
+      "Jennifer Robbie's bedroom": [
         "bed",
         "desk",
         "blackboard",

@@ -1,6 +1,6 @@
 {
   "the Ville": {
-    "Tiffany Yang’s house": {
+    "Tiffany Yang's house": {
       "bathroom": ["bathroom sink", "shower", "toilet"],
       "main room": ["closet", "bed", "desk", "cooking area", "kitchen sink", "refrigerator"]
     },
@@ -24,7 +24,7 @@
       "library": ["library sofa", "library table", "bookshelf"],
       "classroom": ["blackboard", "classroom podium", "classroom student seating"]
     },
-    "Amelie Dupont’s house": {
+    "Amelie Dupont's house": {
       "main room": ["closet", "bed", "shelf", "desk", "cooking area", "kitchen sink", "refrigerator"],
       "bathroom": ["bathroom sink", "shower"]
     },
@@ -37,11 +37,8 @@
       "Abigail Chen's room": [],
       "Abigail Chen's bathroom": []
     },
-    "Katie Adams’s apartment": {
+    "Katie Adams's apartment": {
       "main room": []
-    },
-    "Moore family's house": {
-      "main room": ["closet", "desk", "cooking area", "common room sofa", "kitchen sink"]
     }
   }
 }

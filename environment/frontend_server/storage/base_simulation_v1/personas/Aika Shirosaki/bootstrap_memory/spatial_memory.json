@@ -1,6 +1,6 @@
 {
   "the Ville": {
-    "Aika Shirosaki’s apartment": {
+    "Aika Shirosaki's apartment": {
       "bathroom": ["shower", "bathroom sink", "toilet"],
       "main room": ["bed", "desk", "cooking area", "kitchen sink", "closet", "refrigerator"]
     },
@@ -29,7 +29,7 @@
     },
     "Jennifer Robbie's apartment": {
       "bathroom": ["shower", "bathroom sink", "toilet"],
-      "main room": ["bed", "blackboard", "desk", "cooking area", "kitchen sink", "closet", "refrigerator"]
+      "Jennifer Robbie's bedroom": ["bed", "blackboard", "desk", "cooking area", "kitchen sink", "closet", "refrigerator"]
     }
   }
 }
