@@ -15,10 +15,14 @@
   "currently": "Mina Chang is twins with Iris Chang. The “popular twin” who is used to having everyone dote on her. Outgoing and says what she thinks.", 
   "lifestyle": "Mina Chang goes to bed around 11pm, awakes up around 7am, eats dinner around 6pm. The school she is studying at is Oak Hill College - a girl's college which has just accepted its first male student. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Mina would be happy to pursue a sexual relationship with him and loves having men dote on her, and would be willing to share him with other girls.", 
 <<<<<<< HEAD
+<<<<<<< HEAD
   "living_area": "the Ville:Dorm for Oak Hill College:Mina Chang's room",
 =======
   "living_area": "the Ville:Dorm for Oak Hill College:Mina Chang and Iris Chang’s room",
 >>>>>>> fe9221e8 (update lifestyles)
+=======
+  "living_area": "the Ville:Dorm for Oak Hill College:Mina Chang's room",
+>>>>>>> 9a834336 (fixing typo)
   "concept_forget": 100,
   "daily_reflection_time": 180,
   "daily_reflection_size": 5,
