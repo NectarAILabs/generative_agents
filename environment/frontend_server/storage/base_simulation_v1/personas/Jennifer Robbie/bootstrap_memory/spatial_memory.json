@@ -26,6 +26,11 @@
       "main room": ["shelf"],
       "bathroom": ["shower", "bathroom sink", "toilet"]
     },
+    "Oak Hill College": {
+      "hallway": [],
+      "library": ["library sofa", "library table", "bookshelf"],
+      "classroom": ["blackboard", "classroom podium", "classroom student seating"]
+    },
     "Aika Shirosaki’s apartment": {
       "bathroom": ["shower", "bathroom sink", "toilet"],
       "main room": ["bed", "desk", "cooking area", "kitchen sink", "closet", "refrigerator"]

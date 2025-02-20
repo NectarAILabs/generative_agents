@@ -27,6 +27,11 @@
       "common room": ["common room sofa", "common room table"],
       "kitchen": ["cooking area", "refrigerator", "toaster", "kitchen sink"]
     },
+    "Oak Hill College": {
+      "hallway": [],
+      "library": ["library sofa", "library table", "bookshelf"],
+      "classroom": ["blackboard", "classroom podium", "classroom student seating"]
+    },
     "Tiffany Yang’s house": {
       "main room": []
     }

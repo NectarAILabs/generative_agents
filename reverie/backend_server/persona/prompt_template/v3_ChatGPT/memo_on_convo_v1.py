@@ -65,7 +65,7 @@ async def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbos
   example_output = "Jane Doe was interesting to talk to."
   special_instruction = "The output should ONLY contain a string that summarizes anything interesting that the agent may have noticed"
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ConvoTakeaways,
     example_output,

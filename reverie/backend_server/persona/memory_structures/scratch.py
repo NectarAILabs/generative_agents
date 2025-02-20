@@ -158,7 +158,7 @@ class Scratch:
     # destination tile. 
     # e.g., [(50, 10), (49, 10), (48, 10), ...]
     self.planned_path = []
-
+    self.gender = None
     if check_if_file_exists(f_saved): 
       # If we have a bootstrap file, load that here. 
       scratch_load = json.load(open(f_saved))
@@ -174,7 +174,7 @@ class Scratch:
         self.curr_time = None
       self.curr_tile = scratch_load["curr_tile"]
       self.daily_plan_req = scratch_load["daily_plan_req"]
-
+      self.gender = scratch_load.get("gender", "Not determined")
       self.name = scratch_load["name"]
       self.first_name = scratch_load["first_name"]
       self.last_name = scratch_load["last_name"]
@@ -253,7 +253,7 @@ class Scratch:
       scratch["curr_time"] = self.curr_time.strftime("%B %d, %Y, %H:%M:%S")
     scratch["curr_tile"] = self.curr_tile
     scratch["daily_plan_req"] = self.daily_plan_req
-
+    scratch["gender"] = self.gender
     scratch["name"] = self.name
     scratch["first_name"] = self.first_name
     scratch["last_name"] = self.last_name
@@ -419,6 +419,7 @@ class Scratch:
     commonset = ""
     commonset += f"Name: {self.name}\n"
     commonset += f"Age: {self.age}\n"
+    commonset += f"Gender: {self.gender}\n"
     commonset += f"Innate traits: {self.innate}\n"
     commonset += f"Learned traits: {self.learned}\n"
     commonset += f"Currently: {self.currently}\n"

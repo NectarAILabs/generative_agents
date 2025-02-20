@@ -19,6 +19,11 @@
     "The Rose and Crown Pub": {
       "pub": ["shelf", "refrigerator", "bar customer seating", "behind the bar counter", "kitchen sink", "cooking area", "microphone"]
     },
+    "Oak Hill College": {
+      "hallway": [],
+      "library": ["library sofa", "library table", "bookshelf"],
+      "classroom": ["blackboard", "classroom podium", "classroom student seating"]
+    },
     "Amelie Dupont’s house": {
       "main room": ["closet", "bed", "shelf", "desk", "cooking area", "kitchen sink", "refrigerator"],
       "bathroom": ["bathroom sink", "shower"]

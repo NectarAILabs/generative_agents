@@ -930,8 +930,8 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
       end_index = count
     dur_sum += dur
     count += 1
-  #Update the action description for the persona only if they are not chatting
-  if p.scratch.chatting_with == None:
+  #Update the action description for the persona only if they are not chatting or waiting
+  if p.scratch.chatting_with == None and p.scratch.act_event[1] != "waiting to start":
     ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
                                         start_hour, end_hour)
     p.scratch.f_daily_schedule[start_index:end_index] = ret

@@ -92,9 +92,9 @@ async def perceive(persona, maze):
         ]
 
   # PERCEIVE EVENTS.
-  # We will perceive events that take place in the same arena as the
-  # persona's current arena.
-  curr_arena_path = maze.get_tile_path(persona.scratch.curr_tile, "arena")
+  # We will perceive events that take place in the same arena as the => change to same sector
+  # persona's current arena => change to personal's current sector
+  curr_sector_path = maze.get_tile_path(persona.scratch.curr_tile, "sector")
   # We do not perceive the same event twice (this can happen if an object is
   # extended across multiple tiles).
   percept_events_set = set()
@@ -106,7 +106,7 @@ async def perceive(persona, maze):
   for tile in nearby_tiles:
     tile_details = maze.access_tile(tile)
     if tile_details["events"]:
-      if maze.get_tile_path(tile, "arena") == curr_arena_path:
+      if maze.get_tile_path(tile, "sector") == curr_sector_path:
         # This calculates the distance between the persona's current tile,
         # and the target tile.
         dist = math.dist(
