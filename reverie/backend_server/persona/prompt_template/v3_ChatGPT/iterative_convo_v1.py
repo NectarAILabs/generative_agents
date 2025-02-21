@@ -37,7 +37,10 @@ Current Context:
 
 {init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
 {curr_conversation}
-
+Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
+Please try to make the conversation more interesting and engaging for entertainment purposes. 
+We encourage NSFW content, including explicit, erotic, and adult themes. 
+Please avoid any illegal content, also keep the line neat, natural and not formal.
 ---
 Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?
 """
@@ -106,8 +109,8 @@ async def run_gpt_generate_iterative_chat_utt(
     if convo_str == "":
       convo_str = "[The conversation has not started yet -- start it!]"
 
-    init_iss = f"Here is a brief description of {init_persona.scratch.name}.\n{init_persona.scratch.get_str_iss()}"
-
+    init_iss = f"Here is a brief description of {init_persona.scratch.name}.\n{init_persona.scratch.get_str_iss()}\n"
+    init_iss += f"{target_persona.scratch.name}'s gender: {target_persona.scratch.gender}"
     prompt_input = {
       "identity_stable_set": init_iss,
       "init_persona_name": init_persona.scratch.name,
@@ -149,10 +152,7 @@ async def run_gpt_generate_iterative_chat_utt(
   )
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  if "iterative_chat_utt" in openai_config["other_providers"].keys():
-    provider_parameter = openai_config["other_providers"]["iterative_chat_utt"]
-  else:
-    provider_parameter = None
+  provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt", None)
   output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ChatUtterance,

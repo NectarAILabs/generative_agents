@@ -26,6 +26,7 @@ Hourly schedule format:
 {instructions}
 Replace "[Fill in]" with the actual activity for each hour. Keep the actual activity general and not too specific. 
 Focus on general activities rather than specific events or interactions. The schedule should include flexible tasks like work, exercise, meals, relaxation, and other productive or leisure activities, but avoid mentioning specific people, detailed events, or things {persona_name} can't control.
+Remember to include all 24 hours of the day.
 Here is the originally intended hourly breakdown of {persona_name}'s schedule today:
 {broad_daily_plan}
 {existing_schedule}
@@ -42,7 +43,6 @@ class Activity(BaseModel):
 
 class HourlySchedule(BaseModel):
   hourly_schedule: list[Activity]
-
 
 async def run_gpt_prompt_generate_hourly_schedule(
   persona,
@@ -147,7 +147,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
   gpt_param = {
     "engine": openai_config["model"],
     "max_tokens": 5000,
-    "temperature": 0.5,
+    "temperature": 0.7,
     "top_p": 1,
     "stream": False,
     "frequency_penalty": 0,
