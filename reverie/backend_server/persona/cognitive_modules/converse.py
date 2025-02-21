@@ -173,7 +173,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
 
   for i in range(8): 
     focal_points = [f"{target_persona.scratch.name}"]
-    retrieved = await new_retrieve(init_persona, focal_points, 50) 
+    retrieved = await new_retrieve(init_persona, focal_points, 20) 
     relationship = await generate_summarize_agent_relationship(init_persona, target_persona, retrieved)
     print ("-------- relationship: ", relationship)
     last_chat = ""
@@ -186,7 +186,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
     else: 
       focal_points = [f"{relationship}", 
                       f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(init_persona, focal_points, 15)
+    retrieved = await new_retrieve(init_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
 
     curr_chat += [[init_persona.scratch.name, utt]]
@@ -194,7 +194,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
       break
 
     focal_points = [f"{init_persona.scratch.name}"]
-    retrieved = await new_retrieve(target_persona, focal_points, 50)
+    retrieved = await new_retrieve(target_persona, focal_points, 20)
     relationship = await generate_summarize_agent_relationship(target_persona, init_persona, retrieved)
     print ("-------- relationship: ", relationship)
     last_chat = ""
@@ -207,7 +207,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
     else: 
       focal_points = [f"{relationship}", 
                       f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(target_persona, focal_points, 15)
+    retrieved = await new_retrieve(target_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
 
     curr_chat += [[target_persona.scratch.name, utt]]

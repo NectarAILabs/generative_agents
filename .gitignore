@@ -15,6 +15,7 @@ environment/frontend_server/log_agents/
 logs/*
 !logs/skip-morning_2024-05-15_13-54-44.txt
 reverie/backend_server/queue_log.txt
+reverie/backend_server/react_log.txt
 reverie/backend_server/chatgpt_error.txt
 reverie/backend_server/gpt_error.txt
 reverie/backend_server/embeddings_error.txt
