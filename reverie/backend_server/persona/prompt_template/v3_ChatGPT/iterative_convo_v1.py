@@ -16,7 +16,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   curr_situation = prompt_input["curr_situation"]
   target_persona_name = prompt_input["target_persona_name"]
   curr_conversation = prompt_input["curr_conversation"]
-
+  curr_time = prompt_input["curr_time"]
   prompt = f"""
 Context for the task:
 
@@ -37,6 +37,7 @@ Current Context:
 
 {init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
 {curr_conversation}
+Now is {curr_time}.
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes. 
 We encourage NSFW content, including explicit, erotic, and adult themes. 
@@ -120,6 +121,7 @@ async def run_gpt_generate_iterative_chat_utt(
       "curr_situation": curr_context,
       "target_persona_name": target_persona.scratch.name,
       "curr_conversation": convo_str,
+      "curr_time": init_persona.scratch.curr_time,
     }
     return prompt_input
 

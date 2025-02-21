@@ -199,11 +199,15 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
       client_used = client
       model = openai_config["model"]
       provider_parameter = {}
+
+    #For supported parameters of vLLM
+    extra_body, provider_parameter = {k:v for k,v in provider_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}, {k:v for k,v in provider_parameter.items() if k not in ["min_p","top_k","repetition_penalty"]}
     completion = await client_used.beta.chat.completions.parse(
       model=model,
       response_format=response_format,
       messages=[{"role": "user", "content": prompt}],
       timeout=30,
+      extra_body=extra_body,
       **provider_parameter
     )
     time.sleep(0.5)
@@ -453,10 +457,11 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         "role": "system", "content": prompt
       }]
       if "base_url" in gpt_parameter.keys():
-        client_used = setup_client("openai", {'key': gpt_parameter["api_key"]})
+        client_used = setup_client("openai", {'key': gpt_parameter.get("api_key", openai_config["model-key"])})
         client_used.base_url = gpt_parameter["base_url"]
       else:
         client_used = client
+      extra_body = {k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}
       response = await client_used.beta.chat.completions.parse(
         model=gpt_parameter["engine"],
         messages=messages,
@@ -469,6 +474,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         # stream=gpt_parameter["stream"],
         stop=gpt_parameter["stop"],
         timeout = 30,
+        extra_body=extra_body
         )
     else:
       response = await client.completions.create(model=model, prompt=prompt)
@@ -608,10 +614,10 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
   response = None
   if not text:
     text = "this is blank"
-  global client
+  global embeddings_client
   for _ in range(attemps):
     try:
-      response = await client.embeddings.create(input=[text], model=model)
+      response = await embeddings_client.embeddings.create(input=[text], model=model)
       break
     except Exception as e:
       error_folder = find_latest_folder("error_logging")
@@ -621,7 +627,7 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
         f.write(f"Error: {e}\n")
         f.write("*********************\n")
       print("Resetting client")
-      client = setup_client("openai", { "key": openai_config["model-key"] })
+      embeddings_client = setup_client("openai", { "key": openai_config["embeddings-key"] })
       time.sleep(2)
   if response != None:
     cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
