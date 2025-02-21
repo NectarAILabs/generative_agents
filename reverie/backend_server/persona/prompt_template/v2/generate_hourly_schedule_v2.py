@@ -93,7 +93,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
         existing_schedule += f" {hour_strings[count]}] Activity:"
         existing_schedule += f" {persona_firstname}"
         existing_schedule += f" is {task}\n"
-    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}\nYour schedule should assume that their task is "sleeping" after their bedtime and before they wake up. For example if they go to sleep at 2am, your schedule should make sure that the action at 02:00 AM is sleeping\n'
+    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}\nYour schedule should assume that their task is ONLY "sleeping" after their bedtime and before they wake up. For example if they go to sleep at 2am and wake up at 11am, your schedule should make sure that the action from 02:00 AM to 11:00 AM is sleeping\n'
     if all_in_one:
       prompt_ending += "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
     else:
