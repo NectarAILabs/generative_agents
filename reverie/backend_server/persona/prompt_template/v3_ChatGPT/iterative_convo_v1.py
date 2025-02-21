@@ -152,7 +152,7 @@ async def run_gpt_generate_iterative_chat_utt(
   )
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt", None)
+  provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt_provider", None)
   output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ChatUtterance,
@@ -168,8 +168,11 @@ async def run_gpt_generate_iterative_chat_utt(
     "engine": openai_config["model"],
     "max_tokens": 4096,
     "temperature": 1.1,
+    "top_k": 250,
     "stream": False,
-    "frequency_penalty": 1.1,
+    "frequency_penalty": 0.5,
+    "presence_penalty": 0.5,
+    "repetition_penalty": 1.1,
     "min_p": 0.1,
     "stop": None,
   }

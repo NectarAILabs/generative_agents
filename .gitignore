@@ -19,7 +19,9 @@ reverie/backend_server/react_log.txt
 reverie/backend_server/chatgpt_error.txt
 reverie/backend_server/gpt_error.txt
 reverie/backend_server/embeddings_error.txt
+
 ### Add simulations to keep here ###
+environment/frontend_server/log_agents/
 !environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/
 !environment/frontend_server/storage/base_the_ville_n25/*
 !environment/frontend_server/storage/July1_the_ville_isabella_maria_klaus-step-3-*/*

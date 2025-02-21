@@ -42,7 +42,6 @@ In 5 min increments, list the subtasks Kelly does when Kelly is working on the n
 {identity_stable_set}
 {broad_schedule_summary}
 In 5 min increments, list the subtasks {persona_firstname} does when {persona_firstname} is {action} from {action_time_range} (total duration in minutes: {action_duration}). Use present progressive tense (e.g., "printing the lesson plan").
-Focus on individual actions that can be done independently, without requiring interactions with others (e.g., avoid subtasks like “ask someone for...”). 
 Keep the descriptions concise and avoid overly specific details that might not align with real-world scenarios.
 The goal is to outline clear, actionable steps that can be completed solo, ensuring they are practical and free from dependencies on other people or external factors.
 """
@@ -103,7 +102,7 @@ async def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, v
         ) + datetime.timedelta(minutes=end_min)
         start_time_str = start_time.strftime("%H:%M%p")
         end_time_str = end_time.strftime("%H:%M%p")
-        summary_str += f"{start_time_str} ~ {end_time_str}, {persona.name} is planning on {persona.scratch.f_daily_schedule_hourly_org[index][0]},\n "
+        summary_str += f"{start_time_str} ~ {end_time_str}, {persona.name} is planning on {persona.scratch.f_daily_schedule_hourly_org[index][0]}, "
         if curr_f_org_index + 1 == index:
           curr_time_range = f"{start_time_str} ~ {end_time_str}"
     summary_str = summary_str[:-2] + "."
@@ -208,11 +207,9 @@ async def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, v
     "presence_penalty": 0,
     "stop": None,
   }
-  provider_parameter = openai_config.get("other_providers", {}).get("task_decomp", None)
+  provider_parameter = openai_config.get("other_providers", {}).get("task_decomp_provider", None)
   if provider_parameter != None:
-    for k,v in provider_parameter.items():
-      if k != "model":
-        gpt_param[k] = v
+    gpt_param.update({k:v for k,v in provider_parameter.items() if k != "model"})
     gpt_param["engine"] = provider_parameter["model"]
   prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(persona, task, duration)

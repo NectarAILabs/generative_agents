@@ -190,18 +190,21 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
   #temp_sleep(3)
   global client
   try: 
-    if provider_parameter != None:
+    if provider_parameter is not None:
       client_used = setup_client("openai", {'key': provider_parameter["api_key"]})
       client_used.base_url = provider_parameter["base_url"]
-      model = provider_parameter["model"]
+      model = provider_parameter.get("model", openai_config["model"])
+      provider_parameter = {k: v for k, v in provider_parameter.items() if k not in ["model", "api_key", "base_url"]}
     else:
       client_used = client
       model = openai_config["model"]
+      provider_parameter = {}
     completion = await client_used.beta.chat.completions.parse(
       model=model,
       response_format=response_format,
       messages=[{"role": "user", "content": prompt}],
-      timeout=30
+      timeout=30,
+      **provider_parameter
     )
     time.sleep(0.5)
     print("--- ChatGPT_structured_request() ---")

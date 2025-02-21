@@ -93,7 +93,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
         existing_schedule += f" {hour_strings[count]}] Activity:"
         existing_schedule += f" {persona_firstname}"
         existing_schedule += f" is {task}\n"
-    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}\nYour schedule should assume that their task is "sleeping" during their bedtime and other activies when they are not sleeping. For example if they go to sleep at 2am, your schedule should make sure that the action at 02:00 AM is sleeping\n'
+    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}\nYour schedule should assume that their task is "sleeping" after their bedtime and before they wake up. For example if they go to sleep at 2am, your schedule should make sure that the action at 02:00 AM is sleeping\n'
     if all_in_one:
       prompt_ending += "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
     else:
@@ -153,11 +153,9 @@ async def run_gpt_prompt_generate_hourly_schedule(
       "presence_penalty": 0,
       "stop": ["\n"],
     }
-  provider_parameter = openai_config.get("other_providers", {}).get("hourly_schedule", None)
+  provider_parameter = openai_config.get("other_providers", {}).get("hourly_schedule_provider", None)
   if provider_parameter != None:
-    for k,v in provider_parameter.items():
-      if k != "model":
-        gpt_param[k] = v
+    gpt_param.update({k:v for k,v in provider_parameter.items() if k != "model"})
     gpt_param["engine"] = provider_parameter["model"]
   prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(
