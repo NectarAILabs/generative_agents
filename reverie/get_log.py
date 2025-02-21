@@ -87,7 +87,7 @@ def get_log(sim_code):
 
 
 if __name__ == '__main__':
-  get_log("sim_2102_0358")
+  get_log("sim_2102_1848")
 
 
 

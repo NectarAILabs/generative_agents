@@ -938,7 +938,15 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
   #Logic handling before actually adding the react action to the persona's schedule
   if p.scratch.chatting_with is None:
     if wait_for is None or personas[wait_for].scratch.act_event[1] != "waiting to start":
-      p.scratch.f_daily_schedule[start_index:end_index] = ret
+      with open("react_log.txt", "a") as f:
+        f.write("------------------------------------")
+        f.write(f"{p.scratch.curr_time.strftime('%B %d, %Y, %H:%M:%S')}\n")
+        f.write(f"inserted_act: {inserted_act}\n")
+        f.write(f"inserted_act_dur: {inserted_act_dur}\n")
+        f.write(f"Schedule before modified: {p.scratch.f_daily_schedule}\n")
+        p.scratch.f_daily_schedule[start_index:end_index] = ret
+        f.write(f"Schedule after modified: {p.scratch.f_daily_schedule}\n")
+        f.write("------------------------------------\n")
       p.scratch.add_new_action(act_address,
                               inserted_act_dur,
                               inserted_act,
@@ -952,7 +960,6 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
                               act_obj_pronunciatio,
                               act_obj_event,
                               act_start_time)
-
 async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # There are two personas -- the persona who is initiating the conversation
   # and the persona who is the target. We get the persona instances here.
@@ -963,7 +970,9 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # Actually creating the conversation here.
   convo, duration_min = await generate_convo(maze, init_persona, target_persona)
   convo_summary = await generate_convo_summary(init_persona, convo)
+  target_inserted_act =  await generate_convo_summary(target_persona, convo)
   inserted_act = convo_summary
+
   inserted_act_dur = duration_min
 
   act_start_time = target_persona.scratch.act_start_time
@@ -974,7 +983,7 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
     chatting_end_time = temp_curr_time + datetime.timedelta(minutes=inserted_act_dur)
   else: 
     chatting_end_time = curr_time + datetime.timedelta(minutes=inserted_act_dur)
-
+  
   for role, p in [("init", init_persona), ("target", target_persona)]: 
     if role == "init": 
       act_address = f"<persona> {target_persona.name}"
@@ -984,8 +993,7 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
       chatting_with_buffer[target_persona.name] = 800
     elif role == "target": 
       # Generate the action description for target persona
-      inserted_act =  await generate_convo_summary(target_persona, convo)
-
+      inserted_act = target_inserted_act
       act_address = f"<persona> {init_persona.name}"
       act_event = (p.name, "chat with", init_persona.name)
       chatting_with = init_persona.name
