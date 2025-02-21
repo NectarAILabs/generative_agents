@@ -80,7 +80,7 @@ def setup_client(type: str, config: dict):
   elif type == "openai":
     client = AsyncOpenAI(
       api_key=config["key"],
-      timeout=httpx.Timeout(30.0, read=30.0, write=30.0, connect=3.0)
+      timeout=httpx.Timeout(30.0, read=30.0, write=30.0, connect=3.0),
     )
   else:
     raise ValueError("Invalid client")
@@ -461,7 +461,8 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         client_used.base_url = gpt_parameter["base_url"]
       else:
         client_used = client
-      extra_body = {k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}
+      extra_body = {}
+      extra_body.update({k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty"]})
       response = await client_used.beta.chat.completions.parse(
         model=gpt_parameter["engine"],
         messages=messages,
