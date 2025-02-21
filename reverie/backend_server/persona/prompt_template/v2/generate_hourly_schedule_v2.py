@@ -19,25 +19,25 @@ def create_prompt(prompt_input: dict[str, Any]):
   prompt_ending = prompt_input["prompt_ending"]
 
   prompt = f"""
-Hourly schedule format:
-{schedule_format}
-===
 {identity_stable_set}
 {instructions}
 Replace "[Fill in]" with the actual activity for each hour. Keep the actual activity general and not too specific. 
 Focus on general activities rather than specific events or interactions. The schedule should include flexible tasks like work, exercise, meals, relaxation, and other productive or leisure activities, but avoid mentioning other people, detailed events, or things {persona_name} can't control.
-Remember to include all 24 hours of the day.
 Here is the originally intended hourly breakdown of {persona_name}'s schedule today:
 {broad_daily_plan}
 {existing_schedule}
 {extra_instructions}
 {prompt_ending}
+===
+Follow the hourly schedule format (from 00:00 AM to 11:00 PM). Remember to include all 24 hours of the day.:
+{schedule_format}
+===
 """
   return prompt
 
 
 class Activity(BaseModel):
-  start_datetime: str
+  datetime: str
   activity: str
 
 
@@ -74,7 +74,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
     schedule_format += " ... continue ... , "
     schedule_format += f'{{"datetime":"{curr_date_str}, 11:00 PM"}}",'
     schedule_format += '"activity":"<to_be_determined>"}]}'
-
+    
     if all_in_one:
       instructions = "Create an hourly schedule for the following person to fill out their whole day."
     else:
@@ -93,7 +93,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
         existing_schedule += f" {hour_strings[count]}] Activity:"
         existing_schedule += f" {persona_firstname}"
         existing_schedule += f" is {task}\n"
-    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}\nYour schedule should assume that their task is "sleeping" during their bedtime.\n'
+    prompt_ending = f'{persona.scratch.get_str_firstname()} lifestyle: {persona.scratch.get_str_lifestyle()}\nYour schedule should assume that their task is "sleeping" during their bedtime and other activies when they are not sleeping. For example if they go to sleep at 2am, your schedule should make sure that the action at 02:00 AM is sleeping\n'
     if all_in_one:
       prompt_ending += "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
     else:
@@ -143,17 +143,22 @@ async def run_gpt_prompt_generate_hourly_schedule(
     else:
       fs = "idle"
     return fs
-
   gpt_param = {
-    "engine": openai_config["model"],
-    "max_tokens": 5000,
-    "temperature": 0,
-    "top_p": 1,
-    "stream": False,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
-    "stop": ["\n"],
-  }
+      "engine": openai_config["model"],
+      "max_tokens": 5000,
+      "temperature": 0,
+      "top_p": 1,
+      "stream": False,
+      "frequency_penalty": 0,
+      "presence_penalty": 0,
+      "stop": ["\n"],
+    }
+  provider_parameter = openai_config.get("other_providers", {}).get("hourly_schedule", None)
+  if provider_parameter != None:
+    for k,v in provider_parameter.items():
+      if k != "model":
+        gpt_param[k] = v
+    gpt_param["engine"] = provider_parameter["model"]
   prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(
     persona, p_f_ds_hourly_org, hour_strings, extra_instructions, test_input

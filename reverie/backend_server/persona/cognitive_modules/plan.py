@@ -886,12 +886,14 @@ async def _should_react(persona, retrieved, personas):
   curr_event = retrieved["curr_event"]
 
   if ":" not in curr_event.subject: 
-    # this is a persona event. 
-    if await lets_talk(persona, personas[curr_event.subject], retrieved):
-      return f"chat with {curr_event.subject}"
-    react_mode = await lets_react(persona, personas[curr_event.subject], 
+    if persona.scratch.chatting_with is None and persona.scratch.act_event[1] != "waiting to start":
+      # this is a persona event. 
+      if personas[curr_event.subject].scratch.chatting_with is None:
+        if await lets_talk(persona, personas[curr_event.subject], retrieved):
+          return f"chat with {curr_event.subject}"
+      react_mode = await lets_react(persona, personas[curr_event.subject], 
                             retrieved)
-    return react_mode
+      return react_mode
   return False
 
 

@@ -208,6 +208,12 @@ async def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, v
     "presence_penalty": 0,
     "stop": None,
   }
+  provider_parameter = openai_config.get("other_providers", {}).get("task_decomp", None)
+  if provider_parameter != None:
+    for k,v in provider_parameter.items():
+      if k != "model":
+        gpt_param[k] = v
+    gpt_param["engine"] = provider_parameter["model"]
   prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(persona, task, duration)
   prompt = create_prompt(prompt_input)

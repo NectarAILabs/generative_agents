@@ -125,7 +125,7 @@ async def run_gpt_generate_iterative_chat_utt(
 
   def __chat_func_clean_up(gpt_response: ChatUtterance, prompt=""):
     cleaned_dict = {
-      "utterance": gpt_response.utterance.strip(f"{init_persona.scratch.name}:").strip(),
+      "utterance": gpt_response.utterance.replace(f"{init_persona.scratch.name}:","").strip(),
       "end": gpt_response.did_conversation_end,
     }
     return cleaned_dict
@@ -167,7 +167,7 @@ async def run_gpt_generate_iterative_chat_utt(
   gpt_param = {
     "engine": openai_config["model"],
     "max_tokens": 4096,
-    "temperature": 0.3,
+    "temperature": 0.2,
     "top_p": 0.1,
     "stream": False,
     "frequency_penalty": 0,

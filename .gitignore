@@ -11,6 +11,7 @@ environment/frontend_server/static_dirs/img/
 reverie/backend_server/cost-logs/*
 reverie/backend_server/error_logging/
 # Logs folder
+environment/frontend_server/log_agents/
 logs/*
 !logs/skip-morning_2024-05-15_13-54-44.txt
 reverie/backend_server/queue_log.txt
@@ -59,6 +60,7 @@ develop-eggs/
 dist/
 downloads/
 eggs/
+.cursorrules
 .eggs/
 lib/
 lib64/

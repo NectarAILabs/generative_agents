@@ -1,7 +1,7 @@
 import shutil
 import json
 from global_methods import *
-
+# create a log to track agent actions over time
 def get_log(sim_code):
   sim_storage = f"../environment/frontend_server/storage/{sim_code}"
   log_storage = f"../environment/frontend_server/log_agents/{sim_code}"

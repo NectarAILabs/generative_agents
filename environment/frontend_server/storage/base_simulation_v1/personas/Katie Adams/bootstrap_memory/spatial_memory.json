@@ -2,7 +2,7 @@
   "the Ville": {
     "Katie Adams's apartment": {
       "bathroom": ["bathroom sink", "shower", "toilet"],
-      "main room": ["closet", "bed", "desk", "cooking area", "kitchen sink", "refrigerator"]
+      "main room": ["closet", "bed", "desk", "cooking area", "refrigerator"]
     },
     "Johnson Park": {
       "park": ["park garden"]
@@ -19,7 +19,7 @@
     "The Rose and Crown Pub": {
       "pub": ["shelf", "refrigerator", "bar customer seating", "behind the bar counter", "kitchen sink", "cooking area", "microphone"]
     },
-    "Amelie Dupont’s house": {
+    "Amelie Dupont's house": {
       "main room": ["closet", "bed", "shelf", "desk", "cooking area", "kitchen sink", "refrigerator"],
       "bathroom": ["bathroom sink", "shower"]
     },

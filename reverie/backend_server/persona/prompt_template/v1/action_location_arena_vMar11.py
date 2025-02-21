@@ -53,11 +53,8 @@ async def run_gpt_prompt_action_arena(
     fin_accessible_arenas = []
 
     for i in curr:
-      if "'s room" in i:
-        if persona.scratch.last_name in i:
-          fin_accessible_arenas += [i]
-      else:
-        fin_accessible_arenas += [i]
+      # Can join every arena, not only the persona's room
+      fin_accessible_arenas += [i]
     accessible_arena_str = ", ".join(fin_accessible_arenas)
 
     action_description_1 = action_description
