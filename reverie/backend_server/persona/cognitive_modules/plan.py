@@ -410,8 +410,9 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
   # Step 1: Setting up the core variables for the function. 
 
   # <today_min_pass> indicates the number of minutes that have passed today. 
+  # Fix for the case when the curr_time is round to minute.
   today_min_pass = (int(persona.scratch.curr_time.hour) * 60
-                    + int(persona.scratch.curr_time.minute) + 1)
+                    + int(persona.scratch.curr_time.minute) + (1 if persona.scratch.curr_time.second > 0 else 0))
   
   # Step 2: We need to create <main_act_dur> and <truncated_act_dur>. 
   # These are basically a sub-component of <f_daily_schedule> of the persona,
@@ -446,22 +447,24 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
   truncated_fin = False 
 
   for act, dur in persona.scratch.f_daily_schedule:
-    if (dur_sum >= start_hour * 60) and (dur_sum < end_hour * 60): 
+    # Add duration first to avoid adding the duration of the last act.
+    dur_sum += dur
+    if (dur_sum > start_hour * 60) and (dur_sum <= end_hour * 60): 
       main_act_dur += [[act, dur]]
       if dur_sum <= today_min_pass:
         truncated_act_dur += [[act, dur]]
+      # Check if the action is interupted.
       elif dur_sum > today_min_pass and not truncated_fin: 
         # We need to insert that last act, duration list like this one: 
         # e.g., ['wakes up and completes her morning routine (wakes up...)', 2]
         truncated_act_dur += [[persona.scratch.f_daily_schedule[count][0],
-                               dur_sum - today_min_pass]] 
-        truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
-        # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass + 1) ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
+                               today_min_pass - dur_sum + dur]] 
+        #truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
+        #truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass + 1) ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
 
         # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
         truncated_fin = True
-    dur_sum += dur
-    count += 1
+    count +=1 
 
   x = truncated_act_dur[-1][0].split("(")[0].strip() + " (on the way to " + truncated_act_dur[-1][0].split("(")[-1][:-1] + ")"
   truncated_act_dur[-1][0] = x
