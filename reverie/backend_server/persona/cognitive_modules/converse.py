@@ -6,7 +6,7 @@ Description: An extra cognitive module for generating conversations.
 """
 import datetime
 import traceback
-
+import unicodedata
 import sys
 sys.path.append('../')
 from utils import debug
@@ -188,7 +188,9 @@ async def agent_chat_v2(maze, init_persona, target_persona):
                       f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
     retrieved = await new_retrieve(init_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
-
+    #Remove words like \u2019 from the utterance and normalize
+    utt = utt.encode().decode('unicode_escape')
+    utt = unicodedata.normalize('NFKD', utt)
     curr_chat += [[init_persona.scratch.name, utt]]
     if end:
       break
@@ -209,7 +211,9 @@ async def agent_chat_v2(maze, init_persona, target_persona):
                       f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
     retrieved = await new_retrieve(target_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
-
+    #Remove words like \u2019 from the utterance and normalize
+    utt = utt.encode().decode('unicode_escape')
+    utt = unicodedata.normalize('NFKD', utt)
     curr_chat += [[target_persona.scratch.name, utt]]
     if end:
       break

@@ -32,7 +32,18 @@
       "classroom": ["blackboard", "classroom podium", "classroom student seating"]
     },
     "Noah Walker's apartment": {
-      "main room": ["bed", "desk"]
+      "main room": [
+        "bed",
+        "desk",
+        "refrigerator",
+        "closet",
+        "shelf"
+      ],
+      "bathroom": [
+        "shower",
+        "bathroom sink",
+        "toilet"
+      ]
     }
   }
 }

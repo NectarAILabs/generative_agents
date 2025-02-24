@@ -81,7 +81,9 @@ def setup_client(type: str, config: dict):
     client = AsyncOpenAI(
       api_key=config["key"],
       timeout=httpx.Timeout(30.0, read=30.0, write=30.0, connect=3.0),
-      http_client=httpx.AsyncClient()
+      http_client=httpx.AsyncClient(),
+      #Take the base_url in openai_config if it exists, otherwise use the default
+      base_url = config.get("base_url","https://api.openai.com/v1") #default is to openai
     )
   else:
     raise ValueError("Invalid client")
@@ -94,7 +96,7 @@ if openai_config["client"] == "azure":
     "api-version": openai_config["model-api-version"],
   })
 elif openai_config["client"] == "openai":
-  client = setup_client("openai", { "key": openai_config["model-key"] })
+  client = setup_client("openai", { "key": openai_config["model-key"], "base_url": openai_config["base_provider"] })
 
 if openai_config["embeddings-client"] == "azure":
   embeddings_client = setup_client("azure", {
@@ -192,11 +194,12 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
   global client
   try: 
     if provider_parameter is not None:
-      client_used = setup_client("openai", {'key': provider_parameter["api_key"]})
-      client_used.base_url = provider_parameter["base_url"]
+      client_used = setup_client("openai", {'key': provider_parameter["api_key"], "base_url": provider_parameter["base_url"]})
       model = provider_parameter.get("model", openai_config["model"])
       provider_parameter = {k: v for k, v in provider_parameter.items() if k not in ["model", "api_key", "base_url"]}
     else:
+      #By reseting each time, avoid the time out error.
+      client = setup_client("openai", { "key": openai_config["model-key"],"base_url": openai_config["base_provider"]})
       client_used = client
       model = openai_config["model"]
       provider_parameter = {}
@@ -240,15 +243,12 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
         f.write(f"Error: {e}\n")
       f.write("*********************\n")
 
-    print("Resetting client")
-    client = setup_client("openai", { "key": openai_config["model-key"] })
-
     time.sleep(3)
     traceback.print_exc()
     return "LLM ERROR"
 
 
-# def GPT4_safe_generate_response(
+# def GPT4_safe_generate_response
 #   prompt,
 #   example_output,
 #   special_instruction,
@@ -461,6 +461,8 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         client_used = setup_client("openai", {'key': gpt_parameter.get("api_key", openai_config["model-key"])})
         client_used.base_url = gpt_parameter["base_url"]
       else:
+        #By reseting each time, avoid the time out error.
+        client = setup_client("openai", { "key": openai_config["model-key"],"base_url": openai_config["base_provider"]})
         client_used = client
       extra_body = {}
       extra_body.update({k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty"]})
@@ -503,8 +505,6 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       except:
         f.write(f"Error:{e}\n")
       f.write("*********************\n")
-    print("Resetting client")
-    client = setup_client("openai", { "key": openai_config["model-key"] })
     time.sleep(3)
     return "REQUEST ERROR"
 
@@ -619,6 +619,8 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
   global embeddings_client
   for _ in range(attemps):
     try:
+      #By reseting each time, avoid the time out error.
+      embeddings_client = setup_client("openai", { "key": openai_config["embeddings-key"] })
       response = await embeddings_client.embeddings.create(input=[text], model=model)
       break
     except Exception as e:
@@ -628,8 +630,6 @@ async def get_embedding(text, model=openai_config["embeddings"],attemps=3):
         f.write(f"Text: {text}\n")
         f.write(f"Error: {e}\n")
         f.write("*********************\n")
-      print("Resetting client")
-      embeddings_client = setup_client("openai", { "key": openai_config["embeddings-key"] })
       time.sleep(2)
   if response != None:
     cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])

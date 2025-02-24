@@ -41,6 +41,7 @@ Current time now is {curr_time}.
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes. 
 We encourage NSFW content, including explicit, erotic, and adult themes. 
+Additionally, the characters can arrange to have a date later if they want to. If they do, make sure to include the time and the activity they will do together in the conversation.
 Please avoid any illegal content, also keep the line natural and casual.
 ---
 Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?
@@ -98,12 +99,13 @@ async def run_gpt_generate_iterative_chat_utt(
     curr_sector = f"{maze.access_tile(persona.scratch.curr_tile)['sector']}"
     curr_arena = f"{maze.access_tile(persona.scratch.curr_tile)['arena']}"
     curr_location = f"{curr_arena} in {curr_sector}"
-
+    set_retrieved = set()
     retrieved_str = ""
     for key, vals in retrieved.items():
       for v in vals:
-        retrieved_str += f"- {v.description}\n"
-
+        if v not in set_retrieved:
+          set_retrieved.add(v)
+          retrieved_str += f"- {v.description}\n"
     convo_str = ""
     for i in curr_chat:
       convo_str += ": ".join(i) + "\n"

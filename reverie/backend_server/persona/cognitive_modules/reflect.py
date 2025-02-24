@@ -18,6 +18,7 @@ from persona.prompt_template.run_gpt_prompt import (
     run_gpt_prompt_event_poignancy,
     run_gpt_prompt_chat_poignancy,
     run_gpt_prompt_focal_pt,
+    run_gpt_prompt_generate_new_schedule,
     run_gpt_prompt_insight_and_guidance,
     run_gpt_prompt_planning_thought_on_convo,
     run_gpt_prompt_memo_on_convo,
@@ -115,6 +116,9 @@ async def generate_memo_on_convo(persona, all_utt):
   if debug: print ("GNS FUNCTION: <generate_memo_on_convo>")
   return (await run_gpt_prompt_memo_on_convo(persona, all_utt))[0]
 
+async def generate_new_schedule_on_convo(persona, statement, start_hour):
+  if debug: print ("GNS FUNCTION: <generate_new_schedule_on_convo>")
+  return (await run_gpt_prompt_generate_new_schedule(persona, statement, start_hour))[0]
 
 
 
@@ -232,10 +236,58 @@ async def reflect(persona):
       # print (persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id)
 
       evidence = [persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id]
-
       planning_thought = await generate_planning_thought_on_convo(persona, all_utt)
-      planning_thought = f"For {persona.scratch.name}'s planning: {planning_thought}"
+      #Generate new schedule for the day based on the convo (added function)
+      min_sum = 0 
+      for i in range (persona.scratch.get_f_daily_schedule_hourly_org_index()): 
+        min_sum += persona.scratch.f_daily_schedule_hourly_org[i][1]
+      curr_hour = int (min_sum/60)
 
+      if (persona.scratch.f_daily_schedule_hourly_org[persona.scratch.get_f_daily_schedule_hourly_org_index()][1] >= 120):
+        start_hour = curr_hour + persona.scratch.f_daily_schedule_hourly_org[persona.scratch.get_f_daily_schedule_hourly_org_index()][1]/60
+
+      elif (persona.scratch.f_daily_schedule_hourly_org[persona.scratch.get_f_daily_schedule_hourly_org_index()][1] + 
+          persona.scratch.f_daily_schedule_hourly_org[persona.scratch.get_f_daily_schedule_hourly_org_index()+1][1]): 
+        start_hour = curr_hour + ((persona.scratch.f_daily_schedule_hourly_org[persona.scratch.get_f_daily_schedule_hourly_org_index()][1] + 
+                  persona.scratch.f_daily_schedule_hourly_org[persona.scratch.get_f_daily_schedule_hourly_org_index()+1][1])/60)
+
+      else: 
+        start_hour = curr_hour + 2
+      start_hour = int(start_hour)
+      _new_activities = await generate_new_schedule_on_convo(persona, planning_thought, start_hour)
+      advance = persona.scratch.curr_time.replace(hour=start_hour, minute=0, second=0, microsecond=0) - persona.scratch.curr_time
+      advance= int(advance.total_seconds()/60) +1
+      prev_task = None
+      prev_count = 0
+      _new_hourly_schedule = []
+      for task in _new_activities:
+        if task != prev_task:
+          prev_count = 1
+          _new_hourly_schedule += [[task, prev_count]]
+          prev_task = task
+        else:
+          if _new_hourly_schedule:
+            _new_hourly_schedule[-1][1] += 1
+      new_hourly_schedule = []
+      for task, duration in _new_hourly_schedule:
+        new_hourly_schedule += [[task, duration * 60]]
+      
+      with open("new_schedule.txt", "a") as f:
+        f.write("--------------------------------\n")
+        f.write(f"Persona: {persona.scratch.name}\n")
+        f.write(f"Current time: {persona.scratch.curr_time}\n")
+        f.write(f"Original hourly schedule: {persona.scratch.f_daily_schedule_hourly_org}\n")
+        f.write(f"Original schedule: {persona.scratch.f_daily_schedule}\n")
+
+        hour_index = persona.scratch.get_f_daily_schedule_hourly_org_index(advance=advance)
+        persona.scratch.f_daily_schedule_hourly_org[hour_index:] = new_hourly_schedule
+        schedule_index = persona.scratch.get_f_daily_schedule_index(advance=advance)
+        persona.scratch.f_daily_schedule[schedule_index:] = new_hourly_schedule
+        f.write(f"New hourly schedule: {persona.scratch.f_daily_schedule_hourly_org}\n")
+        f.write(f"New schedule: {persona.scratch.f_daily_schedule}\n")
+        f.write("--------------------------------\n")
+
+      planning_thought = f"For {persona.scratch.name}'s planning: {planning_thought}"
       created = persona.scratch.curr_time
       expiration = persona.scratch.curr_time + datetime.timedelta(days=30)
       s, p, o = await generate_action_event_triple(planning_thought, persona)
@@ -246,7 +298,6 @@ async def reflect(persona):
       persona.a_mem.add_thought(created, expiration, s, p, o, 
                                 planning_thought, keywords, thought_poignancy, 
                                 thought_embedding_pair, evidence)
-
 
 
       memo_thought = await generate_memo_on_convo(persona, all_utt)

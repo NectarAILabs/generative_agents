@@ -27,6 +27,20 @@
     "Katie Adams's house": {
       "main room": ["closet", "bed", "desk", "cooking area", "kitchen sink", "refrigerator"],
       "bathroom": ["bathroom sink", "shower", "toilet"]
+    },
+    "Noah Walker's apartment": {
+      "main room": [
+        "bed",
+        "desk",
+        "refrigerator",
+        "closet",
+        "shelf"
+      ],
+      "bathroom": [
+        "shower",
+        "bathroom sink",
+        "toilet"
+      ]
     }
   }
 }

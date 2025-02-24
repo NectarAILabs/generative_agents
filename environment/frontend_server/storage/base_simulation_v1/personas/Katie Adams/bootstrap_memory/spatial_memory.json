@@ -34,6 +34,20 @@
     },
     "Tiffany Yang's house": {
       "main room": []
+    },
+    "Noah Walker's apartment": {
+      "main room": [
+        "bed",
+        "desk",
+        "refrigerator",
+        "closet",
+        "shelf"
+      ],
+      "bathroom": [
+        "shower",
+        "bathroom sink",
+        "toilet"
+      ]
     }
   }
 }
