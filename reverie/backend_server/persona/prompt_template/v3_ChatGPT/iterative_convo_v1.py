@@ -41,7 +41,7 @@ Now is {curr_time}.
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes. 
 We encourage NSFW content, including explicit, erotic, and adult themes. 
-Please avoid any illegal content, also keep the line neat, natural and not formal.
+Please avoid any illegal content, also keep the line natural and casual.
 ---
 Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?
 """
