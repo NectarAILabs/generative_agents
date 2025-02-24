@@ -16,7 +16,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   curr_situation = prompt_input["curr_situation"]
   target_persona_name = prompt_input["target_persona_name"]
   curr_conversation = prompt_input["curr_conversation"]
-
+  curr_time = prompt_input["curr_time"]
   prompt = f"""
 Context for the task:
 
@@ -37,10 +37,11 @@ Current Context:
 
 {init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
 {curr_conversation}
+Current time now is {curr_time}.
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes. 
 We encourage NSFW content, including explicit, erotic, and adult themes. 
-Please avoid any illegal content, also keep the line neat, natural and not formal.
+Please avoid any illegal content, also keep the line natural and casual.
 ---
 Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?
 """
@@ -120,12 +121,13 @@ async def run_gpt_generate_iterative_chat_utt(
       "curr_situation": curr_context,
       "target_persona_name": target_persona.scratch.name,
       "curr_conversation": convo_str,
+      "curr_time": init_persona.scratch.curr_time,
     }
     return prompt_input
 
   def __chat_func_clean_up(gpt_response: ChatUtterance, prompt=""):
     cleaned_dict = {
-      "utterance": gpt_response.utterance.strip(f"{init_persona.scratch.name}:").strip(),
+      "utterance": gpt_response.utterance.replace(f"{init_persona.scratch.name}:","").strip(),
       "end": gpt_response.did_conversation_end,
     }
     return cleaned_dict
@@ -152,7 +154,7 @@ async def run_gpt_generate_iterative_chat_utt(
   )
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt", None)
+  provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt_provider", None)
   output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ChatUtterance,
@@ -167,11 +169,13 @@ async def run_gpt_generate_iterative_chat_utt(
   gpt_param = {
     "engine": openai_config["model"],
     "max_tokens": 4096,
-    "temperature": 0,
-    "top_p": 1,
+    "temperature": 1.1,
+    "top_k": 250,
     "stream": False,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
+    "frequency_penalty": 0.5,
+    "presence_penalty": 0.5,
+    "repetition_penalty": 1.1,
+    "min_p": 0.1,
     "stop": None,
   }
 
