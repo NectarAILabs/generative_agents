@@ -431,8 +431,10 @@ class ReverieServer:
                 await persona.reflect()
                 await task_queue.put((persona_name, "execute", results[persona_name]["plan"]))
               elif task_type == "execute":
-                result = await persona.execute(self.maze, self.personas, input_data)
-                results[persona_name]["execution"] = result
+                #Make sure all persona have a plan before executing to avoid conflict
+                if all("plan" in results[persona_name].keys() for persona_name in self.personas.keys()):
+                  result = await persona.execute(self.maze, self.personas, self.personas[persona_name].scratch.act_address)
+                  results[persona_name]["execution"] = result
               #log_info(f"Completed task: {task_type} for persona: {persona_name}")
             # Main pipeline
             for persona_name, persona in self.personas.items():
