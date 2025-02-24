@@ -81,6 +81,7 @@ def setup_client(type: str, config: dict):
     client = AsyncOpenAI(
       api_key=config["key"],
       timeout=httpx.Timeout(30.0, read=30.0, write=30.0, connect=3.0),
+      http_client=httpx.AsyncClient()
     )
   else:
     raise ValueError("Invalid client")

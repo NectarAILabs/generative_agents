@@ -213,6 +213,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
     curr_chat += [[target_persona.scratch.name, utt]]
     if end:
       break
+  
 
   return curr_chat
 

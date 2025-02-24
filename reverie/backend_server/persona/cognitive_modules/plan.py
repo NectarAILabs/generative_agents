@@ -963,6 +963,7 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
                               act_obj_pronunciatio,
                               act_obj_event,
                               act_start_time)
+
 async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # There are two personas -- the persona who is initiating the conversation
   # and the persona who is the target. We get the persona instances here.
@@ -1112,5 +1113,4 @@ async def plan(persona, maze, personas, new_day, retrieved):
   for persona_name, buffer_count in curr_persona_chat_buffer.items():
     if persona_name != persona.scratch.chatting_with: 
       persona.scratch.chatting_with_buffer[persona_name] -= 1
-
-  return persona.scratch.act_address
+  return persona.scratch.act_address                                                                                                                                               

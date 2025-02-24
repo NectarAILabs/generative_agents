@@ -24,6 +24,7 @@ from .v2.generate_event_triple_v1 import (
   run_gpt_prompt_event_triple,  # noqa: F401
   run_gpt_prompt_act_obj_event_triple,  # noqa: F401
 )
+from .v3_ChatGPT.generate_new_schedule_v1 import run_gpt_prompt_generate_new_schedule  # noqa: F401
 from .v2.generate_hourly_schedule_v2 import run_gpt_prompt_generate_hourly_schedule  # noqa: F401
 from .v2.generate_next_convo_line_v1 import run_gpt_prompt_generate_next_convo_line  # noqa: F401
 from .v2.insight_and_evidence_v1 import run_gpt_prompt_insight_and_guidance  # noqa: F401
