@@ -6,6 +6,7 @@ Description: This defines the "Reflect" module for generative agents.
 """
 
 import datetime
+import asyncio
 # import random
 # from numpy import dot
 # from numpy.linalg import norm
@@ -77,6 +78,7 @@ async def generate_action_event_triple(act_desp, persona):
   EXAMPLE OUTPUT: 
     "🧈🍞"
   """
+  act_desp = act_desp.replace(f"{persona.scratch.get_str_name()} is", "").strip()
   if debug: print ("GNS FUNCTION: <generate_action_event_triple>")
   return (await run_gpt_prompt_event_triple(act_desp, persona))[0]
 
@@ -145,7 +147,8 @@ async def run_reflect(persona):
     for xxx in xx: print (xxx)
 
     thoughts = await generate_insights_and_evidence(persona, nodes, 5)
-    for thought, evidence in thoughts.items(): 
+    # Async processing instead of iterating.
+    async def process_thought(thought, evidence, persona):
       created = persona.scratch.curr_time
       expiration = persona.scratch.curr_time + datetime.timedelta(days=30)
       s, p, o = await generate_action_event_triple(thought, persona)  
@@ -156,6 +159,11 @@ async def run_reflect(persona):
       persona.a_mem.add_thought(created, expiration, s, p, o, 
                                 thought, keywords, thought_poignancy, 
                                 thought_embedding_pair, evidence)
+
+    tasks = []
+    for thought, evidence in thoughts.items():
+      tasks.append(asyncio.ensure_future(process_thought(thought, evidence, persona)))
+    await asyncio.gather(*tasks)
 
 
 def reflection_trigger(persona): 

@@ -189,7 +189,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
     retrieved = await new_retrieve(init_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
-    utt = utt.encode().decode('unicode_escape')
+    utt = utt.encode().decode('utf-8')
     utt = unicodedata.normalize('NFKD', utt)
     curr_chat += [[init_persona.scratch.name, utt]]
     if end:
@@ -212,7 +212,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
     retrieved = await new_retrieve(target_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
-    utt = utt.encode().decode('unicode_escape')
+    utt = utt.encode().decode('utf-8')
     utt = unicodedata.normalize('NFKD', utt)
     curr_chat += [[target_persona.scratch.name, utt]]
     if end:
@@ -329,8 +329,8 @@ async def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, 
         line = input("Enter Input: ")
       if line == "end_convo": 
         break
-
-      if int((await run_gpt_generate_safety_score(persona, line))[0]) >= 8 and safe_mode:
+      #Fix
+      if int((await run_gpt_generate_safety_score(line))[0]) >= 8 and safe_mode:
         print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")
 
       else: 

@@ -220,4 +220,4 @@ async def perceive(persona, maze):
       persona.scratch.importance_trigger_curr -= event_poignancy
       persona.scratch.importance_ele_n += 1
 
-  return ret_events
+  return [x for x in ret_events if x != None]

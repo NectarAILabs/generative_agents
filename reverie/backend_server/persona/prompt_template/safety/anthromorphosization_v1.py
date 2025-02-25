@@ -37,6 +37,7 @@ async def run_gpt_generate_safety_score(comment: str, test_input=None, verbose=F
   def __chat_func_validate(gpt_response, prompt=""):
     try:
       __chat_func_clean_up(gpt_response)
+      return True
     except Exception:
       traceback.print_exc()
       return False

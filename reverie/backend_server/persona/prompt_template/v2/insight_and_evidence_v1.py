@@ -11,15 +11,15 @@ from ..print_prompt import print_run_prompts
 def create_prompt(prompt_input: dict[str, Any]):
   statements = prompt_input["statements"]
   num_insights = prompt_input["num_insights"]
-
+  persona_name = prompt_input["persona_name"]
   prompt = f"""
 Input:
 {statements}
-
+These statements are from {persona_name} memory.
 What {num_insights} high-level insights can you infer from the above statements?
 Cite the statements that support each insight by number.
 (example format: {{
-  "insight": "This is a high-level insight",
+  "insight": "This is a high-level insight, always start with '{persona_name} is'",
   "because_of": [1, 5, 3]
 }})
 """
@@ -42,6 +42,7 @@ async def run_gpt_prompt_insight_and_guidance(
     prompt_input = {
       "statements": statements,
       "num_insights": num_insights,
+      "persona_name": persona.scratch.get_str_name(),
     }
     return prompt_input
 

@@ -65,10 +65,6 @@ async def run_gpt_prompt_action_sector(
     curr = accessible_sector_str.split(", ")
     fin_accessible_sectors = []
     for i in curr:
-      if "'s house" in i:
-        if persona.scratch.last_name in i:
-          fin_accessible_sectors += [i]
-      else:
         fin_accessible_sectors += [i]
     accessible_sector_str = ", ".join(fin_accessible_sectors)
 

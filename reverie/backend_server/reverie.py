@@ -758,7 +758,7 @@ class ReverieServer:
           # anything to the agent's memory.
           # Ex: call -- analysis Isabella Rodriguez
           persona_name = sim_command[len("call -- analysis") :].strip()
-          self.personas[persona_name].open_convo_session("analysis")
+          asyncio.run(self.personas[persona_name].open_convo_session("analysis"))
 
         elif "call -- load history" in sim_command.lower():
           # Loads the agent history from a file.

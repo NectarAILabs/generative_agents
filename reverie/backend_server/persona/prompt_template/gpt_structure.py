@@ -205,7 +205,7 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
       provider_parameter = {}
 
     #For supported parameters of vLLM
-    extra_body, provider_parameter = {k:v for k,v in provider_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}, {k:v for k,v in provider_parameter.items() if k not in ["min_p","top_k","repetition_penalty"]}
+    extra_body, provider_parameter = {k:v for k,v in provider_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}, {k:v for k,v in provider_parameter.items() if k not in ["min_p","top_k","repetition_penalty","provider"]}
     completion = await client_used.beta.chat.completions.parse(
       model=model,
       response_format=response_format,
@@ -465,7 +465,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         client = setup_client("openai", { "key": openai_config["model-key"],"base_url": openai_config["base_provider"]})
         client_used = client
       extra_body = {}
-      extra_body.update({k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty"]})
+      extra_body.update({k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty","provider"]})
       response = await client_used.beta.chat.completions.parse(
         model=gpt_parameter["engine"],
         messages=messages,
