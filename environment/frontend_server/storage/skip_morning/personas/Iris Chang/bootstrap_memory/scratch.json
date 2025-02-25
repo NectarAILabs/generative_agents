@@ -1,0 +1,347 @@
+{
+  "vision_r": 8,
+  "att_bandwidth": 8,
+  "retention": 8,
+  "curr_time": "February 13, 2023, 07:13:20",
+  "curr_tile": [
+    116,
+    51
+  ],
+  "daily_plan_req": "",
+  "gender": "female",
+  "name": "Iris Chang",
+  "first_name": "Iris",
+  "last_name": "Chang",
+  "age": 20,
+  "innate": "intelligent, reserved, and deeply perceptive.",
+  "learned": " Iris Chang is quiet and observant, Iris has spent most of her life in the shadow of her outgoing twin, Mina. While she\u2019s used to being overlooked, she\u2019s far from resentful\u2014 the twins love and support each other and Iris prefers the peace that comes with solitude. Thoughtful and introspective, Iris finds comfort in books, logic, and structured plans, often immersing herself in her studies to avoid the chaotic energy her sister thrives in. However, deep down, she longs to be noticed for who she truly is, not just as \u201cMina\u2019s twin.\u201d Though she rarely seeks attention, when she does speak, her words carry weight\u2014she\u2019s insightful, sharp, and capable of surprising those who underestimate her. While she doesn\u2019t need the spotlight, she yearns for someone who genuinely sees her and appreciates the quiet strength she possesses.",
+  "currently": "Iris Chang is twins with Mina Chang. The \u201cstudious twin.\u201d Typically stays indoors to study. Used to being ignored by people for her more boisterous sister.",
+  "lifestyle": "Iris Chang goes to bed around 11pm, awakes up around 7am, eats dinner around 6pm. The school she is studying at is Oak Hill College - a girl's college which has just accepted its first male student. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Iris would be happy to pursue a sexual relationship with him to explore herself with a more experienced guy, and would be willing to share him with other girls, including her twin.",
+  "living_area": "the Ville:Dorm for Oak Hill College:Iris Chang's room",
+  "concept_forget": 100,
+  "daily_reflection_time": 180,
+  "daily_reflection_size": 5,
+  "overlap_reflect_th": 4,
+  "kw_strg_event_reflect_th": 10,
+  "kw_strg_thought_reflect_th": 9,
+  "recency_w": 1,
+  "relevance_w": 1,
+  "importance_w": 1,
+  "recency_decay": 0.99,
+  "importance_trigger_max": 150,
+  "importance_trigger_curr": 95,
+  "importance_ele_n": 53,
+  "thought_count": 5,
+  "daily_req": [
+    "7:00 am - Wake up and complete morning routine, including showering and getting dressed.",
+    "8:00 am - Have breakfast with Mina, discussing plans for the day and any assignments due this week.",
+    "9:00 am - Attend morning classes, focusing intently on the lectures and participating when possible.",
+    "12:00 pm - Have lunch in the campus cafeteria, trying to strike up a conversation about the new male student with Mina and their friends.",
+    "1:00 pm - Attend afternoon classes for the day, continuing to engage with studies and taking notes diligently.",
+    "4:00 pm - Spend some quiet time at the library studying and doing homework, aligning her schedules with Mina's social plans later.",
+    "6:00 pm - Have dinner with Mina and friends, playfully discussing the new male student and considering joining a group activity with him and other girls.",
+    "8:00 pm - Join a study group for one of her challenging courses, providing support and insights to classmates.",
+    "10:00 pm - Wind down by reading a book in her dorm room, reflecting on her day and contemplating her feelings towards the new student.",
+    "11:00 pm - Go to bed, hoping for a productive day tomorrow."
+  ],
+  "f_daily_schedule": [
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing the morning routine (waking up and getting out of bed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (making the bed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (brushing teeth)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (washing face)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (applying skincare products)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (getting dressed for the day)",
+      10
+    ],
+    [
+      "waking up and completing the morning routine (brushing hair)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (preparing a glass of water)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (sipping water and organizing thoughts for the day)",
+      10
+    ],
+    [
+      "waking up and completing the morning routine (checking the day\u2019s schedule and ensuring all items needed are in her bag)",
+      5
+    ],
+    [
+      "having breakfast and discussing plans for the day (preparing breakfast)",
+      10
+    ],
+    [
+      "having breakfast and discussing plans for the day (sitting down to eat breakfast)",
+      10
+    ],
+    [
+      "having breakfast and discussing plans for the day (thinking about the day's schedule)",
+      5
+    ],
+    [
+      "having breakfast and discussing plans for the day (writing down plans for the day)",
+      10
+    ],
+    [
+      "having breakfast and discussing plans for the day (reviewing the plans)",
+      10
+    ],
+    [
+      "having breakfast and discussing plans for the day (adjusting schedule as needed)",
+      5
+    ],
+    [
+      "having breakfast and discussing plans for the day (finishing breakfast)",
+      5
+    ],
+    [
+      "having breakfast and discussing plans for the day (cleaning up breakfast dishes)",
+      5
+    ],
+    [
+      "attending morning classes and focusing on lectures",
+      60
+    ],
+    [
+      "continuing with morning classes and participating actively",
+      60
+    ],
+    [
+      "taking a short break and reviewing class notes",
+      60
+    ],
+    [
+      "having lunch and engaging in conversation with peers",
+      60
+    ],
+    [
+      "attending afternoon classes and taking notes diligently",
+      60
+    ],
+    [
+      "continuing with afternoon classes and engaging with studies",
+      60
+    ],
+    [
+      "participating in class discussions and activities",
+      60
+    ],
+    [
+      "studying and doing homework at the library",
+      60
+    ],
+    [
+      "continuing to study and aligning schedules with Mina",
+      60
+    ],
+    [
+      "having dinner and discussing the day with Mina",
+      60
+    ],
+    [
+      "relaxing and contemplating joining group activities",
+      60
+    ],
+    [
+      "joining a study group and providing insights",
+      60
+    ],
+    [
+      "reviewing study materials and preparing for tomorrow",
+      60
+    ],
+    [
+      "reading a book and reflecting on the day",
+      60
+    ],
+    [
+      "going to bed and hoping for a productive day tomorrow",
+      60
+    ]
+  ],
+  "f_daily_schedule_hourly_org": [
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing the morning routine",
+      60
+    ],
+    [
+      "having breakfast and discussing plans for the day",
+      60
+    ],
+    [
+      "attending morning classes and focusing on lectures",
+      60
+    ],
+    [
+      "continuing with morning classes and participating actively",
+      60
+    ],
+    [
+      "taking a short break and reviewing class notes",
+      60
+    ],
+    [
+      "having lunch and engaging in conversation with peers",
+      60
+    ],
+    [
+      "attending afternoon classes and taking notes diligently",
+      60
+    ],
+    [
+      "continuing with afternoon classes and engaging with studies",
+      60
+    ],
+    [
+      "participating in class discussions and activities",
+      60
+    ],
+    [
+      "studying and doing homework at the library",
+      60
+    ],
+    [
+      "continuing to study and aligning schedules with Mina",
+      60
+    ],
+    [
+      "having dinner and discussing the day with Mina",
+      60
+    ],
+    [
+      "relaxing and contemplating joining group activities",
+      60
+    ],
+    [
+      "joining a study group and providing insights",
+      60
+    ],
+    [
+      "reviewing study materials and preparing for tomorrow",
+      60
+    ],
+    [
+      "reading a book and reflecting on the day",
+      60
+    ],
+    [
+      "going to bed and hoping for a productive day tomorrow",
+      60
+    ]
+  ],
+  "act_address": "the Ville:Dorm for Oak Hill College:woman's bathroom:bathroom sink",
+  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_duration": 5,
+  "act_description": "waking up and completing the morning routine (brushing teeth)",
+  "act_pronunciatio": "\ud83d\ude01",
+  "act_event": [
+    "Iris Chang",
+    "brush",
+    "teeth"
+  ],
+  "act_obj_description": "in use with toothpaste and water running",
+  "act_obj_pronunciatio": "\ud83d\udca7",
+  "act_obj_event": [
+    "bathroom sink",
+    "is in use with",
+    "toothpaste and water running"
+  ],
+  "chatting_with": null,
+  "chat": null,
+  "chatting_with_buffer": {},
+  "chatting_end_time": null,
+  "act_path_set": true,
+  "planned_path": [
+    [
+      118,
+      51
+    ],
+    [
+      119,
+      51
+    ],
+    [
+      120,
+      51
+    ],
+    [
+      121,
+      51
+    ],
+    [
+      122,
+      51
+    ],
+    [
+      123,
+      51
+    ],
+    [
+      124,
+      51
+    ],
+    [
+      125,
+      51
+    ],
+    [
+      126,
+      51
+    ],
+    [
+      127,
+      51
+    ],
+    [
+      128,
+      51
+    ],
+    [
+      129,
+      51
+    ],
+    [
+      130,
+      51
+    ],
+    [
+      131,
+      51
+    ],
+    [
+      131,
+      52
+    ],
+    [
+      131,
+      53
+    ]
+  ]
+}

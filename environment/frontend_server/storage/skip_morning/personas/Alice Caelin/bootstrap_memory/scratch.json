@@ -1,0 +1,282 @@
+{
+  "vision_r": 8,
+  "att_bandwidth": 8,
+  "retention": 8,
+  "curr_time": "February 13, 2023, 07:13:20",
+  "curr_tile": [
+    67,
+    14
+  ],
+  "daily_plan_req": "",
+  "gender": "female",
+  "name": "Alice Caelin",
+  "first_name": "Alice",
+  "last_name": "Caelin",
+  "age": 19,
+  "innate": "playful, attention-loving, and carefree.",
+  "learned": "Alice is fully focused on her online career, making a name for herself as an OnlyFans model while streaming on Twitch. She enjoys the attention and the financial freedom it gives her, often prioritizing her content over school. While she\u2019s confident and outgoing, she doesn\u2019t take studying seriously and needs someone to keep her on track.",
+  "currently": "Alice is an OnlyFans model and Twitch streamer. Rarely goes to class as she\u2019s always online. Outgoing and sociable personality. Needs someone to help her study, preferably the new cute guy who's on campus.",
+  "lifestyle": "Alice Caelin goes to bed around 11pm, awakes up around 7am, eats dinner around 5pm. The school she is studying at is Oak Hill College - a girl's college which has just accepted its first male student. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Alice would be happy to pursue a sexual relationship with him and to make content for OnlyFans with him, and would be willing to share him with other girls.",
+  "living_area": "the Ville:Alice Caelin's apartment:main room",
+  "concept_forget": 100,
+  "daily_reflection_time": 180,
+  "daily_reflection_size": 5,
+  "overlap_reflect_th": 4,
+  "kw_strg_event_reflect_th": 10,
+  "kw_strg_thought_reflect_th": 9,
+  "recency_w": 1,
+  "relevance_w": 1,
+  "importance_w": 1,
+  "recency_decay": 0.99,
+  "importance_trigger_max": 150,
+  "importance_trigger_curr": 109,
+  "importance_ele_n": 41,
+  "thought_count": 5,
+  "daily_req": [
+    "Wake up and complete their morning routine at 7:00 am",
+    "Check OnlyFans messages and respond to followers from 7:30 am to 8:00 am",
+    "Stream on Twitch from 8:00 am to 10:00 am",
+    "Have a light breakfast and browse social media from 10:00 am to 11:00 am",
+    "Attend classes or study at the library from 11:00 am to 1:00 pm (if she decides to go)",
+    "Have lunch with friends at 1:00 pm",
+    "Create content for OnlyFans (photos/videos) from 2:00 pm to 4:00 pm",
+    "Have dinner at 5:00 pm",
+    "Plan upcoming streams and content ideas from 5:30 pm to 6:30 pm",
+    "Meet up with other girls to chat about the new cute guy on campus from 6:30 pm to 7:30 pm",
+    "Possibly flirt or introduce herself to the new guy at a campus hangout from 7:30 pm to 9:00 pm",
+    "Relax, unwind, or watch a show from 9:00 pm to 10:00 pm",
+    "Prepare for bed and plan tomorrow's content schedule from 10:00 pm to 11:00 pm",
+    "Go to sleep around 11:00 pm"
+  ],
+  "f_daily_schedule": [
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing the morning routine (hitting snooze on the alarm)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (getting out of bed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (heading to the bathroom)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (brushing teeth)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (washing face)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (going to the kitchen)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (preparing coffee)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (drinking coffee)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (checking phone for messages and notifications)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (selecting an outfit for the day)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (getting dressed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (applying light makeup)",
+      5
+    ],
+    [
+      "streaming on Twitch (setting up streaming equipment and logging into Twitch)",
+      10
+    ],
+    [
+      "streaming on Twitch (updating game overlays and checking stream settings)",
+      10
+    ],
+    [
+      "streaming on Twitch (interacting with viewers in the chat)",
+      15
+    ],
+    [
+      "streaming on Twitch (starting the game stream)",
+      5
+    ],
+    [
+      "streaming on Twitch (playing the game and providing live commentary)",
+      20
+    ],
+    [
+      "streaming on Twitch (reading and responding to viewer comments)",
+      10
+    ],
+    [
+      "streaming on Twitch (taking a short break and hydrating)",
+      5
+    ],
+    [
+      "streaming on Twitch (resuming gameplay and engaging with viewers)",
+      20
+    ],
+    [
+      "streaming on Twitch (promoting OnlyFans and other social media platforms)",
+      10
+    ],
+    [
+      "streaming on Twitch (checking viewer statistics and adjusting stream settings)",
+      10
+    ],
+    [
+      "streaming on Twitch (wrapping up the stream and thanking viewers)",
+      5
+    ],
+    [
+      "having a light breakfast and browsing social media",
+      60
+    ],
+    [
+      "attending classes or studying at the library",
+      120
+    ],
+    [
+      "having lunch with friends",
+      60
+    ],
+    [
+      "creating content for OnlyFans",
+      120
+    ],
+    [
+      "relaxing and taking a short break",
+      60
+    ],
+    [
+      "having dinner",
+      60
+    ],
+    [
+      "planning upcoming streams and content ideas",
+      60
+    ],
+    [
+      "meeting up with other girls to chat about the new cute guy on campus",
+      60
+    ],
+    [
+      "possibly flirting or introducing herself to the new guy at a campus hangout",
+      60
+    ],
+    [
+      "relaxing, unwinding, or watching a show",
+      60
+    ],
+    [
+      "preparing for bed and planning tomorrow's content schedule",
+      60
+    ],
+    [
+      "sleeping",
+      60
+    ]
+  ],
+  "f_daily_schedule_hourly_org": [
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing the morning routine",
+      60
+    ],
+    [
+      "streaming on Twitch",
+      120
+    ],
+    [
+      "having a light breakfast and browsing social media",
+      60
+    ],
+    [
+      "attending classes or studying at the library",
+      120
+    ],
+    [
+      "having lunch with friends",
+      60
+    ],
+    [
+      "creating content for OnlyFans",
+      120
+    ],
+    [
+      "relaxing and taking a short break",
+      60
+    ],
+    [
+      "having dinner",
+      60
+    ],
+    [
+      "planning upcoming streams and content ideas",
+      60
+    ],
+    [
+      "meeting up with other girls to chat about the new cute guy on campus",
+      60
+    ],
+    [
+      "possibly flirting or introducing herself to the new guy at a campus hangout",
+      60
+    ],
+    [
+      "relaxing, unwinding, or watching a show",
+      60
+    ],
+    [
+      "preparing for bed and planning tomorrow's content schedule",
+      60
+    ],
+    [
+      "sleeping",
+      60
+    ]
+  ],
+  "act_address": "the Ville:Alice Caelin's apartment:bathroom:bathroom sink",
+  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_duration": 5,
+  "act_description": "waking up and completing the morning routine (heading to the bathroom)",
+  "act_pronunciatio": "\ud83d\udebb",
+  "act_event": [
+    "Alice Caelin",
+    "head",
+    "bathroom"
+  ],
+  "act_obj_description": "currently being used by Alice Caelin for washing her face",
+  "act_obj_pronunciatio": "\ud83e\uddd6",
+  "act_obj_event": [
+    "bathroom sink",
+    "use",
+    "bathroom sink for washing her face"
+  ],
+  "chatting_with": null,
+  "chat": null,
+  "chatting_with_buffer": {},
+  "chatting_end_time": null,
+  "act_path_set": true,
+  "planned_path": []
+}

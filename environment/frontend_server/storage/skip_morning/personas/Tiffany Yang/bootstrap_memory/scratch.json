@@ -1,0 +1,258 @@
+{
+  "vision_r": 8,
+  "att_bandwidth": 8,
+  "retention": 8,
+  "curr_time": "February 13, 2023, 07:13:20",
+  "curr_tile": [
+    20,
+    65
+  ],
+  "daily_plan_req": "",
+  "gender": "female",
+  "name": "Tiffany Yang",
+  "first_name": "Tiffany",
+  "last_name": "Yang",
+  "age": 24,
+  "innate": "empathetic, approachable, and wise-hearted",
+  "learned": "Tiffany is a natural listener, effortlessly making people feel heard and understood. Her laid-back demeanor and warm smile put everyone at ease, and she has a knack for diffusing tense situations with humor and charm. She\u2019s the confidante who keeps secrets safe, never one to judge but always ready with honest advice. Despite her seemingly carefree lifestyle, Tiffany is deeply introspective and wise beyond her years, often reflecting on her own experiences to grow and learn. She dreams of exploring the world beyond her small town but is anchored by the close connections she\u2019s built behind the bar. Though she\u2019s surrounded by people every night, Tiffany occasionally feels lonely, craving a deeper connection that goes beyond casual chatter and gossip.",
+  "currently": "Tiffany Yang is currently a bartender at the local bar that many of the college students go to. Knows all the gossip in town. Easy-going, many people are comfortable around her.",
+  "lifestyle": "Tiffany Yang goes to bed around 11pm, awakes up around 7am, eats dinner around 5pm. The school she is studying at is Oak Hill College - a girl's college which has just accepted its first male student. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Alice would be happy to pursue a sexual relationship with him, and would be willing to share him with other girls.",
+  "living_area": "the Ville:Tiffany Yang's house:main room",
+  "concept_forget": 100,
+  "daily_reflection_time": 180,
+  "daily_reflection_size": 5,
+  "overlap_reflect_th": 4,
+  "kw_strg_event_reflect_th": 10,
+  "kw_strg_thought_reflect_th": 9,
+  "recency_w": 1,
+  "relevance_w": 1,
+  "importance_w": 1,
+  "recency_decay": 0.99,
+  "importance_trigger_max": 150,
+  "importance_trigger_curr": 113,
+  "importance_ele_n": 35,
+  "thought_count": 5,
+  "daily_req": [
+    "7:00 am - Wake up and complete my morning routine.",
+    "8:00 am - Attend classes at Oak Hill College; focus on psychology and women studies.",
+    "12:00 pm - Have lunch with friends in the cafeteria, discussing weekend plans.",
+    "1:00 pm - Continue classes; engage in lively discussions about campus life.",
+    "5:00 pm - Finish classes and head to the bar to prepare for my shift.",
+    "5:30 pm - Have dinner while setting up the bar for the evening.",
+    "6:00 pm - Begin working as a bartender, serving drinks and chatting with patrons.",
+    "8:00 pm - Engage in lighthearted conversations with students about the new male student and their attraction to him.",
+    "10:00 pm - Wind down the night at the bar, reflect on the day's interactions, and offer support to friends who share their thoughts on relationships.",
+    "11:00 pm - Wrap up the bar shift, head home to relax and unwind before bed."
+  ],
+  "f_daily_schedule": [
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing the morning routine (turning off the alarm)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (getting out of bed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (stretching)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (going to the bathroom)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (washing face)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (brushing teeth)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (combing hair)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (getting dressed)",
+      10
+    ],
+    [
+      "waking up and completing the morning routine (making breakfast)",
+      15
+    ],
+    [
+      "attending classes at Oak Hill College (walking to first class)",
+      10
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (gathering class materials)",
+      5
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (walking to the lecture hall)",
+      10
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (finding a seat)",
+      5
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (setting up laptop for notes)",
+      5
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (reviewing lecture notes from last class)",
+      10
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (listening to the lecture)",
+      10
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (taking notes)",
+      10
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in first class) (packing up belongings after class)",
+      5
+    ],
+    [
+      "attending classes at Oak Hill College (taking notes during first class)",
+      15
+    ],
+    [
+      "attending classes at Oak Hill College (walking to second class)",
+      10
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in second class)",
+      60
+    ],
+    [
+      "attending classes at Oak Hill College (taking notes during second class)",
+      15
+    ],
+    [
+      "attending classes at Oak Hill College (walking to third class)",
+      10
+    ],
+    [
+      "attending classes at Oak Hill College (attending lecture in third class)",
+      60
+    ],
+    [
+      "having lunch and discussing weekend plans",
+      60
+    ],
+    [
+      "continuing classes and engaging in discussions",
+      240
+    ],
+    [
+      "heading to the bar to prepare for the shift",
+      60
+    ],
+    [
+      "beginning work as a bartender",
+      60
+    ],
+    [
+      "serving drinks and chatting with patrons",
+      60
+    ],
+    [
+      "engaging in lighthearted conversations with students",
+      60
+    ],
+    [
+      "serving drinks and offering advice to patrons",
+      60
+    ],
+    [
+      "winding down the night and reflecting on interactions",
+      60
+    ],
+    [
+      "wrapping up the bar shift and heading home",
+      60
+    ]
+  ],
+  "f_daily_schedule_hourly_org": [
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing the morning routine",
+      60
+    ],
+    [
+      "attending classes at Oak Hill College",
+      240
+    ],
+    [
+      "having lunch and discussing weekend plans",
+      60
+    ],
+    [
+      "continuing classes and engaging in discussions",
+      240
+    ],
+    [
+      "heading to the bar to prepare for the shift",
+      60
+    ],
+    [
+      "beginning work as a bartender",
+      60
+    ],
+    [
+      "serving drinks and chatting with patrons",
+      60
+    ],
+    [
+      "engaging in lighthearted conversations with students",
+      60
+    ],
+    [
+      "serving drinks and offering advice to patrons",
+      60
+    ],
+    [
+      "winding down the night and reflecting on interactions",
+      60
+    ],
+    [
+      "wrapping up the bar shift and heading home",
+      60
+    ]
+  ],
+  "act_address": "the Ville:Tiffany Yang's house:main room:bed",
+  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_duration": 5,
+  "act_description": "waking up and completing the morning routine (stretching)",
+  "act_pronunciatio": "\ud83e\udd38",
+  "act_event": [
+    "Tiffany Yang",
+    "stretch",
+    ""
+  ],
+  "act_obj_description": "in disarray with rumpled sheets and pillows askew",
+  "act_obj_pronunciatio": "\ud83d\udecf",
+  "act_obj_event": [
+    "bed",
+    "is in disarray with",
+    "rumpled sheets and pillows askew"
+  ],
+  "chatting_with": null,
+  "chat": null,
+  "chatting_with_buffer": {},
+  "chatting_end_time": null,
+  "act_path_set": true,
+  "planned_path": []
+}

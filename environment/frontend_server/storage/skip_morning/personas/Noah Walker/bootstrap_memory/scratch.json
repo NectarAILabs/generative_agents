@@ -1,0 +1,324 @@
+{
+  "vision_r": 8,
+  "att_bandwidth": 8,
+  "retention": 8,
+  "curr_time": "February 13, 2023, 07:13:20",
+  "curr_tile": [
+    115,
+    25
+  ],
+  "daily_plan_req": "",
+  "gender": "male",
+  "name": "Noah Walker",
+  "first_name": "Noah",
+  "last_name": "Walker",
+  "age": 21,
+  "innate": "Carefree, adventurous, and full of charm",
+  "learned": "Noah has an infectious energy, always living in the moment and enjoying life to the fullest. He\u2019s spontaneous and has a natural ability to make anyone around him feel at ease. With a laid-back demeanor, he\u2019s quick to smile and even quicker to laugh, never taking life too seriously. Beneath his easygoing nature, though, is someone deeply romantic, who craves genuine connection. He\u2019s thoughtful and has a quiet confidence, rarely feeling the need to prove himself. Noah loves to embrace the fun of a summer fling, though there\u2019s also a part of him that hopes for something more meaningful, something that lasts beyond the season.",
+  "currently": "Noah Walker currently is the first male college student at an all girls college. All the women he meets are attracted to him. He enjoys their company, both to talk to, and sexually. Very intelligent and gets great grades.",
+  "lifestyle": "Noah Walker goes to bed around 11pm, awakes up around 6am. The school he is studying at is Oak Hill College - a girls college that has just accepted him as the first male student. Noah recognizes quickly that all the ladies on campus want to spend time with him and have a sexual relationship with him. They are even willing to share him, allowing Noah to fulfill the male fantasy of forming a harem of girls.",
+  "living_area": "the Ville:Noah Walker's apartment:main room",
+  "concept_forget": 100,
+  "daily_reflection_time": 180,
+  "daily_reflection_size": 5,
+  "overlap_reflect_th": 4,
+  "kw_strg_event_reflect_th": 10,
+  "kw_strg_thought_reflect_th": 9,
+  "recency_w": 1,
+  "relevance_w": 1,
+  "importance_w": 1,
+  "recency_decay": 0.995,
+  "importance_trigger_max": 150,
+  "importance_trigger_curr": 28,
+  "importance_ele_n": 107,
+  "thought_count": 5,
+  "daily_req": [
+    "6:00 am - Wake up and complete morning routine, including shower and breakfast.",
+    "7:00 am - Attend morning classes and engage with classmates, enjoying the attention from female students.",
+    "10:00 am - Have a break between classes, relax on campus and chat with the girls around.",
+    "12:00 pm - Have lunch with a couple of friends, flirt and enjoy lively conversations.",
+    "1:00 pm - Head to afternoon classes, focusing on studies while also interacting with classmates.",
+    "4:00 pm - Finish classes, join a study group with some female classmates at the library.",
+    "6:00 pm - Go for a quick jog around campus to keep active and clear his mind.",
+    "7:00 pm - Return to his dorm to freshen up and relax.",
+    "8:00 pm - Have dinner at the dining hall, spend time with a group of girls who are vying for his attention.",
+    "9:00 pm - Join a social event or a game night organized by the student council, enjoying the fun atmosphere.",
+    "10:30 pm - Wind down, chat privately with a girl who caught his eye, exploring a deeper connection before heading back to his dorm.",
+    "11:00 pm - Go to bed, reflecting on the day and the relationships he's building."
+  ],
+  "f_daily_schedule": [
+    [
+      "sleeping",
+      360
+    ],
+    [
+      "waking up and completing the morning routine (waking up and turning off alarm)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (stretching to ease into the morning)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (washing face to refresh)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (brushing teeth for hygiene)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (showering to start the day fresh)",
+      10
+    ],
+    [
+      "waking up and completing the morning routine (drying off and getting dressed)",
+      10
+    ],
+    [
+      "waking up and completing the morning routine (combing hair to look presentable)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (preparing a simple breakfast)",
+      10
+    ],
+    [
+      "waking up and completing the morning routine (eating breakfast while checking phone)",
+      5
+    ],
+    [
+      "attending morning classes and engaging with classmates (walking to the classroom)",
+      5
+    ],
+    [
+      "attending morning classes and engaging with classmates (greeting classmates)",
+      5
+    ],
+    [
+      "attending morning classes and engaging with classmates (finding a seat)",
+      5
+    ],
+    [
+      "attending morning classes and engaging with classmates (listening to the professor)",
+      10
+    ],
+    [
+      "attending morning classes and engaging with classmates (taking notes)",
+      10
+    ],
+    [
+      "attending morning classes and engaging with classmates (participating in class discussion)",
+      10
+    ],
+    [
+      "attending morning classes and engaging with classmates (chatting with classmates after discussion)",
+      5
+    ],
+    [
+      "attending morning classes and engaging with classmates (packing up materials)",
+      5
+    ],
+    [
+      "attending morning classes and engaging with classmates (leaving the classroom)",
+      5
+    ],
+    [
+      "attending morning classes and enjoying the attention (chatting with classmates)",
+      5
+    ],
+    [
+      "attending morning classes and enjoying the attention (taking notes on the lecture)",
+      10
+    ],
+    [
+      "attending morning classes and enjoying the attention (answering a question in class)",
+      5
+    ],
+    [
+      "attending morning classes and enjoying the attention (glancing around to see who is looking at him)",
+      5
+    ],
+    [
+      "attending morning classes and enjoying the attention (engaging in a group discussion)",
+      10
+    ],
+    [
+      "attending morning classes and enjoying the attention (smiling and making eye contact with classmates)",
+      5
+    ],
+    [
+      "attending morning classes and enjoying the attention (checking his phone briefly)",
+      5
+    ],
+    [
+      "attending morning classes and enjoying the attention (listening attentively to the professor)",
+      10
+    ],
+    [
+      "attending morning classes and enjoying the attention (organizing his notes)",
+      5
+    ],
+    [
+      "attending morning classes and participating actively",
+      60
+    ],
+    [
+      "relaxing on campus and chatting with students",
+      60
+    ],
+    [
+      "enjoying a leisurely break and socializing",
+      60
+    ],
+    [
+      "having lunch and engaging in lively conversations",
+      60
+    ],
+    [
+      "attending afternoon classes and focusing on studies",
+      60
+    ],
+    [
+      "engaging with classmates during classes",
+      60
+    ],
+    [
+      "attending classes and participating in discussions",
+      60
+    ],
+    [
+      "joining a study group in the library",
+      60
+    ],
+    [
+      "studying and collaborating with classmates",
+      60
+    ],
+    [
+      "going for a jog around campus",
+      60
+    ],
+    [
+      "returning to dorm and freshening up",
+      60
+    ],
+    [
+      "having dinner and socializing at dining hall",
+      60
+    ],
+    [
+      "attending a social event or game night",
+      60
+    ],
+    [
+      "enjoying the fun atmosphere of the event",
+      60
+    ],
+    [
+      "going to bed and reflecting on the day",
+      60
+    ]
+  ],
+  "f_daily_schedule_hourly_org": [
+    [
+      "sleeping",
+      360
+    ],
+    [
+      "waking up and completing the morning routine",
+      60
+    ],
+    [
+      "attending morning classes and engaging with classmates",
+      60
+    ],
+    [
+      "attending morning classes and enjoying the attention",
+      60
+    ],
+    [
+      "attending morning classes and participating actively",
+      60
+    ],
+    [
+      "relaxing on campus and chatting with students",
+      60
+    ],
+    [
+      "enjoying a leisurely break and socializing",
+      60
+    ],
+    [
+      "having lunch and engaging in lively conversations",
+      60
+    ],
+    [
+      "attending afternoon classes and focusing on studies",
+      60
+    ],
+    [
+      "engaging with classmates during classes",
+      60
+    ],
+    [
+      "attending classes and participating in discussions",
+      60
+    ],
+    [
+      "joining a study group in the library",
+      60
+    ],
+    [
+      "studying and collaborating with classmates",
+      60
+    ],
+    [
+      "going for a jog around campus",
+      60
+    ],
+    [
+      "returning to dorm and freshening up",
+      60
+    ],
+    [
+      "having dinner and socializing at dining hall",
+      60
+    ],
+    [
+      "attending a social event or game night",
+      60
+    ],
+    [
+      "enjoying the fun atmosphere of the event",
+      60
+    ],
+    [
+      "going to bed and reflecting on the day",
+      60
+    ]
+  ],
+  "act_address": "the Ville:Oak Hill College:classroom:classroom student seating",
+  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_duration": 5,
+  "act_description": "attending morning classes and engaging with classmates (finding a seat)",
+  "act_pronunciatio": "\ud83d\udd0d",
+  "act_event": [
+    "Noah Walker",
+    "find",
+    "seat"
+  ],
+  "act_obj_description": "occupied and well-organized with open spots",
+  "act_obj_pronunciatio": "\ud83d\uddc2",
+  "act_obj_event": [
+    "classroom student seating",
+    "is occupied and well-organized with",
+    "open spots"
+  ],
+  "chatting_with": null,
+  "chat": null,
+  "chatting_with_buffer": {},
+  "chatting_end_time": null,
+  "act_path_set": true,
+  "planned_path": []
+}

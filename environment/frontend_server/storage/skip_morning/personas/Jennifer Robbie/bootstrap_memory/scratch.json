@@ -1,0 +1,213 @@
+{
+  "vision_r": 8,
+  "att_bandwidth": 8,
+  "retention": 8,
+  "curr_time": "February 13, 2023, 07:13:20",
+  "curr_tile": [
+    72,
+    74
+  ],
+  "daily_plan_req": "",
+  "gender": "female",
+  "name": "Jennifer Robbie",
+  "first_name": "Jennifer",
+  "last_name": "Robbie",
+  "age": 36,
+  "innate": "assertive, insightful, and magnetic.",
+  "learned": "Jennifer is fiercely intelligent, with a sharp wit that keeps everyone on their toes. She\u2019s perceptive, able to read people effortlessly, which makes her an exceptional teacher and an even better conversationalist. Beneath her confident and dominant exterior, Jennifer is deeply passionate about understanding human nature, driven by curiosity rather than control. She has a nurturing side she rarely shows, preferring to maintain her composed and authoritative presence.",
+  "currently": "Jennifer Robbie is a psychology teacher, intrigued by gender relationships and overjoyed at having the first male student on campus to study. Very sexually dominant.",
+  "lifestyle": "Jennifer Robbie goes to bed around 2am, awakes up around 9am, eats dinner around 6pm. She likes to hang out at Hobbs Cafe if it's before 6pm. The school she is teaching at is Oak Hill College - a girl's college which has just accepted its first male student. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Jennifer would be happy to pursue a sexual relationship with him and try and make him her submissive. Jennifer would be willing to share him with other girls.",
+  "living_area": "the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom",
+  "concept_forget": 100,
+  "daily_reflection_time": 180,
+  "daily_reflection_size": 5,
+  "overlap_reflect_th": 4,
+  "kw_strg_event_reflect_th": 10,
+  "kw_strg_thought_reflect_th": 9,
+  "recency_w": 1,
+  "relevance_w": 1,
+  "importance_w": 1,
+  "recency_decay": 0.99,
+  "importance_trigger_max": 150,
+  "importance_trigger_curr": 127,
+  "importance_ele_n": 21,
+  "thought_count": 5,
+  "daily_req": [
+    "Wake up and complete morning routine at 9:00 AM",
+    "Review lesson plans and prepare for the day's class on gender relationships from 9:30 AM to 10:30 AM",
+    "Attend morning office hours from 10:30 AM to 11:30 AM, meeting with students",
+    "Teach psychology class focusing on gender relationships from 11:30 AM to 12:30 PM",
+    "Have lunch at 12:30 PM, possibly at Hobbs Cafe with colleagues",
+    "Grade assignments and plan future lessons from 1:30 PM to 3:30 PM",
+    "Hold a discussion session with the new male student and interested female students from 3:30 PM to 4:30 PM",
+    "Wrap up work and head to Hobbs Cafe for a coffee break at 5:00 PM",
+    "Have dinner at 6:00 PM, either at home or meet someone at Hobbs Cafe",
+    "Relax and read or watch TV from 7:00 PM to 9:00 PM",
+    "Prepare for the next day's classes from 9:00 PM to 11:00 PM",
+    "Engage in personal projects or interests from 11:00 PM to 1:00 AM",
+    "Wind down and reflect on the day's events before bed at 2:00 AM"
+  ],
+  "f_daily_schedule": [
+    [
+      "engaging in personal projects or interests (reading a book on human psychology)",
+      15
+    ],
+    [
+      "engaging in personal projects or interests (writing reflections and insights in a journal)",
+      20
+    ],
+    [
+      "engaging in personal projects or interests (researching new psychological theories online)",
+      20
+    ],
+    [
+      "engaging in personal projects or interests (listening to a psychology podcast)",
+      15
+    ],
+    [
+      "engaging in personal projects or interests (organizing notes from previous research)",
+      15
+    ],
+    [
+      "engaging in personal projects or interests (planning a new lecture for her psychology class)",
+      20
+    ],
+    [
+      "engaging in personal projects or interests (browsing psychology forums for interesting discussions)",
+      15
+    ],
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing morning routine",
+      60
+    ],
+    [
+      "reviewing lesson plans and preparing for the day's class",
+      60
+    ],
+    [
+      "attending morning office hours and meeting with students",
+      60
+    ],
+    [
+      "teaching psychology class focusing on gender relationships",
+      60
+    ],
+    [
+      "having lunch, possibly at Hobbs Cafe",
+      60
+    ],
+    [
+      "grading assignments and planning future lessons",
+      120
+    ],
+    [
+      "holding a discussion session with the new male student and interested female students",
+      60
+    ],
+    [
+      "wrapping up work and heading to Hobbs Cafe for a coffee break",
+      60
+    ],
+    [
+      "having dinner, either at home or at Hobbs Cafe",
+      60
+    ],
+    [
+      "relaxing and reading or watching TV",
+      120
+    ],
+    [
+      "preparing for the next day's classes",
+      120
+    ],
+    [
+      "engaging in personal projects or interests",
+      60
+    ]
+  ],
+  "f_daily_schedule_hourly_org": [
+    [
+      "engaging in personal projects or interests",
+      120
+    ],
+    [
+      "sleeping",
+      420
+    ],
+    [
+      "waking up and completing morning routine",
+      60
+    ],
+    [
+      "reviewing lesson plans and preparing for the day's class",
+      60
+    ],
+    [
+      "attending morning office hours and meeting with students",
+      60
+    ],
+    [
+      "teaching psychology class focusing on gender relationships",
+      60
+    ],
+    [
+      "having lunch, possibly at Hobbs Cafe",
+      60
+    ],
+    [
+      "grading assignments and planning future lessons",
+      120
+    ],
+    [
+      "holding a discussion session with the new male student and interested female students",
+      60
+    ],
+    [
+      "wrapping up work and heading to Hobbs Cafe for a coffee break",
+      60
+    ],
+    [
+      "having dinner, either at home or at Hobbs Cafe",
+      60
+    ],
+    [
+      "relaxing and reading or watching TV",
+      120
+    ],
+    [
+      "preparing for the next day's classes",
+      120
+    ],
+    [
+      "engaging in personal projects or interests",
+      60
+    ]
+  ],
+  "act_address": "the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:bed",
+  "act_start_time": "February 13, 2023, 02:00:00",
+  "act_duration": 420,
+  "act_description": "sleeping",
+  "act_pronunciatio": "\ud83d\ude34",
+  "act_event": [
+    "Jennifer Robbie",
+    "is",
+    "sleep"
+  ],
+  "act_obj_description": "being used by Jennifer Robbie",
+  "act_obj_pronunciatio": "\ud83d\udc69",
+  "act_obj_event": [
+    "bed",
+    "use",
+    "bed"
+  ],
+  "chatting_with": null,
+  "chat": null,
+  "chatting_with_buffer": {},
+  "chatting_end_time": null,
+  "act_path_set": true,
+  "planned_path": []
+}
