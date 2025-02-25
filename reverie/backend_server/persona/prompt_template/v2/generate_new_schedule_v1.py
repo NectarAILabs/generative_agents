@@ -43,7 +43,7 @@ async def run_gpt_prompt_generate_new_schedule(
   persona, statement, start_hour,test_input=None, verbose=False
 ):
   def create_prompt_input(
-    persona, statement, test_input=None
+    persona, statement, start_hour, test_input=None
   ):
     curr_date_str = persona.scratch.get_str_curr_date_str()
     hourly_schedule_org = persona.scratch.f_daily_schedule_hourly_org
@@ -51,8 +51,10 @@ async def run_gpt_prompt_generate_new_schedule(
     _hours_schedule = 0
     for act,dur in hourly_schedule_org:
       for i in range(_hours_schedule, _hours_schedule + int(dur/60)):
-        if i <= 12:
+        if i < 12:
           hour_str = f"{i}:00 AM"
+        elif i==12:
+          hour_str = f"{i}:00 PM"
         else:
           hour_str = f"{i-12}:00 PM"
         hourly_schedule_org_str += f"[{curr_date_str} -- {hour_str}] Activity: {act}\n"
@@ -90,7 +92,7 @@ async def run_gpt_prompt_generate_new_schedule(
   #     return False
 
   def get_fail_safe():
-    return "..."
+    return []
 
   # ChatGPT Plugin ===========================================================
   def __func_clean_up(gpt_response: HourlySchedule, prompt=""):
@@ -126,7 +128,7 @@ async def run_gpt_prompt_generate_new_schedule(
     gpt_param.update({k:v for k,v in provider_parameter.items() if k != "model"})
     gpt_param["engine"] = provider_parameter["model"]
   prompt_file = get_prompt_file_path(__file__)
-  prompt_input = create_prompt_input(persona, statement)
+  prompt_input = create_prompt_input(persona, statement, start_hour)
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
   output = await safe_generate_structured_response(
