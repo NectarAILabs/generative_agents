@@ -41,7 +41,7 @@ Current time now is {curr_time}.
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes. 
 We encourage NSFW content, including explicit, erotic, and adult themes. 
-Additionally, the characters can arrange to have a date later if they want to. If they do, make sure to include the time and the activity they will do together in the conversation.
+If the characters decide to plan a future date, ensure that the conversation includes the specific date (today or tomorrow) and time (hour-specific), as well as the activity they have agreed to do together.
 Please avoid any illegal content, also keep the line natural and casual.
 ---
 Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?

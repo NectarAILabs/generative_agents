@@ -32,8 +32,9 @@ Statement: {convo_schedule_memory}
 Finishing the schedule for the rest of the day (start from {start_hour_str} to the end of the day), follow the format:
 {schedule_format}
 Your schedule should assume that their task is ONLY "sleeping" after their bedtime and before they wake up.
-Only modify the schedule when a statement explicitly refers to a specific appointment. Do not create or assume a schedule based on uncertain or unspecified plans with particular individuals. 
-The action should be clear and easy to understand, and should be in a sentence. We allow and encourage erotic and sexual action.
+The statement is the only information you have, so modify the schedule only when the statement explicitly refers to a specific appointment with date and activity. 
+Do not create or assume a schedule with uncertain or unspecified plans with particular individuals, it can make their schedules conflict with each other.
+The action should be clear, easy to understand, and in a sentence. We allow and encourage erotic and sexual action.
 ===
 """
   return prompt
