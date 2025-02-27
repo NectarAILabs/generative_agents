@@ -7,24 +7,26 @@ from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
-
+#Modified to have more specific information for the replan.
 def create_prompt(prompt_input: dict[str, Any]):
   conversation = prompt_input["conversation"]
   persona_1_name = prompt_input["persona_1_name"]
   persona_2_name = prompt_input["persona_2_name"]
-
+  curr_time = prompt_input["curr_time"]
   prompt = f"""
 [Conversation]
 {conversation}
 [End of conversation]
-
-Write down if there is anything from the conversation that {persona_1_name} needs to remember for their planning, from {persona_2_name}'s perspective, in a full sentence. Start the sentence with {persona_1_name}'s name.
+Current time: {curr_time}
+Write down if there is anything from the conversation that all 2 personas needs to remember for their planning, in a full sentence.
+Remember to generating the date and time of the planning, and the location of the conversation (persona's house, restaurant, pub,...), also 2 personas's name.
 """
   return prompt
 
 
 class PlanningThought(BaseModel):
   planning_thought: str
+  planning_date: str
 
 
 async def run_gpt_prompt_planning_thought_on_convo(
@@ -35,11 +37,12 @@ async def run_gpt_prompt_planning_thought_on_convo(
       "conversation": all_utterances,
       "persona_1_name": persona.scratch.name,
       "persona_2_name": persona.scratch.name,
+      "curr_time": persona.scratch.curr_time,
     }
     return prompt_input
 
   def __func_clean_up(gpt_response: PlanningThought, prompt=""):
-    return gpt_response.planning_thought.strip().strip('"').strip()
+    return gpt_response.planning_thought.strip().strip('".').strip() + f" at {gpt_response.planning_date}"
 
   def __func_validate(gpt_response, prompt=""):
     try:
