@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 import traceback
-from typing import Any
+from typing import Any, Optional
 import datetime
 from utils import debug
 from ..common import openai_config, get_prompt_file_path
@@ -18,17 +18,17 @@ def create_prompt(prompt_input: dict[str, Any]):
 {conversation}
 [End of conversation]
 Current time now is {curr_time.strftime('%B %d, %Y %I:%M %p')}
-Write down if there is anything from the conversation that all 2 personas needs to remember for their planning, in a full sentence.
-Remember to generating the date and time of the planning, and the location of the conversation (persona's house, restaurant, pub,...), also 2 personas's name.
-If there's nothing to remember, the planning thought and planning date should be empty.
+Write down if there is anything from the conversation that all 2 personas needs to remember for their meeting, in a full sentence.
+Remember to generate the date, time and also the location of the meeting (persona's house, restaurant, pub, coffee shop,...), also mention 2 personas's name.
+Planning date should be in form 'YYYY-MM-DD HH:MM AM/PM' and should be as soon as possible. If they don't mention about it, just assume it's today.
+If there's nothing to remember, the planning thought should be empty and you can assign any planning date.
 """
   return prompt
 
 
 class PlanningThought(BaseModel):
   planning_thought: str
-  planning_date: datetime.datetime | None
-
+  planning_date: str
 
 async def run_gpt_prompt_planning_thought_on_convo(
   persona, all_utterances, test_input=None, verbose=False
@@ -47,7 +47,7 @@ async def run_gpt_prompt_planning_thought_on_convo(
       return ""
     if gpt_response.planning_date is None:
       return ""
-    return gpt_response.planning_thought.strip().strip('".').strip() + f" at {gpt_response.planning_date.strftime('%B %d, %Y %I:%M %p')}"
+    return gpt_response.planning_thought.strip().strip('".').strip() + f" at {gpt_response.planning_date}"
 
   def __func_validate(gpt_response, prompt=""):
     try:
@@ -60,7 +60,7 @@ async def run_gpt_prompt_planning_thought_on_convo(
       return False
 
   def get_fail_safe():
-    return "..."
+    return ""
 
   gpt_param = {
     "engine": openai_config["model"],
