@@ -95,6 +95,7 @@ async def perceive(persona, maze):
   # We will perceive events that take place in the same arena as the => change to same sector
   # persona's current arena => change to personal's current sector
   curr_sector_path = maze.get_tile_path(persona.scratch.curr_tile, "sector")
+  curr_arena_path = maze.get_tile_path(persona.scratch.curr_tile, "arena")
   # We do not perceive the same event twice (this can happen if an object is
   # extended across multiple tiles).
   percept_events_set = set()
@@ -116,8 +117,13 @@ async def perceive(persona, maze):
         # Add any relevant events to our temp set/list with the distant info.
         for event in tile_details["events"]:
           if event not in percept_events_set:
-            percept_events_list += [[dist, event]]
-            percept_events_set.add(event)
+            s,p,o,_ = event
+            # Receive only the description of object in the same arena, 
+            # only human activities can be received in sector
+            if (":" in s  and maze.get_tile_path(tile, "arena") == curr_arena_path) or (":" not in s):
+              percept_events_list += [[dist, event]]
+              percept_events_set.add(event)
+            
 
   # We sort, and perceive only persona.scratch.att_bandwidth of the closest
   # events. If the bandwidth is larger, then it means the persona can perceive
@@ -125,7 +131,14 @@ async def perceive(persona, maze):
   percept_events_list = sorted(percept_events_list, key=itemgetter(0))
   perceived_events = []
   for dist, event in percept_events_list[: persona.scratch.att_bandwidth]:
-    perceived_events += [event]
+    if persona.scratch.chatting_with != None or persona.scratch.act_event[1] == "waiting to start":
+      s,p,o,desc = event
+      # If the persona is chatting with someone or waiting to start something,
+      # we do not perceive any new events (except from self). Because they will not be processed in the plan module
+      if s == persona.name:
+        perceived_events += [event]
+    else: 
+      perceived_events += [event]
 
   # Storing events.
   # <ret_events> is a list of <ConceptNode> instances from the persona's
@@ -148,6 +161,9 @@ async def perceive(persona, maze):
       persona.scratch.retention
     )
     if p_event not in latest_events:
+      print(f"{persona.scratch.name} is perceiving {p_event}")
+      print(f"Current time: {persona.scratch.curr_time}")
+      print(f"Latest events: {latest_events}")
       # We start by managing keywords.
       keywords = set()
       sub = p_event[0]
@@ -169,7 +185,6 @@ async def perceive(persona, maze):
       else:
         event_embedding = await get_embedding(desc_embedding_in)
       event_embedding_pair = (desc_embedding_in, event_embedding)
-
       # Get event poignancy.
       event_poignancy = await generate_poig_score(persona, "event", desc_embedding_in)
 
@@ -217,7 +232,8 @@ async def perceive(persona, maze):
           chat_node_ids,
         )
       ]
-      persona.scratch.importance_trigger_curr -= event_poignancy
-      persona.scratch.importance_ele_n += 1
+      if ret_events[-1] != None:  
+        persona.scratch.importance_trigger_curr -= event_poignancy
+        persona.scratch.importance_ele_n += 1
 
   return [x for x in ret_events if x != None]

@@ -40,10 +40,13 @@ async def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False
   def __chat_func_clean_up(gpt_response: Pronunciatio, prompt=""):
     # This pattern matches most modern emojis
     pattern = r"[\U0001F300-\U0001F9FF\u200d\u2600-\u26FF\u2700-\u27BF]"
-    result = re.search(pattern, gpt_response.emoji)
-    if result:
-        return result.group()
-    raise ValueError("No emoji found in the response.")
+    # Get all emojis in the response instead of just one
+    try:
+      results = re.findall(pattern, gpt_response.emoji)
+      if results:
+        return ''.join(results)
+    except:
+      raise ValueError("No emoji found in the response.")
 
   def __chat_func_validate(gpt_response, prompt=""):
     try:

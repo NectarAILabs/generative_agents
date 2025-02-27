@@ -857,7 +857,8 @@ async def _should_react(persona, retrieved, personas):
       return False
     if init_persona.scratch.planned_path == []:
       return False
-
+    # Only reacting when 2 of the personas is going to the same object
+    # There will be a case that one is using bathroom sink, one is using the bathroom (maybe need to changed ???)
     if (init_persona.scratch.act_address 
         != target_persona.scratch.act_address): 
       return False
@@ -1089,7 +1090,7 @@ async def plan(persona, maze, personas, new_day, retrieved):
   if focused_event: 
     reaction_mode = await _should_react(persona, focused_event, personas)
     if reaction_mode: 
-      print(reaction_mode)
+      print(f"Reaction mode:reaction_mode")
       # If we do want to chat, then we generate conversation 
       if reaction_mode[:9] == "chat with":
         await _chat_react(maze, persona, focused_event, reaction_mode, personas)

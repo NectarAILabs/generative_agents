@@ -198,7 +198,10 @@ class AssociativeMemory:
         if node.description == description: 
           node.last_accessed = created
           node.expiration = expiration
-          return node
+          #move to front
+          self.seq_event.remove(node)
+          self.seq_event.insert(0, node)
+          break
       return None
 
 
@@ -252,7 +255,9 @@ class AssociativeMemory:
         if node.description == description: 
           node.last_accessed = created
           node.expiration = expiration
-          return node
+          self.seq_thought.remove(node)
+          self.seq_thought.insert(0, node)
+          break
       return None
 
 
@@ -293,7 +298,9 @@ class AssociativeMemory:
         if node.description == description: 
           node.last_accessed = created
           node.expiration = expiration
-          return node
+          self.seq_chat.remove(node)
+          self.seq_chat.insert(0, node)
+          break
       return None
 
 

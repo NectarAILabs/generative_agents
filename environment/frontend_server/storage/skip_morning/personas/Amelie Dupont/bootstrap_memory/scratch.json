@@ -1,11 +1,11 @@
 {
   "vision_r": 8,
   "att_bandwidth": 8,
-  "retention": 8,
-  "curr_time": "February 13, 2023, 07:13:20",
+  "retention": 20,
+  "curr_time": "February 13, 2023, 07:00:00",
   "curr_tile": [
-    28,
-    68
+    29,
+    65
   ],
   "daily_plan_req": "",
   "gender": "female",
@@ -28,25 +28,23 @@
   "relevance_w": 1,
   "importance_w": 1,
   "recency_decay": 0.99,
-  "importance_trigger_max": 150,
-  "importance_trigger_curr": 106,
-  "importance_ele_n": 40,
+  "importance_trigger_max": 2000,
+  "importance_trigger_curr": 1988,
+  "importance_ele_n": 11,
   "thought_count": 5,
   "daily_req": [
-    "7:00 am - Wake up and complete morning routine, getting ready for the day.",
-    "8:00 am - Enjoy breakfast at the campus dining hall, casually chatting with other students.",
-    "9:00 am - Attend English language class, focusing on improving vocabulary and conversation skills.",
-    "11:00 am - Join a group activity or club meeting, where she can meet new people and practice her English.",
-    "12:30 pm - Have lunch with friends at the cafeteria, discussing weekend plans and flirting with classmates.",
-    "1:30 pm - Attend an afternoon lecture, engaging actively and making jokes to charm her classmates.",
-    "3:00 pm - Take a break and go to the campus coffee shop, where she might spot the new male student.",
-    "4:00 pm - Participate in a study group to prepare for an upcoming exam, encouraging others to join in.",
-    "5:00 pm - Have dinner at the dining hall, looking for opportunities to sit with the new male student.",
-    "6:00 pm - Join a casual interest group, perhaps something adventurous like hiking or cultural exchanges.",
-    "8:00 pm - Head back to her dorm to unwind, reflecting on her connections and any flirting that happened.",
-    "9:00 pm - Video call with friends back in France, sharing her experiences and struggles of feeling like an outsider.",
-    "10:00 pm - Prepare for bed, planning her strategy on how to approach the new male student tomorrow.",
-    "11:00 pm - Head to bed, reflecting on the day and her hopes for deeper connections."
+    "7:00 AM - Wake up and complete morning routine: shower, get dressed, and do hair and makeup, feeling excited for the day ahead.",
+    "8:00 AM - Have breakfast in the campus dining hall, casually chatting with fellow students about weekend plans.",
+    "9:00 AM - Attend classes, paying special attention to opportunities to practice English and connect with classmates.",
+    "12:00 PM - Have lunch with a group of friends, discussing the newest activities and the recent arrival of the male student.",
+    "1:00 PM - Continue attending afternoon classes, trying to sit next to the cute boy if possible, engaging in friendly conversation.",
+    "3:00 PM - After classes, socialize with friends in the campus common area, where rumors of the boy\u2019s popularity circulate.",
+    "4:00 PM - Participate in a small club meeting or group activity, aiming to help her English and meet more people.",
+    "5:00 PM - Enjoy dinner with friends while playfully discussing plans to attract the attention of the new boy.",
+    "6:30 PM - Head to the library for a few hours of studying, occasionally glancing at the cute boy if he comes in.",
+    "8:30 PM - Attend a social event or gathering organized for the students, initiating flirty conversations and playful banter.",
+    "10:00 PM - Wind down the evening by chatting with friends about the day\u2019s encounters, especially the boy, and sharing laughs about flirtation tactics.",
+    "11:00 PM - Go to bed, reflecting on the day's fun and hoping for more exciting interactions tomorrow."
   ],
   "f_daily_schedule": [
     [
@@ -54,147 +52,143 @@
       420
     ],
     [
-      "waking up and completing the morning routine (turning off the alarm and stretching in bed)",
+      "waking up and completing the morning routine (hitting snooze on the alarm)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting out of bed and heading to the bathroom)",
+      "waking up and completing the morning routine (getting out of bed)",
       5
     ],
     [
-      "waking up and completing the morning routine (brushing her teeth)",
+      "waking up and completing the morning routine (walking to the bathroom)",
       5
     ],
     [
-      "waking up and completing the morning routine (washing her face)",
+      "waking up and completing the morning routine (brushing teeth)",
       5
     ],
     [
-      "waking up and completing the morning routine (applying skincare products)",
+      "waking up and completing the morning routine (washing face)",
       5
     ],
     [
-      "waking up and completing the morning routine (combing and styling her hair)",
-      10
+      "waking up and completing the morning routine (combing hair)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (applying moisturizer)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (going back to the bedroom)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (choosing an outfit)",
+      5
     ],
     [
       "waking up and completing the morning routine (getting dressed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (applying light makeup)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (grabbing phone and keys)",
+      5
+    ],
+    [
+      "having breakfast and chatting with fellow students (selecting a breakfast table with a good view)",
+      5
+    ],
+    [
+      "having breakfast and chatting with fellow students (gathering breakfast items from the buffet)",
       10
     ],
     [
-      "waking up and completing the morning routine (packing her bag for the day)",
+      "having breakfast and chatting with fellow students (sitting down and arranging breakfast items)",
       5
     ],
     [
-      "waking up and completing the morning routine (checking her phone for messages and notifications)",
+      "having breakfast and chatting with fellow students (greeting fellow students at the table)",
       5
     ],
     [
-      "waking up and completing the morning routine (putting on a light makeup)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (walking to the campus dining hall)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (greeting friends and finding a seat)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (waiting in line for food)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (scanning the breakfast options)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (choosing breakfast items)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (getting a cup of coffee)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (carrying tray to the table)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (sitting down and arranging food)",
-      5
-    ],
-    [
-      "enjoying breakfast at the campus dining hall (eating breakfast and chatting)",
+      "having breakfast and chatting with fellow students (engaging in light conversation about the day's classes)",
       10
     ],
     [
-      "enjoying breakfast at the campus dining hall (finishing coffee and relaxing)",
+      "having breakfast and chatting with fellow students (asking for tips on English pronunciation)",
+      10
+    ],
+    [
+      "having breakfast and chatting with fellow students (sharing experiences from France)",
+      10
+    ],
+    [
+      "having breakfast and chatting with fellow students (finishing breakfast and tidying up the table)",
       5
     ],
     [
-      "enjoying breakfast at the campus dining hall (clearing the table and leaving the dining hall)",
-      5
-    ],
-    [
-      "attending English language class",
+      "attending classes and practicing English",
       60
     ],
     [
-      "continuing English language class",
+      "continuing to attend classes and engaging with classmates",
       60
     ],
     [
-      "joining a group activity or club meeting",
+      "participating in class discussions and activities",
       60
     ],
     [
-      "heading to the cafeteria for lunch preparations",
+      "having lunch with friends and discussing campus news",
       60
     ],
     [
-      "attending an afternoon lecture",
+      "attending afternoon classes and engaging in conversation",
       60
     ],
     [
-      "engaging actively in the lecture and making jokes",
+      "focusing on lectures and participating in class activities",
       60
     ],
     [
-      "taking a break and visiting the campus coffee shop",
+      "socializing with friends in the common area",
       60
     ],
     [
-      "participating in a study group",
+      "participating in a club meeting or group activity",
       60
     ],
     [
-      "having dinner at the dining hall",
+      "enjoying dinner with friends and discussing plans",
       60
     ],
     [
-      "joining a casual interest group",
+      "engaging in light exercise or relaxing",
       60
     ],
     [
-      "exploring the campus or relaxing in the dorm",
+      "studying at the library and reviewing class materials",
       60
     ],
     [
-      "heading back to her dorm to unwind",
+      "continuing to study or preparing for upcoming classes",
       60
     ],
     [
-      "video calling friends back in France",
+      "attending a social event or gathering on campus",
       60
     ],
     [
-      "preparing for bed and planning her next day",
+      "winding down by chatting with friends and reflecting on the day",
       60
     ],
     [
-      "sleeping",
+      "going to bed and reflecting on the day's experiences",
       60
     ]
   ],
@@ -208,86 +202,86 @@
       60
     ],
     [
-      "enjoying breakfast at the campus dining hall",
+      "having breakfast and chatting with fellow students",
       60
     ],
     [
-      "attending English language class",
+      "attending classes and practicing English",
       60
     ],
     [
-      "continuing English language class",
+      "continuing to attend classes and engaging with classmates",
       60
     ],
     [
-      "joining a group activity or club meeting",
+      "participating in class discussions and activities",
       60
     ],
     [
-      "heading to the cafeteria for lunch preparations",
+      "having lunch with friends and discussing campus news",
       60
     ],
     [
-      "attending an afternoon lecture",
+      "attending afternoon classes and engaging in conversation",
       60
     ],
     [
-      "engaging actively in the lecture and making jokes",
+      "focusing on lectures and participating in class activities",
       60
     ],
     [
-      "taking a break and visiting the campus coffee shop",
+      "socializing with friends in the common area",
       60
     ],
     [
-      "participating in a study group",
+      "participating in a club meeting or group activity",
       60
     ],
     [
-      "having dinner at the dining hall",
+      "enjoying dinner with friends and discussing plans",
       60
     ],
     [
-      "joining a casual interest group",
+      "engaging in light exercise or relaxing",
       60
     ],
     [
-      "exploring the campus or relaxing in the dorm",
+      "studying at the library and reviewing class materials",
       60
     ],
     [
-      "heading back to her dorm to unwind",
+      "continuing to study or preparing for upcoming classes",
       60
     ],
     [
-      "video calling friends back in France",
+      "attending a social event or gathering on campus",
       60
     ],
     [
-      "preparing for bed and planning her next day",
+      "winding down by chatting with friends and reflecting on the day",
       60
     ],
     [
-      "sleeping",
+      "going to bed and reflecting on the day's experiences",
       60
     ]
   ],
-  "act_address": "the Ville:Amelie Dupont's house:bathroom:bathroom sink",
-  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_address": "the Ville:Amelie Dupont's house:main room:bed",
+  "act_start_time": "February 13, 2023, 07:00:00",
   "act_duration": 5,
-  "act_description": "waking up and completing the morning routine (brushing her teeth)",
-  "act_pronunciatio": "\ud83d\ude00",
+  "act_description": "waking up and completing the morning routine (hitting snooze on the alarm)",
+  "act_pronunciatio": "\ud83d\udcc5",
   "act_event": [
     "Amelie Dupont",
-    "brush",
-    "her teeth"
+    "hit",
+    "snooze on the alarm"
   ],
-  "act_obj_description": "filled with water and toothpaste residue",
-  "act_obj_pronunciatio": "\ud83e\uddfc",
+  "act_obj_description": "messy from Amelie Dupont getting out of it",
+  "act_obj_pronunciatio": "\ud83c\udf00\ud83e\uddd6\u200d\u2640",
   "act_obj_event": [
-    "bathroom sink",
-    "is filled with",
-    "water and toothpaste residue"
+    "bed",
+    "is messy from",
+    "Amelie Dupont getting out of it"
   ],
   "chatting_with": null,
   "chat": null,

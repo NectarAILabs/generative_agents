@@ -1,7 +1,7 @@
 {
   "vision_r": 8, 
   "att_bandwidth": 8, 
-  "retention": 8, 
+  "retention": 20, 
   "curr_time": null, 
   "curr_tile": null, 
   "daily_plan_req": "", 
@@ -26,8 +26,8 @@
   "relevance_w": 1,
   "importance_w": 1,
   "recency_decay": 0.995,
-  "importance_trigger_max": 150,
-  "importance_trigger_curr": 150,
+  "importance_trigger_max": 2000,
+  "importance_trigger_curr": 2000,
   "importance_ele_n": 0, 
   "thought_count": 5, 
 

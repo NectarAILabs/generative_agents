@@ -1,0 +1,88 @@
+{
+  "persona": {
+    "Aika Shirosaki": {
+      "movement": [
+        93,
+        18
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "sleeping @ the Ville:Aika Shirosaki's apartment:main room:bed",
+      "chat": null
+    },
+    "Alice Caelin": {
+      "movement": [
+        66,
+        19
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udecf",
+      "description": "sleeping @ the Ville:Alice Caelin's apartment:main room:bed",
+      "chat": null
+    },
+    "Noah Walker": {
+      "movement": [
+        73,
+        14
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "sleeping @ the Ville:Noah Walker's apartment:main room:bed",
+      "chat": null
+    },
+    "Jennifer Robbie": {
+      "movement": [
+        73,
+        74
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
+      "description": "sleeping @ the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:bed",
+      "chat": null
+    },
+    "Tiffany Yang": {
+      "movement": [
+        21,
+        65
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "sleeping @ the Ville:Tiffany Yang's house:main room:bed",
+      "chat": null
+    },
+    "Katie Adams": {
+      "movement": [
+        54,
+        14
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udecf",
+      "description": "sleeping @ the Ville:Katie Adams's apartment:main room:bed",
+      "chat": null
+    },
+    "Mina Chang": {
+      "movement": [
+        127,
+        46
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
+      "description": "sleeping @ the Ville:Dorm for Oak Hill College:Mina Chang's room:bed",
+      "chat": null
+    },
+    "Iris Chang": {
+      "movement": [
+        107,
+        62
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "sleeping @ the Ville:Dorm for Oak Hill College:Iris Chang's room:bed",
+      "chat": null
+    },
+    "Amelie Dupont": {
+      "movement": [
+        29,
+        65
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "sleeping @ the Ville:Amelie Dupont's house:main room:bed",
+      "chat": null
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 03:34:30"
+  }
+}

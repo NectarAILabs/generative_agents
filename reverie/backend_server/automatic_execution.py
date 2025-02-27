@@ -245,7 +245,7 @@ if __name__ == '__main__':
             else:
                 curr_stepbacks = 0
 
-            if step > 0:
+            if int(step) > 0:
                 origin, current_step, idx = save_checkpoint(rs, idx)
 
             print(f"(Auto-Exec): Error at step {current_step}", flush=True)

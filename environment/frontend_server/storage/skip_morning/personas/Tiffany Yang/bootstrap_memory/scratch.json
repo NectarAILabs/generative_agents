@@ -1,10 +1,10 @@
 {
   "vision_r": 8,
   "att_bandwidth": 8,
-  "retention": 8,
-  "curr_time": "February 13, 2023, 07:13:20",
+  "retention": 20,
+  "curr_time": "February 13, 2023, 07:00:00",
   "curr_tile": [
-    20,
+    21,
     65
   ],
   "daily_plan_req": "",
@@ -28,21 +28,21 @@
   "relevance_w": 1,
   "importance_w": 1,
   "recency_decay": 0.99,
-  "importance_trigger_max": 150,
-  "importance_trigger_curr": 113,
-  "importance_ele_n": 35,
+  "importance_trigger_max": 2000,
+  "importance_trigger_curr": 1989,
+  "importance_ele_n": 11,
   "thought_count": 5,
   "daily_req": [
-    "7:00 am - Wake up and complete my morning routine.",
-    "8:00 am - Attend classes at Oak Hill College; focus on psychology and women studies.",
-    "12:00 pm - Have lunch with friends in the cafeteria, discussing weekend plans.",
-    "1:00 pm - Continue classes; engage in lively discussions about campus life.",
-    "5:00 pm - Finish classes and head to the bar to prepare for my shift.",
-    "5:30 pm - Have dinner while setting up the bar for the evening.",
-    "6:00 pm - Begin working as a bartender, serving drinks and chatting with patrons.",
-    "8:00 pm - Engage in lighthearted conversations with students about the new male student and their attraction to him.",
-    "10:00 pm - Wind down the night at the bar, reflect on the day's interactions, and offer support to friends who share their thoughts on relationships.",
-    "11:00 pm - Wrap up the bar shift, head home to relax and unwind before bed."
+    "7:00 am - Wake up and complete morning routine, including showering and getting dressed for the day.",
+    "8:00 am - Have breakfast, typically something quick and healthy to start the day right.",
+    "9:00 am - Attend classes at Oak Hill College, where she engages with classmates and participates in discussions.",
+    "12:00 pm - Have lunch with friends at the college cafeteria, discussing the latest happenings around campus.",
+    "1:00 pm - Return to classes or study sessions, focusing on her coursework and maintaining good grades.",
+    "4:00 pm - Finish classes and head to the local bar to prepare for her shift.",
+    "5:00 pm - Eat a light dinner at the bar, often bringing food from home or enjoying leftovers.",
+    "6:00 pm - Start her shift at the bar, serving drinks and chatting with patrons, including college students.",
+    "10:00 pm - Wind down her shift, helping to clean up and making sure everything is in order for the next day.",
+    "11:00 pm - Return home and relax by watching a show or reading, reflecting on the day and her dreams of exploring the world."
   ],
   "f_daily_schedule": [
     [
@@ -50,23 +50,11 @@
       420
     ],
     [
-      "waking up and completing the morning routine (turning off the alarm)",
+      "waking up and completing the morning routine (waking up and stretching)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting out of bed)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (stretching)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (going to the bathroom)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (washing face)",
+      "waking up and completing the morning routine (making the bed)",
       5
     ],
     [
@@ -74,91 +62,99 @@
       5
     ],
     [
+      "waking up and completing the morning routine (washing face)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (taking a quick shower)",
+      10
+    ],
+    [
+      "waking up and completing the morning routine (drying off and getting dressed)",
+      10
+    ],
+    [
       "waking up and completing the morning routine (combing hair)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting dressed)",
-      10
+      "waking up and completing the morning routine (applying skincare)",
+      5
     ],
     [
-      "waking up and completing the morning routine (making breakfast)",
+      "waking up and completing the morning routine (putting on light makeup)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (gathering items for the day)",
+      5
+    ],
+    [
+      "having breakfast (preparing breakfast ingredients)",
+      5
+    ],
+    [
+      "having breakfast (cooking breakfast)",
       15
     ],
     [
-      "attending classes at Oak Hill College (walking to first class)",
-      10
-    ],
-    [
-      "attending classes at Oak Hill College (attending lecture in first class) (gathering class materials)",
+      "having breakfast (making a cup of coffee)",
       5
     ],
     [
-      "attending classes at Oak Hill College (attending lecture in first class) (walking to the lecture hall)",
-      10
-    ],
-    [
-      "attending classes at Oak Hill College (attending lecture in first class) (finding a seat)",
+      "having breakfast (setting the table)",
       5
     ],
     [
-      "attending classes at Oak Hill College (attending lecture in first class) (setting up laptop for notes)",
+      "having breakfast (eating breakfast)",
+      20
+    ],
+    [
+      "having breakfast (cleaning up the table)",
       5
     ],
     [
-      "attending classes at Oak Hill College (attending lecture in first class) (reviewing lecture notes from last class)",
-      10
-    ],
-    [
-      "attending classes at Oak Hill College (attending lecture in first class) (listening to the lecture)",
-      10
-    ],
-    [
-      "attending classes at Oak Hill College (attending lecture in first class) (taking notes)",
-      10
-    ],
-    [
-      "attending classes at Oak Hill College (attending lecture in first class) (packing up belongings after class)",
+      "having breakfast (washing dishes)",
       5
     ],
     [
-      "attending classes at Oak Hill College (taking notes during first class)",
-      15
-    ],
-    [
-      "attending classes at Oak Hill College (walking to second class)",
-      10
-    ],
-    [
-      "attending classes at Oak Hill College (attending lecture in second class)",
+      "attending classes at Oak Hill College",
       60
     ],
     [
-      "attending classes at Oak Hill College (taking notes during second class)",
-      15
-    ],
-    [
-      "attending classes at Oak Hill College (walking to third class)",
-      10
-    ],
-    [
-      "attending classes at Oak Hill College (attending lecture in third class)",
+      "engaging in discussions with classmates",
       60
     ],
     [
-      "having lunch and discussing weekend plans",
+      "continuing with classes and coursework",
       60
     ],
     [
-      "continuing classes and engaging in discussions",
-      240
-    ],
-    [
-      "heading to the bar to prepare for the shift",
+      "having lunch with friends at the college cafeteria",
       60
     ],
     [
-      "beginning work as a bartender",
+      "returning to classes or study sessions",
+      60
+    ],
+    [
+      "focusing on coursework and studying",
+      60
+    ],
+    [
+      "wrapping up study sessions",
+      60
+    ],
+    [
+      "heading to the local bar to prepare for her shift",
+      60
+    ],
+    [
+      "eating a light dinner at the bar",
+      60
+    ],
+    [
+      "starting her shift at the bar",
       60
     ],
     [
@@ -166,19 +162,19 @@
       60
     ],
     [
-      "engaging in lighthearted conversations with students",
+      "continuing to serve and interact with customers",
       60
     ],
     [
-      "serving drinks and offering advice to patrons",
+      "maintaining a friendly atmosphere during her shift",
       60
     ],
     [
-      "winding down the night and reflecting on interactions",
+      "winding down her shift and cleaning up",
       60
     ],
     [
-      "wrapping up the bar shift and heading home",
+      "returning home and relaxing before bed",
       60
     ]
   ],
@@ -192,23 +188,47 @@
       60
     ],
     [
+      "having breakfast",
+      60
+    ],
+    [
       "attending classes at Oak Hill College",
-      240
-    ],
-    [
-      "having lunch and discussing weekend plans",
       60
     ],
     [
-      "continuing classes and engaging in discussions",
-      240
-    ],
-    [
-      "heading to the bar to prepare for the shift",
+      "engaging in discussions with classmates",
       60
     ],
     [
-      "beginning work as a bartender",
+      "continuing with classes and coursework",
+      60
+    ],
+    [
+      "having lunch with friends at the college cafeteria",
+      60
+    ],
+    [
+      "returning to classes or study sessions",
+      60
+    ],
+    [
+      "focusing on coursework and studying",
+      60
+    ],
+    [
+      "wrapping up study sessions",
+      60
+    ],
+    [
+      "heading to the local bar to prepare for her shift",
+      60
+    ],
+    [
+      "eating a light dinner at the bar",
+      60
+    ],
+    [
+      "starting her shift at the bar",
       60
     ],
     [
@@ -216,38 +236,38 @@
       60
     ],
     [
-      "engaging in lighthearted conversations with students",
+      "continuing to serve and interact with customers",
       60
     ],
     [
-      "serving drinks and offering advice to patrons",
+      "maintaining a friendly atmosphere during her shift",
       60
     ],
     [
-      "winding down the night and reflecting on interactions",
+      "winding down her shift and cleaning up",
       60
     ],
     [
-      "wrapping up the bar shift and heading home",
+      "returning home and relaxing before bed",
       60
     ]
   ],
   "act_address": "the Ville:Tiffany Yang's house:main room:bed",
-  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_start_time": "February 13, 2023, 07:00:00",
   "act_duration": 5,
-  "act_description": "waking up and completing the morning routine (stretching)",
-  "act_pronunciatio": "\ud83e\udd38",
+  "act_description": "waking up and completing the morning routine (waking up and stretching)",
+  "act_pronunciatio": "\ud83c\udf05\ud83d\udcaa",
   "act_event": [
     "Tiffany Yang",
-    "stretch",
+    "wake up and stretch",
     ""
   ],
-  "act_obj_description": "in disarray with rumpled sheets and pillows askew",
-  "act_obj_pronunciatio": "\ud83d\udecf",
+  "act_obj_description": "in disarray with crumpled sheets and pillows askew",
+  "act_obj_pronunciatio": "\ud83d\udecf\ud83d\ude35",
   "act_obj_event": [
     "bed",
     "is in disarray with",
-    "rumpled sheets and pillows askew"
+    "crumpled sheets and pillows askew"
   ],
   "chatting_with": null,
   "chat": null,

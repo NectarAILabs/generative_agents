@@ -162,7 +162,7 @@ async def generate_one_utterance(maze, init_persona, target_persona, retrieved, 
   convo_response = convo_response[0]
 
   try:
-    return convo_response["utterance"], convo_response["end"]
+    return convo_response["utterance"].encode().decode('utf-8').replace("\u2019", "'"), convo_response["end"]
   except Exception:
     print("Error <generate_one_utterance>: Could not get utterance")
     traceback.print_exc()
@@ -189,8 +189,6 @@ async def agent_chat_v2(maze, init_persona, target_persona):
     retrieved = await new_retrieve(init_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
-    utt = utt.encode().decode('utf-8')
-    utt = unicodedata.normalize('NFKD', utt)
     curr_chat += [[init_persona.scratch.name, utt]]
     if end:
       break
@@ -212,8 +210,6 @@ async def agent_chat_v2(maze, init_persona, target_persona):
     retrieved = await new_retrieve(target_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
-    utt = utt.encode().decode('utf-8')
-    utt = unicodedata.normalize('NFKD', utt)
     curr_chat += [[target_persona.scratch.name, utt]]
     if end:
       break
@@ -334,7 +330,7 @@ async def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, 
         print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")
 
       else: 
-        retrieved = new_retrieve(persona, [line], 50)[line]
+        retrieved = await new_retrieve(persona, [line], 50)[line]
         summarized_idea = await generate_summarize_ideas(persona, retrieved, line)
         curr_convo += [[interlocutor_desc, line]]
 

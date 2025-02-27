@@ -1,7 +1,7 @@
 {
   "fork_sim_code": "base_simulation_v1",
   "start_date": "February 13, 2023",
-  "curr_time": "February 13, 2023, 07:13:30",
+  "curr_time": "February 13, 2023, 07:00:10",
   "sec_per_step": 10,
   "maze_name": "the_ville",
   "persona_names": [
@@ -15,7 +15,7 @@
     "Iris Chang",
     "Amelie Dupont"
   ],
-  "step": 2601,
+  "step": 2521,
   "block_remaps": {
     "sector": {
       "Isabella Rodriguez's apartment": "Noah Walker's apartment",

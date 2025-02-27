@@ -2,7 +2,7 @@
   "the Ville": {
     "Katie Adams's apartment": {
       "bathroom": ["bathroom sink", "shower", "toilet"],
-      "main room": ["closet", "bed", "desk", "cooking area", "refrigerator"]
+      "main room": ["closet", "bed", "desk", "refrigerator"]
     },
     "Johnson Park": {
       "park": ["park garden"]

@@ -215,7 +215,6 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
       **provider_parameter
     )
     time.sleep(0.5)
-    print("--- ChatGPT_structured_request() ---")
     print("Prompt:", prompt, flush=True)
     print("Response:", completion, flush=True)
     message = completion.choices[0].message

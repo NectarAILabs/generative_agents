@@ -29,6 +29,7 @@ But {persona_name} unexpectedly ended up {new_action} for {new_action_duration} 
 
 Revised schedule:
 {new_schedule_start}
+Remember to keep the revised original schedule, don't change anything. 
 """
   return prompt
 
@@ -106,8 +107,11 @@ async def run_gpt_prompt_new_decomp_schedule(
     return prompt_input
 
   def __func_clean_up(gpt_response: NewSchedule, prompt=""):
+    # Keep the revised schedule, just add the rest of the plan.
+    #new_schedule = truncated_act_dur
+    #truncated_minute_pass = sum([i[1] for i in truncated_act_dur])
+    #hour_start_time = start_time_hour + datetime.timedelta(minutes=truncated_minute_pass)
     new_schedule = []
-
     for activity in gpt_response.schedule:
       start_time = activity.start_time
       end_time = activity.end_time
@@ -118,6 +122,7 @@ async def run_gpt_prompt_new_decomp_schedule(
       if delta_min < 0:
         delta_min = 0
       action = activity.main_task + f" ({activity.subtask})"
+      #if hour_start_time <= datetime.datetime.strptime(start_time, "%H:%M"):
       new_schedule += [[action, delta_min]]
 
     return new_schedule
@@ -191,6 +196,10 @@ async def run_gpt_prompt_new_decomp_schedule(
     "presence_penalty": 0,
     "stop": None,
   }
+  provider_parameter = openai_config.get("other_providers", {}).get("new_decomp_schedule_provider", None)
+  if provider_parameter != None:
+    gpt_param.update({k:v for k,v in provider_parameter.items() if k != "model"})
+    gpt_param["engine"] = provider_parameter["model"]
   prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(
     persona,

@@ -1,10 +1,10 @@
 {
   "vision_r": 8,
   "att_bandwidth": 8,
-  "retention": 8,
-  "curr_time": "February 13, 2023, 07:13:20",
+  "retention": 20,
+  "curr_time": "February 13, 2023, 07:00:00",
   "curr_tile": [
-    53,
+    54,
     14
   ],
   "daily_plan_req": "",
@@ -28,81 +28,58 @@
   "relevance_w": 1,
   "importance_w": 1,
   "recency_decay": 0.99,
-  "importance_trigger_max": 150,
-  "importance_trigger_curr": 118,
-  "importance_ele_n": 25,
+  "importance_trigger_max": 2000,
+  "importance_trigger_curr": 1941,
+  "importance_ele_n": 28,
   "thought_count": 5,
   "daily_req": [
     "Wake up and complete morning routine at 9:00 AM",
     "Attend classes from 10:00 AM to 12:00 PM",
-    "Hang out at Hobbs Cafe with friends from 12:00 PM to 1:30 PM",
-    "Attend cheerleading practice from 2:00 PM to 4:00 PM",
-    "Finish classes for the day and relax at the dorm from 4:30 PM to 5:30 PM",
-    "Have dinner at 6:00 PM",
-    "Study and complete assignments from 7:00 PM to 9:00 PM",
-    "Hang out in the common area with friends and discuss the new male student from 9:00 PM to 11:00 PM",
-    "Plan to meet the new male student and socialize from 11:00 PM to 1:00 AM",
-    "Wind down and prepare for bed by 2:00 AM"
+    "Have lunch with friends at Hobbs Cafe from 12:00 PM to 1:00 PM",
+    "Attend cheerleading practice from 1:30 PM to 3:30 PM",
+    "Hang out with friends and discuss the new male student from 4:00 PM to 5:30 PM",
+    "Grab a quick snack at Hobbs Cafe before dinner at 6:00 PM",
+    "Have dinner at 6:00 PM with a few close friends, gossiping about the male student",
+    "Attend a study group session from 7:30 PM to 9:00 PM",
+    "Relax at Hobbs Cafe from 9:30 PM to 11:00 PM, flirting and socializing",
+    "Spend time preparing for the upcoming cheerleading event from 11:00 PM to 1:00 AM",
+    "Wind down and get ready for bed at 1:30 AM."
   ],
   "f_daily_schedule": [
     [
-      "socializing and relaxing (scrolling through social media to catch up with friends)",
-      10
-    ],
-    [
-      "socializing and relaxing (texting a close friend to chat about the day)",
+      "preparing for upcoming cheerleading event (reviewing the cheerleading routine and making notes)",
       15
     ],
     [
-      "socializing and relaxing (listening to her favorite playlist)",
+      "preparing for upcoming cheerleading event (practicing specific cheerleading moves in front of a mirror)",
+      20
+    ],
+    [
+      "preparing for upcoming cheerleading event (creating a playlist of songs for the event)",
       10
     ],
     [
-      "socializing and relaxing (taking a few minutes to dance around the room)",
-      5
+      "preparing for upcoming cheerleading event (selecting outfits and accessories for the event)",
+      15
     ],
     [
-      "socializing and relaxing (watching a short comedy skit online)",
+      "preparing for upcoming cheerleading event (watching videos of previous cheerleading events for inspiration)",
+      15
+    ],
+    [
+      "preparing for upcoming cheerleading event (recording a video of herself practicing to evaluate performance)",
+      20
+    ],
+    [
+      "preparing for upcoming cheerleading event (taking a short break and hydrating)",
       10
     ],
     [
-      "socializing and relaxing (reflecting on the day's events and emotions)",
-      5
-    ],
-    [
-      "socializing and relaxing (writing a quick journal entry about her thoughts)",
-      5
-    ],
-    [
-      "winding down for bed (brushing teeth and washing face)",
+      "preparing for upcoming cheerleading event (making a checklist of items to bring to the event)",
       10
     ],
     [
-      "winding down for bed (changing into sleepwear)",
-      5
-    ],
-    [
-      "winding down for bed (setting the alarm for the next day)",
-      5
-    ],
-    [
-      "winding down for bed (stretching gently to relax muscles)",
-      10
-    ],
-    [
-      "winding down for bed (reviewing the day's events and reflecting)",
-      10
-    ],
-    [
-      "winding down for bed (reading a book to relax)",
-      10
-    ],
-    [
-      "winding down for bed (turning off the lights and electronics)",
-      5
-    ],
-    [
-      "winding down for bed (lying in bed and focusing on breathing to relax)",
+      "preparing for upcoming cheerleading event (packing her cheerleading bag with essentials)",
       5
     ],
     [
@@ -118,50 +95,42 @@
       120
     ],
     [
-      "hanging out at Hobbs Cafe",
-      120
+      "having lunch with friends at Hobbs Cafe",
+      60
+    ],
+    [
+      "heading to cheerleading practice",
+      60
     ],
     [
       "attending cheerleading practice",
       120
     ],
     [
-      "finishing classes and relaxing at the dorm",
-      60
-    ],
-    [
-      "relaxing at the dorm",
-      60
-    ],
-    [
-      "having dinner",
-      60
-    ],
-    [
-      "studying and completing assignments",
+      "hanging out with friends and discussing the new male student",
       120
     ],
     [
-      "hanging out in the common area",
+      "having dinner with close friends",
       60
     ],
     [
-      "discussing the new male student",
+      "gossiping with friends during dinner",
       60
     ],
     [
-      "planning to meet and socialize with the new male student",
-      60
+      "attending study group session",
+      120
+    ],
+    [
+      "relaxing at Hobbs Cafe, flirting and socializing",
+      120
     ]
   ],
   "f_daily_schedule_hourly_org": [
     [
-      "socializing and relaxing",
-      60
-    ],
-    [
-      "winding down for bed",
-      60
+      "preparing for upcoming cheerleading event",
+      120
     ],
     [
       "sleeping",
@@ -176,58 +145,54 @@
       120
     ],
     [
-      "hanging out at Hobbs Cafe",
-      120
+      "having lunch with friends at Hobbs Cafe",
+      60
+    ],
+    [
+      "heading to cheerleading practice",
+      60
     ],
     [
       "attending cheerleading practice",
       120
     ],
     [
-      "finishing classes and relaxing at the dorm",
-      60
-    ],
-    [
-      "relaxing at the dorm",
-      60
-    ],
-    [
-      "having dinner",
-      60
-    ],
-    [
-      "studying and completing assignments",
+      "hanging out with friends and discussing the new male student",
       120
     ],
     [
-      "hanging out in the common area",
+      "having dinner with close friends",
       60
     ],
     [
-      "discussing the new male student",
+      "gossiping with friends during dinner",
       60
     ],
     [
-      "planning to meet and socialize with the new male student",
-      60
+      "attending study group session",
+      120
+    ],
+    [
+      "relaxing at Hobbs Cafe, flirting and socializing",
+      120
     ]
   ],
   "act_address": "the Ville:Katie Adams's apartment:main room:bed",
   "act_start_time": "February 13, 2023, 02:00:00",
   "act_duration": 420,
   "act_description": "sleeping",
-  "act_pronunciatio": "\ud83d\ude34",
+  "act_pronunciatio": "\ud83d\ude34\ud83d\udecf",
   "act_event": [
     "Katie Adams",
     "is",
     "sleep"
   ],
-  "act_obj_description": "being used by Katie Adams for sleeping",
-  "act_obj_pronunciatio": "\ud83d\ude34",
+  "act_obj_description": "occupied by Katie Adams who is sleeping",
+  "act_obj_pronunciatio": "\ud83d\ude34\ud83d\udca4",
   "act_obj_event": [
     "bed",
-    "use",
-    "bed for sleeping"
+    "is",
+    "sleeping"
   ],
   "chatting_with": null,
   "chat": null,

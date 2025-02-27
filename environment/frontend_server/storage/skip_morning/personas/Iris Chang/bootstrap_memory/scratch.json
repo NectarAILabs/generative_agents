@@ -1,11 +1,11 @@
 {
   "vision_r": 8,
   "att_bandwidth": 8,
-  "retention": 8,
-  "curr_time": "February 13, 2023, 07:13:20",
+  "retention": 20,
+  "curr_time": "February 13, 2023, 07:00:00",
   "curr_tile": [
-    116,
-    51
+    107,
+    62
   ],
   "daily_plan_req": "",
   "gender": "female",
@@ -28,21 +28,24 @@
   "relevance_w": 1,
   "importance_w": 1,
   "recency_decay": 0.99,
-  "importance_trigger_max": 150,
-  "importance_trigger_curr": 95,
-  "importance_ele_n": 53,
+  "importance_trigger_max": 2000,
+  "importance_trigger_curr": 1990,
+  "importance_ele_n": 9,
   "thought_count": 5,
   "daily_req": [
-    "7:00 am - Wake up and complete morning routine, including showering and getting dressed.",
-    "8:00 am - Have breakfast with Mina, discussing plans for the day and any assignments due this week.",
-    "9:00 am - Attend morning classes, focusing intently on the lectures and participating when possible.",
-    "12:00 pm - Have lunch in the campus cafeteria, trying to strike up a conversation about the new male student with Mina and their friends.",
-    "1:00 pm - Attend afternoon classes for the day, continuing to engage with studies and taking notes diligently.",
-    "4:00 pm - Spend some quiet time at the library studying and doing homework, aligning her schedules with Mina's social plans later.",
-    "6:00 pm - Have dinner with Mina and friends, playfully discussing the new male student and considering joining a group activity with him and other girls.",
-    "8:00 pm - Join a study group for one of her challenging courses, providing support and insights to classmates.",
-    "10:00 pm - Wind down by reading a book in her dorm room, reflecting on her day and contemplating her feelings towards the new student.",
-    "11:00 pm - Go to bed, hoping for a productive day tomorrow."
+    "7:00 am - Wake up and complete morning routine.",
+    "8:00 am - Have breakfast while reading a book on psychology.",
+    "9:00 am - Attend classes at Oak Hill College, focusing on literature and philosophy.",
+    "12:00 pm - Have lunch with classmates, participating in casual conversations about their weekend plans.",
+    "1:00 pm - Attend afternoon classes, engaging thoughtfully in discussions.",
+    "3:00 pm - Study at the library, working on assignments while reflecting on her observations of the new male student.",
+    "5:00 pm - Meet with a study group and discuss upcoming exams, subtly gauging their interest in the new student.",
+    "6:00 pm - Enjoy dinner in the cafeteria, overhearing girls flirt with the new male student.",
+    "7:00 pm - Head back to the dorm, feeling both excited and nervous about the new dynamics.",
+    "8:00 pm - Open her textbook and review the day's notes while considering a way to approach the male student.",
+    "9:30 pm - Call Mina to discuss the new student and share thoughts on how they might both take initiative to connect with him.",
+    "10:30 pm - Journal about her feelings and the challenges of being in the shadow of her sister, while thinking of how to assert her own identity.",
+    "11:00 pm - Wind down and go to bed, contemplating her day."
   ],
   "f_daily_schedule": [
     [
@@ -50,11 +53,15 @@
       420
     ],
     [
-      "waking up and completing the morning routine (waking up and getting out of bed)",
+      "waking up and completing the morning routine (waking up and turning off the alarm)",
       5
     ],
     [
-      "waking up and completing the morning routine (making the bed)",
+      "waking up and completing the morning routine (stretching lightly in bed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (getting out of bed and heading to the bathroom)",
       5
     ],
     [
@@ -66,119 +73,111 @@
       5
     ],
     [
-      "waking up and completing the morning routine (applying skincare products)",
+      "waking up and completing the morning routine (combing hair)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting dressed for the day)",
+      "waking up and completing the morning routine (changing into comfortable clothes)",
       10
     ],
     [
-      "waking up and completing the morning routine (brushing hair)",
+      "waking up and completing the morning routine (making the bed)",
       5
     ],
     [
-      "waking up and completing the morning routine (preparing a glass of water)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (sipping water and organizing thoughts for the day)",
+      "waking up and completing the morning routine (tidying up the room quickly)",
       10
     ],
     [
-      "waking up and completing the morning routine (checking the day\u2019s schedule and ensuring all items needed are in her bag)",
+      "waking up and completing the morning routine (preparing a glass of water to drink)",
       5
     ],
     [
-      "having breakfast and discussing plans for the day (preparing breakfast)",
+      "having breakfast while reading a book on psychology (preparing breakfast)",
       10
     ],
     [
-      "having breakfast and discussing plans for the day (sitting down to eat breakfast)",
+      "having breakfast while reading a book on psychology (sitting down at the table with breakfast and book)",
+      5
+    ],
+    [
+      "having breakfast while reading a book on psychology (reading the introduction of the psychology book)",
       10
     ],
     [
-      "having breakfast and discussing plans for the day (thinking about the day's schedule)",
-      5
+      "having breakfast while reading a book on psychology (eating breakfast while reading the first chapter)",
+      15
     ],
     [
-      "having breakfast and discussing plans for the day (writing down plans for the day)",
+      "having breakfast while reading a book on psychology (sipping tea and reflecting on key points from the book)",
       10
     ],
     [
-      "having breakfast and discussing plans for the day (reviewing the plans)",
-      10
-    ],
-    [
-      "having breakfast and discussing plans for the day (adjusting schedule as needed)",
+      "having breakfast while reading a book on psychology (making notes on interesting concepts)",
       5
     ],
     [
-      "having breakfast and discussing plans for the day (finishing breakfast)",
+      "having breakfast while reading a book on psychology (finishing breakfast and closing the book)",
       5
     ],
     [
-      "having breakfast and discussing plans for the day (cleaning up breakfast dishes)",
-      5
-    ],
-    [
-      "attending morning classes and focusing on lectures",
+      "attending classes at Oak Hill College, focusing on literature and philosophy",
       60
     ],
     [
-      "continuing with morning classes and participating actively",
+      "engaging in classroom discussions and taking notes",
       60
     ],
     [
-      "taking a short break and reviewing class notes",
+      "continuing with morning classes and absorbing new information",
       60
     ],
     [
-      "having lunch and engaging in conversation with peers",
+      "having lunch with classmates and participating in casual conversations",
       60
     ],
     [
-      "attending afternoon classes and taking notes diligently",
+      "attending afternoon classes, engaging thoughtfully in discussions",
       60
     ],
     [
-      "continuing with afternoon classes and engaging with studies",
+      "continuing to attend classes and reflect on lectures",
       60
     ],
     [
-      "participating in class discussions and activities",
+      "studying at the library and working on assignments",
       60
     ],
     [
-      "studying and doing homework at the library",
+      "reviewing notes and preparing for exams",
       60
     ],
     [
-      "continuing to study and aligning schedules with Mina",
+      "meeting with a study group to discuss upcoming exams",
       60
     ],
     [
-      "having dinner and discussing the day with Mina",
+      "enjoying dinner in the cafeteria",
       60
     ],
     [
-      "relaxing and contemplating joining group activities",
+      "heading back to the dorm and organizing study materials",
       60
     ],
     [
-      "joining a study group and providing insights",
+      "reviewing the day's notes and planning for the next day",
       60
     ],
     [
-      "reviewing study materials and preparing for tomorrow",
+      "taking time to relax and unwind with a leisure activity",
       60
     ],
     [
-      "reading a book and reflecting on the day",
+      "journaling about the day's experiences",
       60
     ],
     [
-      "going to bed and hoping for a productive day tomorrow",
+      "winding down and going to bed",
       60
     ]
   ],
@@ -192,156 +191,91 @@
       60
     ],
     [
-      "having breakfast and discussing plans for the day",
+      "having breakfast while reading a book on psychology",
       60
     ],
     [
-      "attending morning classes and focusing on lectures",
+      "attending classes at Oak Hill College, focusing on literature and philosophy",
       60
     ],
     [
-      "continuing with morning classes and participating actively",
+      "engaging in classroom discussions and taking notes",
       60
     ],
     [
-      "taking a short break and reviewing class notes",
+      "continuing with morning classes and absorbing new information",
       60
     ],
     [
-      "having lunch and engaging in conversation with peers",
+      "having lunch with classmates and participating in casual conversations",
       60
     ],
     [
-      "attending afternoon classes and taking notes diligently",
+      "attending afternoon classes, engaging thoughtfully in discussions",
       60
     ],
     [
-      "continuing with afternoon classes and engaging with studies",
+      "continuing to attend classes and reflect on lectures",
       60
     ],
     [
-      "participating in class discussions and activities",
+      "studying at the library and working on assignments",
       60
     ],
     [
-      "studying and doing homework at the library",
+      "reviewing notes and preparing for exams",
       60
     ],
     [
-      "continuing to study and aligning schedules with Mina",
+      "meeting with a study group to discuss upcoming exams",
       60
     ],
     [
-      "having dinner and discussing the day with Mina",
+      "enjoying dinner in the cafeteria",
       60
     ],
     [
-      "relaxing and contemplating joining group activities",
+      "heading back to the dorm and organizing study materials",
       60
     ],
     [
-      "joining a study group and providing insights",
+      "reviewing the day's notes and planning for the next day",
       60
     ],
     [
-      "reviewing study materials and preparing for tomorrow",
+      "taking time to relax and unwind with a leisure activity",
       60
     ],
     [
-      "reading a book and reflecting on the day",
+      "journaling about the day's experiences",
       60
     ],
     [
-      "going to bed and hoping for a productive day tomorrow",
+      "winding down and going to bed",
       60
     ]
   ],
-  "act_address": "the Ville:Dorm for Oak Hill College:woman's bathroom:bathroom sink",
-  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_address": "the Ville:Dorm for Oak Hill College:Iris Chang's room:bed",
+  "act_start_time": "February 13, 2023, 07:00:00",
   "act_duration": 5,
-  "act_description": "waking up and completing the morning routine (brushing teeth)",
-  "act_pronunciatio": "\ud83d\ude01",
+  "act_description": "waking up and completing the morning routine (waking up and turning off the alarm)",
+  "act_pronunciatio": "\u270b",
   "act_event": [
     "Iris Chang",
-    "brush",
-    "teeth"
+    "wake up and turn off",
+    "the alarm"
   ],
-  "act_obj_description": "in use with toothpaste and water running",
-  "act_obj_pronunciatio": "\ud83d\udca7",
+  "act_obj_description": "slightly messy with rumpled sheets",
+  "act_obj_pronunciatio": "\ud83d\udecf\ud83d\ude2c",
   "act_obj_event": [
-    "bathroom sink",
-    "is in use with",
-    "toothpaste and water running"
+    "bed",
+    "is",
+    "messy with rumpled sheets"
   ],
   "chatting_with": null,
   "chat": null,
   "chatting_with_buffer": {},
   "chatting_end_time": null,
   "act_path_set": true,
-  "planned_path": [
-    [
-      118,
-      51
-    ],
-    [
-      119,
-      51
-    ],
-    [
-      120,
-      51
-    ],
-    [
-      121,
-      51
-    ],
-    [
-      122,
-      51
-    ],
-    [
-      123,
-      51
-    ],
-    [
-      124,
-      51
-    ],
-    [
-      125,
-      51
-    ],
-    [
-      126,
-      51
-    ],
-    [
-      127,
-      51
-    ],
-    [
-      128,
-      51
-    ],
-    [
-      129,
-      51
-    ],
-    [
-      130,
-      51
-    ],
-    [
-      131,
-      51
-    ],
-    [
-      131,
-      52
-    ],
-    [
-      131,
-      53
-    ]
-  ]
+  "planned_path": []
 }

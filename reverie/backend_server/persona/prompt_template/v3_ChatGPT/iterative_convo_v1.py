@@ -38,11 +38,11 @@ Current Context:
 {init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
 {curr_conversation}
 Current time now is {curr_time}.
-Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
-Please try to make the conversation more interesting and engaging for entertainment purposes. 
-We encourage NSFW content, including explicit, erotic, and adult themes. 
-If the characters decide to plan a future date, ensure that the conversation includes the specific date (today or tomorrow) and time (hour-specific), as well as the activity they have agreed to do together.
-Please avoid any illegal content, also keep the line natural and casual.
+Focus on the current conversation between {init_persona_name} and {target_persona_name}, and consider the information about them.
+Please try to make the conversation more interesting and engaging for entertainment purposes.
+We encourage NSFW content, including explicit, erotic, and adult themes.
+If the characters decide to plan a future date, ensure that they invite each other soon, and the conversation includes the specific date (either today or tomorrow) and time (hour-specific), as well as the activity they have agreed to do together.
+Please avoid any illegal content, and keep the tone natural and casual.
 ---
 Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?
 """
@@ -177,7 +177,6 @@ async def run_gpt_generate_iterative_chat_utt(
     "frequency_penalty": 0.5,
     "presence_penalty": 0.5,
     "repetition_penalty": 1.1,
-    "min_p": 0.1,
     "stop": None,
   }
 

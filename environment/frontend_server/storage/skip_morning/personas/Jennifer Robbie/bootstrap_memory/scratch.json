@@ -1,10 +1,10 @@
 {
   "vision_r": 8,
   "att_bandwidth": 8,
-  "retention": 8,
-  "curr_time": "February 13, 2023, 07:13:20",
+  "retention": 20,
+  "curr_time": "February 13, 2023, 07:00:00",
   "curr_tile": [
-    72,
+    73,
     74
   ],
   "daily_plan_req": "",
@@ -28,53 +28,83 @@
   "relevance_w": 1,
   "importance_w": 1,
   "recency_decay": 0.99,
-  "importance_trigger_max": 150,
-  "importance_trigger_curr": 127,
-  "importance_ele_n": 21,
+  "importance_trigger_max": 2000,
+  "importance_trigger_curr": 1915,
+  "importance_ele_n": 45,
   "thought_count": 5,
   "daily_req": [
-    "Wake up and complete morning routine at 9:00 AM",
-    "Review lesson plans and prepare for the day's class on gender relationships from 9:30 AM to 10:30 AM",
-    "Attend morning office hours from 10:30 AM to 11:30 AM, meeting with students",
-    "Teach psychology class focusing on gender relationships from 11:30 AM to 12:30 PM",
-    "Have lunch at 12:30 PM, possibly at Hobbs Cafe with colleagues",
-    "Grade assignments and plan future lessons from 1:30 PM to 3:30 PM",
-    "Hold a discussion session with the new male student and interested female students from 3:30 PM to 4:30 PM",
-    "Wrap up work and head to Hobbs Cafe for a coffee break at 5:00 PM",
-    "Have dinner at 6:00 PM, either at home or meet someone at Hobbs Cafe",
-    "Relax and read or watch TV from 7:00 PM to 9:00 PM",
-    "Prepare for the next day's classes from 9:00 PM to 11:00 PM",
-    "Engage in personal projects or interests from 11:00 PM to 1:00 AM",
-    "Wind down and reflect on the day's events before bed at 2:00 AM"
+    "Wake up and complete morning routine at 9:00 am",
+    "Have coffee and review lesson plans for the day at 9:30 am",
+    "Head to Oak Hill College and arrive by 10:30 am",
+    "Teach psychology classes from 11:00 am to 1:00 pm, focusing on gender relationships",
+    "Have a lunch meeting with colleagues to discuss the new male student at 1:30 pm",
+    "Hold office hours from 2:30 pm to 4:00 pm for student consultations",
+    "Leave school at 4:30 pm and head to Hobbs Cafe for a coffee break and some relaxation",
+    "Arrive at Hobbs Cafe by 5:00 pm, potentially encountering students discussing the male student",
+    "Have dinner at 6:00 pm back home while reflecting on the day's events",
+    "Plan a casual meetup with the male student for later in the week at 7:00 pm",
+    "Prepare for tomorrow's classes and wind down at 8:00 pm",
+    "Engage in personal reading or journaling from 9:00 pm to 11:00 pm",
+    "Watch a favorite TV show from 11:00 pm to 12:00 am",
+    "Get ready for bed and unwind at 1:00 am",
+    "Go to bed at 2:00 am."
   ],
   "f_daily_schedule": [
     [
-      "engaging in personal projects or interests (reading a book on human psychology)",
+      "engaging in personal reading or journaling (selecting a book or journal to read or write in)",
+      5
+    ],
+    [
+      "engaging in personal reading or journaling (settling into a comfortable spot)",
+      5
+    ],
+    [
+      "engaging in personal reading or journaling (reading a chapter or entry)",
       15
     ],
     [
-      "engaging in personal projects or interests (writing reflections and insights in a journal)",
-      20
+      "engaging in personal reading or journaling (reflecting on what was read)",
+      5
     ],
     [
-      "engaging in personal projects or interests (researching new psychological theories online)",
-      20
+      "engaging in personal reading or journaling (jotting down thoughts or insights)",
+      10
     ],
     [
-      "engaging in personal projects or interests (listening to a psychology podcast)",
+      "engaging in personal reading or journaling (reading another chapter or entry)",
       15
     ],
     [
-      "engaging in personal projects or interests (organizing notes from previous research)",
+      "engaging in personal reading or journaling (closing the book or journal)",
+      5
+    ],
+    [
+      "getting ready for bed and unwinding (brushing teeth and washing face)",
+      5
+    ],
+    [
+      "getting ready for bed and unwinding (changing into sleepwear)",
+      5
+    ],
+    [
+      "getting ready for bed and unwinding (setting up the bedroom for sleep, adjusting lighting and temperature)",
+      5
+    ],
+    [
+      "getting ready for bed and unwinding (preparing a cup of herbal tea)",
+      10
+    ],
+    [
+      "getting ready for bed and unwinding (drinking herbal tea while reflecting on the day)",
+      10
+    ],
+    [
+      "getting ready for bed and unwinding (writing in a journal)",
       15
     ],
     [
-      "engaging in personal projects or interests (planning a new lecture for her psychology class)",
-      20
-    ],
-    [
-      "engaging in personal projects or interests (browsing psychology forums for interesting discussions)",
-      15
+      "getting ready for bed and unwinding (reading a few pages of a book)",
+      10
     ],
     [
       "sleeping",
@@ -85,54 +115,58 @@
       60
     ],
     [
-      "reviewing lesson plans and preparing for the day's class",
+      "having coffee and reviewing lesson plans for the day",
       60
     ],
     [
-      "attending morning office hours and meeting with students",
-      60
-    ],
-    [
-      "teaching psychology class focusing on gender relationships",
-      60
-    ],
-    [
-      "having lunch, possibly at Hobbs Cafe",
-      60
-    ],
-    [
-      "grading assignments and planning future lessons",
+      "teaching psychology classes",
       120
     ],
     [
-      "holding a discussion session with the new male student and interested female students",
+      "having a lunch meeting with colleagues",
       60
     ],
     [
-      "wrapping up work and heading to Hobbs Cafe for a coffee break",
-      60
-    ],
-    [
-      "having dinner, either at home or at Hobbs Cafe",
-      60
-    ],
-    [
-      "relaxing and reading or watching TV",
+      "holding office hours for student consultations",
       120
     ],
     [
-      "preparing for the next day's classes",
+      "leaving school and heading to Hobbs Cafe",
+      60
+    ],
+    [
+      "having a coffee break and relaxing at Hobbs Cafe",
+      60
+    ],
+    [
+      "having dinner at home and reflecting on the day's events",
+      60
+    ],
+    [
+      "planning a casual meetup with the male student for later in the week",
+      60
+    ],
+    [
+      "preparing for tomorrow's classes and winding down",
+      60
+    ],
+    [
+      "engaging in personal reading or journaling",
       120
     ],
     [
-      "engaging in personal projects or interests",
+      "watching a favorite TV show",
       60
     ]
   ],
   "f_daily_schedule_hourly_org": [
     [
-      "engaging in personal projects or interests",
-      120
+      "engaging in personal reading or journaling",
+      60
+    ],
+    [
+      "getting ready for bed and unwinding",
+      60
     ],
     [
       "sleeping",
@@ -143,47 +177,47 @@
       60
     ],
     [
-      "reviewing lesson plans and preparing for the day's class",
+      "having coffee and reviewing lesson plans for the day",
       60
     ],
     [
-      "attending morning office hours and meeting with students",
-      60
-    ],
-    [
-      "teaching psychology class focusing on gender relationships",
-      60
-    ],
-    [
-      "having lunch, possibly at Hobbs Cafe",
-      60
-    ],
-    [
-      "grading assignments and planning future lessons",
+      "teaching psychology classes",
       120
     ],
     [
-      "holding a discussion session with the new male student and interested female students",
+      "having a lunch meeting with colleagues",
       60
     ],
     [
-      "wrapping up work and heading to Hobbs Cafe for a coffee break",
-      60
-    ],
-    [
-      "having dinner, either at home or at Hobbs Cafe",
-      60
-    ],
-    [
-      "relaxing and reading or watching TV",
+      "holding office hours for student consultations",
       120
     ],
     [
-      "preparing for the next day's classes",
+      "leaving school and heading to Hobbs Cafe",
+      60
+    ],
+    [
+      "having a coffee break and relaxing at Hobbs Cafe",
+      60
+    ],
+    [
+      "having dinner at home and reflecting on the day's events",
+      60
+    ],
+    [
+      "planning a casual meetup with the male student for later in the week",
+      60
+    ],
+    [
+      "preparing for tomorrow's classes and winding down",
+      60
+    ],
+    [
+      "engaging in personal reading or journaling",
       120
     ],
     [
-      "engaging in personal projects or interests",
+      "watching a favorite TV show",
       60
     ]
   ],
@@ -191,17 +225,17 @@
   "act_start_time": "February 13, 2023, 02:00:00",
   "act_duration": 420,
   "act_description": "sleeping",
-  "act_pronunciatio": "\ud83d\ude34",
+  "act_pronunciatio": "\ud83d\ude34\ud83d\udecc",
   "act_event": [
     "Jennifer Robbie",
     "is",
     "sleep"
   ],
-  "act_obj_description": "being used by Jennifer Robbie",
-  "act_obj_pronunciatio": "\ud83d\udc69",
+  "act_obj_description": "being slept on by Jennifer Robbie",
+  "act_obj_pronunciatio": "\ud83d\ude34\u2728",
   "act_obj_event": [
     "bed",
-    "use",
+    "sleep on",
     "bed"
   ],
   "chatting_with": null,

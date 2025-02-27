@@ -1,11 +1,11 @@
 {
   "vision_r": 8,
   "att_bandwidth": 8,
-  "retention": 8,
-  "curr_time": "February 13, 2023, 07:13:20",
+  "retention": 20,
+  "curr_time": "February 13, 2023, 07:00:00",
   "curr_tile": [
-    95,
-    13
+    93,
+    18
   ],
   "daily_plan_req": "",
   "gender": "female",
@@ -28,21 +28,24 @@
   "relevance_w": 1,
   "importance_w": 1,
   "recency_decay": 0.99,
-  "importance_trigger_max": 150,
-  "importance_trigger_curr": 107,
-  "importance_ele_n": 39,
+  "importance_trigger_max": 2000,
+  "importance_trigger_curr": 1989,
+  "importance_ele_n": 10,
   "thought_count": 5,
   "daily_req": [
-    "Wake up and complete her morning routine at 7:00 am",
-    "Attend morning classes from 8:00 am to 12:00 pm",
-    "Have lunch with friends in the cafeteria at 12:00 pm",
-    "Join a study group in the library from 1:00 pm to 3:00 pm",
-    "Attend afternoon classes from 3:00 pm to 5:00 pm",
-    "Have dinner at 5:00 pm in her dormitory",
-    "Spend time journaling and reflecting on her day from 6:00 pm to 7:00 pm",
-    "Prepare for the next day's classes from 7:00 pm to 8:00 pm",
-    "Relax by reading a book or watching a show from 8:00 pm to 9:00 pm",
-    "Go to bed around 11:00 pm"
+    "wake up and complete her morning routine at 7:00 am",
+    "have breakfast and mentally prepare for the day at 7:30 am",
+    "attend classes from 8:00 am to 12:00 pm",
+    "have lunch with friends and discuss the new male student from 12:00 pm to 1:00 pm",
+    "attend afternoon classes from 1:00 pm to 3:00 pm",
+    "engage in group study or club meetings from 3:00 pm to 5:00 pm",
+    "have dinner and chat about her day with her dormmates at 5:00 pm",
+    "study or finish assignments in her room from 6:00 pm to 7:30 pm",
+    "watch a favorite show or read from 7:30 pm to 8:30 pm",
+    "consider how to approach the new guy and plan her interactions from 8:30 pm to 9:30 pm",
+    "relax and unwind by writing in her journal about her feelings and aspirations from 9:30 pm to 10:30 pm",
+    "prepare for bed and reflect on the day at 10:30 pm",
+    "go to sleep by 11:00 pm"
   ],
   "f_daily_schedule": [
     [
@@ -50,15 +53,11 @@
       420
     ],
     [
-      "waking up and completing the morning routine (turning off the alarm)",
+      "waking up and completing the morning routine (turning off the alarm and getting out of bed)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting out of bed)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (heading to the bathroom)",
+      "waking up and completing the morning routine (going to the bathroom to freshen up)",
       5
     ],
     [
@@ -70,7 +69,11 @@
       5
     ],
     [
-      "waking up and completing the morning routine (combing hair)",
+      "waking up and completing the morning routine (applying skincare products)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (brushing hair)",
       5
     ],
     [
@@ -78,115 +81,87 @@
       10
     ],
     [
-      "waking up and completing the morning routine (preparing a light breakfast)",
+      "waking up and completing the morning routine (checking her school bag for necessary items)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (preparing a quick breakfast)",
       10
     ],
     [
       "waking up and completing the morning routine (eating breakfast)",
-      10
-    ],
-    [
-      "attending morning classes (walking to the classroom)",
       5
     ],
     [
-      "attending morning classes (settling into her seat and preparing notebooks and pens)",
-      5
-    ],
-    [
-      "attending morning classes (listening to the professor's lecture)",
-      30
-    ],
-    [
-      "attending morning classes (taking notes during the lecture)",
-      30
-    ],
-    [
-      "attending morning classes (participating in a small group discussion)",
-      15
-    ],
-    [
-      "attending morning classes (asking clarifying questions)",
-      15
-    ],
-    [
-      "attending morning classes (listening to a classmate's presentation)",
-      20
-    ],
-    [
-      "attending morning classes (reviewing her notes)",
-      15
-    ],
-    [
-      "attending morning classes (taking a short break to stretch)",
-      5
-    ],
-    [
-      "attending morning classes (working on an in-class assignment)",
-      30
-    ],
-    [
-      "attending morning classes (organizing her notes and materials)",
-      10
-    ],
-    [
-      "attending morning classes (listening to a guest speaker)",
-      20
-    ],
-    [
-      "attending morning classes (taking additional notes during the guest speaker's talk)",
-      10
-    ],
-    [
-      "attending morning classes (reviewing the day's lecture content)",
-      15
-    ],
-    [
-      "attending morning classes (packing up her belongings to leave)",
-      5
-    ],
-    [
-      "attending morning classes (walking to the cafeteria for lunch)",
-      10
-    ],
-    [
-      "having lunch in the cafeteria",
+      "attending classes (attending the first class and taking notes)",
       60
     ],
     [
-      "joining a study group in the library",
-      120
+      "attending classes (reviewing notes from the first class)",
+      10
+    ],
+    [
+      "attending classes (transitioning to the second class)",
+      5
+    ],
+    [
+      "attending classes (attending the second class and participating in a group discussion)",
+      55
+    ],
+    [
+      "attending classes (taking a short break and reflecting on the discussion)",
+      10
+    ],
+    [
+      "attending classes (attending the third class and focusing on the lecture)",
+      55
+    ],
+    [
+      "attending classes (reviewing notes from the third class)",
+      10
+    ],
+    [
+      "attending classes (spending time planning for assignments)",
+      25
+    ],
+    [
+      "attending classes (packing up and preparing to leave for lunch)",
+      10
+    ],
+    [
+      "having lunch and socializing with friends",
+      60
     ],
     [
       "attending afternoon classes",
       120
     ],
     [
-      "having dinner in her dormitory",
+      "engaging in group study or club meetings",
+      120
+    ],
+    [
+      "having dinner and chatting with dormmates",
       60
     ],
     [
-      "journaling and reflecting on her day",
+      "studying or finishing assignments",
+      120
+    ],
+    [
+      "watching a favorite show or reading",
       60
     ],
     [
-      "preparing for the next day's classes",
+      "planning interactions with the new student",
       60
     ],
     [
-      "relaxing by reading a book or watching a show",
+      "writing in journal and reflecting on feelings",
       60
     ],
     [
-      "spending time on a hobby or interest",
-      60
-    ],
-    [
-      "relaxing and unwinding before bed",
-      60
-    ],
-    [
-      "sleeping",
+      "preparing for bed and going to sleep",
       60
     ]
   ],
@@ -200,66 +175,62 @@
       60
     ],
     [
-      "attending morning classes",
+      "attending classes",
       240
     ],
     [
-      "having lunch in the cafeteria",
+      "having lunch and socializing with friends",
       60
-    ],
-    [
-      "joining a study group in the library",
-      120
     ],
     [
       "attending afternoon classes",
       120
     ],
     [
-      "having dinner in her dormitory",
+      "engaging in group study or club meetings",
+      120
+    ],
+    [
+      "having dinner and chatting with dormmates",
       60
     ],
     [
-      "journaling and reflecting on her day",
+      "studying or finishing assignments",
+      120
+    ],
+    [
+      "watching a favorite show or reading",
       60
     ],
     [
-      "preparing for the next day's classes",
+      "planning interactions with the new student",
       60
     ],
     [
-      "relaxing by reading a book or watching a show",
+      "writing in journal and reflecting on feelings",
       60
     ],
     [
-      "spending time on a hobby or interest",
-      60
-    ],
-    [
-      "relaxing and unwinding before bed",
-      60
-    ],
-    [
-      "sleeping",
+      "preparing for bed and going to sleep",
       60
     ]
   ],
-  "act_address": "the Ville:Aika Shirosaki's apartment:bathroom:bathroom sink",
-  "act_start_time": "February 13, 2023, 07:10:00",
+  "act_address": "the Ville:Aika Shirosaki's apartment:main room:bed",
+  "act_start_time": "February 13, 2023, 07:00:00",
   "act_duration": 5,
-  "act_description": "waking up and completing the morning routine (heading to the bathroom)",
-  "act_pronunciatio": "\ud83d\udebd",
+  "act_description": "waking up and completing the morning routine (turning off the alarm and getting out of bed)",
+  "act_pronunciatio": "\ud83d\udeb6",
   "act_event": [
     "Aika Shirosaki",
-    "head",
-    "bathroom"
+    "turn off and get out of",
+    "alarm and bed"
   ],
-  "act_obj_description": "is clean and ready for use",
-  "act_obj_pronunciatio": "\ud83e\uddfc",
+  "act_obj_description": "in disarray with rumpled sheets",
+  "act_obj_pronunciatio": "\ud83d\udecf\ud83d\ude35",
   "act_obj_event": [
-    "bathroom sink",
-    "is",
-    "clean and ready for use"
+    "bed",
+    "is in disarray with",
+    "rumpled sheets"
   ],
   "chatting_with": null,
   "chat": null,

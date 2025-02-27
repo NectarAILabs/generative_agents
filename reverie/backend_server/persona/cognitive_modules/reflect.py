@@ -146,7 +146,7 @@ async def run_reflect(persona):
     xx = [i.embedding_key for i in nodes]
     for xxx in xx: print (xxx)
 
-    thoughts = await generate_insights_and_evidence(persona, nodes, 5)
+    thoughts = await generate_insights_and_evidence(persona, nodes, 2)
     # Async processing instead of iterating.
     async def process_thought(thought, evidence, persona):
       created = persona.scratch.curr_time
@@ -242,7 +242,7 @@ async def reflect(persona):
       # make sure you set the fillings as well
 
       # print (persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id)
-
+      
       evidence = [persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id]
       planning_thought = await generate_planning_thought_on_convo(persona, all_utt)
       #Generate new schedule for the day based on the convo (added function)
