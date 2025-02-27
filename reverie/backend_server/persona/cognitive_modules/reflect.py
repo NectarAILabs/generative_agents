@@ -262,8 +262,12 @@ async def reflect(persona):
       else: 
         start_hour = curr_hour + 2
       start_hour = int(start_hour)
-      _new_activities = await generate_new_schedule_on_convo(persona, planning_thought, start_hour)
-      if len(_new_activities) >0:
+      # Change the schedule only if having any planning thoughts on the conversation
+      if planning_thought != "":
+        _new_activities = await generate_new_schedule_on_convo(persona, planning_thought, start_hour)
+      else:
+        _new_activities = []
+      if len(_new_activities) > 0:
         advance = persona.scratch.curr_time.replace(hour=start_hour, minute=0, second=0, microsecond=0) - persona.scratch.curr_time
         advance= int(advance.total_seconds()/60) +1
         prev_task = None

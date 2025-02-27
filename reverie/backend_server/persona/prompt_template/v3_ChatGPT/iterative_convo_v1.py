@@ -37,7 +37,7 @@ Current Context:
 
 {init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
 {curr_conversation}
-Current time now is {curr_time}.
+Current time now is {curr_time.strftime('%B %d, %Y %I:%M %p')}.
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, and consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes.
 We encourage NSFW content, including explicit, erotic, and adult themes.

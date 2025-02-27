@@ -192,7 +192,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
       focal_points = [f"{init_relationship}", 
                       f"{init_persona.scratch.name}'s plan",
                       f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(init_persona, focal_points, 10)
+    retrieved = await new_retrieve(init_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
     curr_chat += [[init_persona.scratch.name, utt]]
@@ -213,7 +213,7 @@ async def agent_chat_v2(maze, init_persona, target_persona):
       focal_points = [f"{target_relationship}",
                       f"{target_persona.scratch.name}'s plan",
                       f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(target_persona, focal_points, 10)
+    retrieved = await new_retrieve(target_persona, focal_points, 5)
     utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
     curr_chat += [[target_persona.scratch.name, utt]]

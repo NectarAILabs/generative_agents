@@ -151,7 +151,7 @@ async def perceive(persona, maze):
       p = "is"
       o = "idle"
       desc = "idle"
-    desc = f"{s.split(':')[-1]} is {desc}"
+    desc = f"{s.split(':')[-1]} is {desc}" if not desc.startswith(s) else desc
     p_event = (s, p, o)
 
     # We retrieve the latest persona.scratch.retention events. If there is

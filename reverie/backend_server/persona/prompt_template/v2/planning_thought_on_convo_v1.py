@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 import traceback
 from typing import Any
-
+import datetime
 from utils import debug
 from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import safe_generate_structured_response
@@ -17,16 +17,17 @@ def create_prompt(prompt_input: dict[str, Any]):
 [Conversation]
 {conversation}
 [End of conversation]
-Current time: {curr_time}
+Current time now is {curr_time.strftime('%B %d, %Y %I:%M %p')}
 Write down if there is anything from the conversation that all 2 personas needs to remember for their planning, in a full sentence.
 Remember to generating the date and time of the planning, and the location of the conversation (persona's house, restaurant, pub,...), also 2 personas's name.
+If there's nothing to remember, the planning thought and planning date should be empty.
 """
   return prompt
 
 
 class PlanningThought(BaseModel):
   planning_thought: str
-  planning_date: str
+  planning_date: datetime.datetime | None
 
 
 async def run_gpt_prompt_planning_thought_on_convo(
@@ -42,7 +43,11 @@ async def run_gpt_prompt_planning_thought_on_convo(
     return prompt_input
 
   def __func_clean_up(gpt_response: PlanningThought, prompt=""):
-    return gpt_response.planning_thought.strip().strip('".').strip() + f" at {gpt_response.planning_date}"
+    if gpt_response.planning_thought == "":
+      return ""
+    if gpt_response.planning_date is None:
+      return ""
+    return gpt_response.planning_thought.strip().strip('".').strip() + f" at {gpt_response.planning_date.strftime('%B %d, %Y %I:%M %p')}"
 
   def __func_validate(gpt_response, prompt=""):
     try:
