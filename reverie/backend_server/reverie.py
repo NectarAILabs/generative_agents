@@ -126,7 +126,7 @@ class ReverieServer:
     # The tile take the form of a set, (row, col). 
     # e.g., ["Isabella Rodriguez"] = (58, 39)
     self.personas_tile = dict()
-    
+    self.start_time = time.time()
     # # <persona_convo_match> is a dictionary that describes which of the two
     # # personas are talking to each other. It takes a key of a persona's full
     # # name, and value of another persona's full name who is talking to the 
@@ -602,6 +602,8 @@ class ReverieServer:
         if sim_command.lower() in ["f", "fin", "finish", "save and finish"]:
           # Finishes the simulation environment and saves the progress.
           # Example: fin
+          # To get all time need to run the simulation:
+          print(f"Time taken: {time.time() - self.start_time}")
           self.save()
           break
 

@@ -730,7 +730,12 @@ async def _determine_action(persona, maze):
   act_obj_desp = await generate_act_obj_desc(act_game_object, act_desp, persona)
   #act_obj_desp = act_obj_desp_response[0] if act_obj_desp_response else None
 
-  act_obj_pron = await generate_action_pronunciatio(act_obj_desp, persona)
+  # I don't know what they are doing with the act_obj_pron, so just use a default value
+  #act_obj_pron = await generate_action_pronunciatio(act_obj_desp, persona)
+  act_obj_pron = "🙂"
+
+  
+  #Maybe just let the event triple be like (object, "being used by", )
   act_obj_event = await generate_act_obj_event_triple(act_game_object,
                                                 act_obj_desp, persona)
 
