@@ -161,15 +161,14 @@ async def perceive(persona, maze):
       persona.scratch.retention
     )
     if p_event not in latest_events:
-      print(f"{persona.scratch.name} is perceiving {p_event}")
-      print(f"Current time: {persona.scratch.curr_time}")
-      print(f"Latest events: {latest_events}")
       # We start by managing keywords.
       keywords = set()
       sub = p_event[0]
       obj = p_event[2]
+      is_obj_event = False
       if ":" in p_event[0]:
         sub = p_event[0].split(":")[-1]
+        is_obj_event= True
       if ":" in p_event[2]:
         obj = p_event[2].split(":")[-1]
       keywords.update([sub, obj])
@@ -186,7 +185,10 @@ async def perceive(persona, maze):
         event_embedding = await get_embedding(desc_embedding_in)
       event_embedding_pair = (desc_embedding_in, event_embedding)
       # Get event poignancy.
-      event_poignancy = await generate_poig_score(persona, "event", desc_embedding_in)
+      if is_obj_event:
+        event_poignancy = 2
+      else:
+        event_poignancy = await generate_poig_score(persona, "chat", desc_embedding_in)
 
       # If we observe the persona's self chat, we include that in the memory
       # of the persona here.
@@ -218,7 +220,7 @@ async def perceive(persona, maze):
         chat_node_ids = [chat_node.node_id]
 
       # Finally, we add the current event to the agent's memory.
-      ret_events += [
+      ret_events += [ 
         persona.a_mem.add_event(
           persona.scratch.curr_time,
           None,

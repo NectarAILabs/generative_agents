@@ -206,6 +206,7 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
 
     #For supported parameters of vLLM
     extra_body, provider_parameter = {k:v for k,v in provider_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}, {k:v for k,v in provider_parameter.items() if k not in ["min_p","top_k","repetition_penalty","provider"]}
+    start_time = time.time()
     completion = await client_used.beta.chat.completions.parse(
       model=model,
       response_format=response_format,
@@ -217,6 +218,7 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
     time.sleep(0.5)
     print("Prompt:", prompt, flush=True)
     print("Response:", completion, flush=True)
+    print("<Time spend>:", time.time() - start_time, flush=True)
     message = completion.choices[0].message
 
     cost_logger.update_cost(
@@ -465,6 +467,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
         client_used = client
       extra_body = {}
       extra_body.update({k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty","provider"]})
+      start_time = time.time()
       response = await client_used.beta.chat.completions.parse(
         model=gpt_parameter["engine"],
         messages=messages,
@@ -485,6 +488,7 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
     # Make sure the prompt continue the response in the log
     print("Prompt: ", prompt, flush=True)
     print("Response: ", response.choices[0].message, flush=True)
+    print("<Time spend>:", time.time() - start_time, flush=True)
     message = response.choices[0].message
 
     if message.parsed:
