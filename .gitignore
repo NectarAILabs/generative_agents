@@ -33,7 +33,7 @@ environment/frontend_server/log_agents/
 ####################################
 
 # Ignore all environment and movement files except the starting environment file
-environment/frontend_server/storage/*/environment/*
+#environment/frontend_server/storage/*/environment/*
 !environment/frontend_server/storage/*/environment/0.json
 #environment/frontend_server/storage/*/movement/
 environment/frontend_server/compressed_storage/*
