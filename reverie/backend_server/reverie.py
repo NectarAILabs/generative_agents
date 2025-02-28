@@ -138,7 +138,7 @@ class ReverieServer:
     # # Note that the key pairs are *ordered alphabetically*. 
     # # e.g., dict[("Adam Abraham", "Zane Xu")] = "Adam: baba \n Zane:..."
     # self.persona_convo = dict()
-
+  
     # Loading in all personas. 
     init_env_file = f"{sim_folder}/environment/{str(self.step)}.json"
     init_env = json.load(open(init_env_file))
@@ -426,7 +426,7 @@ class ReverieServer:
                 results[persona_name]["plan"] = result
                 await task_queue.put((persona_name, "reflect", None))
               elif task_type == "reflect":
-                await persona.reflect()
+                await persona.reflect(self.maze,self.personas)
                 await task_queue.put((persona_name, "execute", self.personas[persona_name].scratch.act_address))
               elif task_type == "execute":
                 #Make sure all persona have a plan before executing to avoid conflict        

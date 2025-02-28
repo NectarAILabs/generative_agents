@@ -17,6 +17,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   target_persona_name = prompt_input["target_persona_name"]
   curr_conversation = prompt_input["curr_conversation"]
   curr_time = prompt_input["curr_time"]
+  sector_accessibles_str = prompt_input["sector_accessibles_str"]
   prompt = f"""
 Context for the task:
 
@@ -38,6 +39,8 @@ Current Context:
 {init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
 {curr_conversation}
 Current time now is {curr_time.strftime('%B %d, %Y %I:%M %p')}.
+All sectors that {init_persona_name} and {target_persona_name} can go are:
+{sector_accessibles_str}
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, and consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes.
 We encourage NSFW content, including explicit, erotic, and adult themes.
@@ -99,6 +102,12 @@ async def run_gpt_generate_iterative_chat_utt(
     curr_sector = f"{maze.access_tile(persona.scratch.curr_tile)['sector']}"
     curr_arena = f"{maze.access_tile(persona.scratch.curr_tile)['arena']}"
     curr_location = f"{curr_arena} in {curr_sector}"
+    init_persona_world = f"{maze.access_tile(init_persona.scratch.curr_tile)['world']}"
+    init_persona_sector_accessibles = [i.strip() for i in init_persona.s_mem.get_str_accessible_sectors(init_persona_world).split(",")]
+    target_persona_world = f"{maze.access_tile(target_persona.scratch.curr_tile)['world']}"
+    target_persona_sector_accessibles = [i.strip() for i in target_persona.s_mem.get_str_accessible_sectors(target_persona_world).split(",")]
+    sector_accessibles = list(set(init_persona_sector_accessibles + target_persona_sector_accessibles))
+    sector_accessibles_str = ", ".join(sector_accessibles)
     set_retrieved = set()
     retrieved_str = ""
     for key, vals in retrieved.items():
@@ -124,6 +133,7 @@ async def run_gpt_generate_iterative_chat_utt(
       "target_persona_name": target_persona.scratch.name,
       "curr_conversation": convo_str,
       "curr_time": init_persona.scratch.curr_time,
+      "sector_accessibles_str": sector_accessibles_str,
     }
     return prompt_input
 

@@ -109,9 +109,9 @@ async def generate_poig_score(persona, event_type, description):
       )
 
 
-async def generate_planning_thought_on_convo(persona, all_utt):
+async def generate_planning_thought_on_convo(persona, all_utt,maze,personas):
   if debug: print ("GNS FUNCTION: <generate_planning_thought_on_convo>")
-  return (await run_gpt_prompt_planning_thought_on_convo(persona, all_utt))[0]
+  return (await run_gpt_prompt_planning_thought_on_convo(persona, all_utt,maze,personas))[0]
 
 
 async def generate_memo_on_convo(persona, all_utt):
@@ -201,7 +201,7 @@ def reset_reflection_counter(persona):
   persona.scratch.importance_ele_n = 0
 
 
-async def reflect(persona):
+async def reflect(persona, maze, personas):
   """
   The main reflection module for the persona. We first check if the trigger 
   conditions are met, and if so, run the reflection and reset any of the 
@@ -244,7 +244,7 @@ async def reflect(persona):
       # print (persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id)
       
       evidence = [persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id]
-      planning_thought = await generate_planning_thought_on_convo(persona, all_utt)
+      planning_thought = await generate_planning_thought_on_convo(persona, all_utt,maze,personas)
       #Generate new schedule for the day based on the convo (added function)
       min_sum = 0 
       for i in range (persona.scratch.get_f_daily_schedule_hourly_org_index()): 
@@ -262,7 +262,7 @@ async def reflect(persona):
       else: 
         start_hour = curr_hour + 2
       start_hour = int(start_hour)
-      # Change the schedule only if having any planning thoughts on the conversation
+      # Change the schedule only if  any planning thoughts on the conversation
       if planning_thought != "":
         _new_activities = await generate_new_schedule_on_convo(persona, planning_thought, start_hour)
       else:

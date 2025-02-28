@@ -310,6 +310,8 @@ async def generate_action_pronunciatio(act_desp, persona):
     response = await run_gpt_prompt_pronunciatio(act_desp, persona)
     if response:
       emoji = response[0]
+    else:
+      emoji = None
   except Exception:
     traceback.print_exc()
     emoji = "🙂"

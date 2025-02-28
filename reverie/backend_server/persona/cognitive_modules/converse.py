@@ -176,6 +176,14 @@ async def agent_chat_v2(maze, init_persona, target_persona):
   focal_points = [f"{init_persona.scratch.name}"]
   retrieved = await new_retrieve(target_persona, focal_points, 20)
   target_relationship = await generate_summarize_agent_relationship(target_persona, init_persona, retrieved)
+  init_focal_points = [f"{init_relationship}", 
+                       f"{init_persona.scratch.name}'s plan",
+                       f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
+  init_retrieved = await new_retrieve(init_persona, init_focal_points, 5)
+  target_focal_points = [f"{target_relationship}", 
+                         f"{target_persona.scratch.name}'s plan",
+                         f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
+  target_retrieved = await new_retrieve(target_persona, target_focal_points, 5)
   for i in range(8): 
 
     print ("-------- relationship: ", init_relationship)
@@ -184,15 +192,10 @@ async def agent_chat_v2(maze, init_persona, target_persona):
       last_chat += ": ".join(i) + "\n"
     #Add plan to focal_point to retrieve the plan of the init_persona, will be used for context for conversation
     if last_chat: 
-      focal_points = [f"{init_relationship}", 
-                      f"{init_persona.scratch.name}'s plan",
-                      f"{target_persona.scratch.name} is {target_persona.scratch.act_description}", 
-                      last_chat]
-    else: 
-      focal_points = [f"{init_relationship}", 
-                      f"{init_persona.scratch.name}'s plan",
-                      f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(init_persona, focal_points, 5)
+      retrieved = await new_retrieve(init_persona, [last_chat], 5)
+      retrieved.update(init_retrieved)
+    else:
+      retrieved = init_retrieved
     utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
     curr_chat += [[init_persona.scratch.name, utt]]
@@ -205,15 +208,10 @@ async def agent_chat_v2(maze, init_persona, target_persona):
       last_chat += ": ".join(i) + "\n"
     #Add plan to focal_point to retrieve the plan of the target_persona
     if last_chat: 
-      focal_points = [f"{target_relationship}", 
-                      f"{target_persona.scratch.name}'s plan",
-                      f"{init_persona.scratch.name} is {init_persona.scratch.act_description}", 
-                      last_chat]
-    else: 
-      focal_points = [f"{target_relationship}",
-                      f"{target_persona.scratch.name}'s plan",
-                      f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(target_persona, focal_points, 5)
+      retrieved = await new_retrieve(target_persona, [last_chat], 5)
+      retrieved.update(target_retrieved)
+    else:
+      retrieved = target_retrieved
     utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
     #Remove words like \u2019 from the utterance and normalize
     curr_chat += [[target_persona.scratch.name, utt]]

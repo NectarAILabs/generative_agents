@@ -33,7 +33,8 @@ Finishing the schedule for the rest of the day (start from {start_hour_str} to t
 {schedule_format}
 Your schedule should assume that their task is ONLY "sleeping" after their bedtime and before they wake up.
 The statement is the only information you have, so modify the schedule only when the statement explicitly refers to a specific appointment with date and activity. 
-Do not create or assume a schedule with uncertain or unspecified plans with particular individuals, it can make their schedules conflict with each other.
+Do not create or assume a schedule with uncertain or unspecified plans with particular individuals, it can make their schedules conflict with each other. If the date mentioned in the statement is earlier than today's date at the time specified by {start_hour_str}, just ignore the statement and don't change anything in the schedule.
+Please do not modify the schedule of {init_persona_name} in relation to other specific individuals (who have names), as this could lead to conflicts in their schedules. Or having a new plan that doesn't relate to the statement.
 The action should be clear, easy to understand, and in a sentence. We allow and encourage erotic and sexual action.
 ===
 """
