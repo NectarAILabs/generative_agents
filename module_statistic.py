@@ -1,3 +1,4 @@
+import sys
 # Define the path to the log file
 def get_statistics(log_file_path):
     # Initialize an empty dictionary to store the counts
@@ -20,4 +21,5 @@ def get_statistics(log_file_path):
 
 
 if __name__ == "__main__":
-    print(get_statistics("logs/test_nsfw_2025-03-01_00-07-32.txt"))
+    arg = sys.argv[1]
+    print(get_statistics(arg))
