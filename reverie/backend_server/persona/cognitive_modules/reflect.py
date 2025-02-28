@@ -109,9 +109,9 @@ async def generate_poig_score(persona, event_type, description):
       )
 
 
-async def generate_planning_thought_on_convo(persona, all_utt,maze,personas):
+async def generate_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas):
   if debug: print ("GNS FUNCTION: <generate_planning_thought_on_convo>")
-  return (await run_gpt_prompt_planning_thought_on_convo(persona, all_utt,maze,personas))[0]
+  return (await run_gpt_prompt_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas))[0]
 
 
 async def generate_memo_on_convo(persona, all_utt):
@@ -224,9 +224,12 @@ async def reflect(persona, maze, personas):
     if persona.scratch.curr_time + datetime.timedelta(0,10) == persona.scratch.chatting_end_time: 
       # print ("KABOOOOOMMMMMMM")
       all_utt = ""
+      target_persona = None
       if persona.scratch.chat: 
         for row in persona.scratch.chat:  
           all_utt += f"{row[0]}: {row[1]}\n"
+          if row[0] != persona.scratch.name and row[0] in personas.keys() and target_persona is None:
+            target_persona = personas[row[0]]
 
       # planning_thought = generate_planning_thought_on_convo(persona, all_utt)
       # print ("init planning: aosdhfpaoisdh90m     ::", f"For {persona.scratch.name}'s planning: {planning_thought}")
@@ -244,7 +247,7 @@ async def reflect(persona, maze, personas):
       # print (persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id)
       
       evidence = [persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id]
-      planning_thought = await generate_planning_thought_on_convo(persona, all_utt,maze,personas)
+      planning_thought = await generate_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas)
       #Generate new schedule for the day based on the convo (added function)
       min_sum = 0 
       for i in range (persona.scratch.get_f_daily_schedule_hourly_org_index()): 

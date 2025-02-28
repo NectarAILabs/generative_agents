@@ -35,15 +35,9 @@ class PlanningThought(BaseModel):
   planning_sector: str
 
 async def run_gpt_prompt_planning_thought_on_convo(
-  persona, all_utterances, maze, personas, test_input=None, verbose=False
+  persona, target_persona, all_utterances, maze, personas, test_input=None, verbose=False
 ):
-  def create_prompt_input(persona, all_utterances, maze, personas, test_input=None):
-    target_persona = None
-    for line in all_utterances.split("\n"):
-      persona_name = line.split(":")[0].strip()
-      if persona_name != persona.scratch.name:
-        target_persona = personas[persona_name]
-        break
+  def create_prompt_input(persona,target_persona, all_utterances, maze, personas, test_input=None):
     init_persona_world = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
     init_persona_sector_accessibles = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(init_persona_world).split(",")]
     target_persona_world = f"{maze.access_tile(target_persona.scratch.curr_tile)['world']}"
@@ -53,7 +47,7 @@ async def run_gpt_prompt_planning_thought_on_convo(
     prompt_input = {
       "conversation": all_utterances,
       "persona_1_name": persona.scratch.name,
-      "persona_2_name": persona.scratch.name,
+      "persona_2_name": target_persona.scratch.name,
       "curr_time": persona.scratch.curr_time,
       "sector_accessibles_str": sector_accessibles_str,
     }
