@@ -84,7 +84,7 @@ async def run_gpt_prompt_planning_thought_on_convo(
     "stop": None,
   }
   prompt_file = get_prompt_file_path(__file__)
-  prompt_input = create_prompt_input(persona, all_utterances, maze, personas)
+  prompt_input = create_prompt_input(persona, target_persona, all_utterances, maze, personas)
   prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
