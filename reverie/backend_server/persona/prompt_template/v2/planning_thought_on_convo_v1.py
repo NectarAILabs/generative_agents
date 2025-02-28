@@ -19,8 +19,8 @@ def create_prompt(prompt_input: dict[str, Any]):
 {conversation}
 [End of conversation]
 Current time now is {curr_time.strftime('%B %d, %Y %I:%M %p')}
-Write down if there is anything from the conversation that all 2 personas needs to remember for their meeting, in a full sentence.
-Remember to generate the date, time and also the sector (where they both know and can go) of the meeting (persona's house, restaurant, pub, coffee shop,...), also mention 2 personas's name.
+Write down if there is anything from the conversation that both personas needs to remember for their meeting, in a full sentence.
+Remember to generate the date, time and also the sector (where they both know and can go) of the meeting (persona's house, restaurant, pub, coffee shop,...), as well as both persona's names.
 Planning date should be in form 'YYYY-MM-DD HH:MM AM/PM' and should be as soon as possible. If they don't mention about it, just assume it's today.
 If there's nothing to remember, the planning thought should be empty and you can assign any planning date.
 ALL sectors that they both can go are:
