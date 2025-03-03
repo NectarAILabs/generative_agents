@@ -13,6 +13,7 @@ reverie/backend_server/error_logging/
 # Logs folder
 environment/frontend_server/log_agents/
 logs/*
+module_logs*
 !logs/skip-morning_2024-05-15_13-54-44.txt
 reverie/backend_server/*.txt
 #Tkinter app I build for manage storage, you can ignore it
