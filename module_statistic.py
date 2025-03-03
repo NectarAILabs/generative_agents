@@ -1,5 +1,54 @@
-import sys
-# Define the path to the log file
+import sys  
+import os
+# Extract the logs by response type, add to module_logs folder
+def extract_responses_by_type(log_file_path):
+    responses_dict = {}
+    
+    with open(log_file_path, 'r') as file:
+        lines = file.readlines()
+        for i, line in enumerate(lines):
+            if line.startswith("Response:"):
+                # Extract response type from between brackets
+                start_idx = line.find('[') + 1
+                end_idx = line.find(']')
+                if start_idx != -1 and end_idx != -1:
+                    response_type = line[start_idx:end_idx]
+                    
+                    # Find the preceding prompt
+                    prompt_start_index = None
+                    for j in range(i-1, 0, -1):
+                        if lines[j].startswith("Prompt:"):
+                            prompt_start_index = j
+                            break
+                    
+                    if prompt_start_index is not None:
+                        # Get all lines between prompt and response
+                        prompt_content = "\n".join(lines[prompt_start_index:i])
+                        
+                        # Add to dictionary
+                        if response_type not in responses_dict:
+                            responses_dict[response_type] = []
+                        responses_dict[response_type].append({
+                            'prompt': prompt_content,
+                            'response': line.replace(f"Response: ParsedChatCompletionMessage[{response_type}]", "").strip()
+                        })
+
+    # Write to files
+    log_file_name = log_file_path.split("/")[-1].replace('.txt', '')
+    os.makedirs(f"./module_logs/{log_file_name}", exist_ok=True)
+    
+    for response_type, entries in responses_dict.items():
+        output_path = f"./module_logs/{log_file_name}/{response_type}.txt"
+        with open(output_path, 'w') as f:
+            for entry in entries:
+                f.write("=== PROMPT ===\n")
+                f.write(f"{entry['prompt']}\n")
+                f.write("=== RESPONSE ===\n")
+                f.write(f"{entry['response']}\n")
+                f.write("\n" + "="*50 + "\n\n")
+
+    return responses_dict
+
 def get_statistics(log_file_path):
     # Initialize an empty dictionary to store the counts and times
     response_counts = {}
@@ -38,4 +87,5 @@ def get_statistics(log_file_path):
 
 if __name__ == "__main__":
     arg = sys.argv[1]
+    extract_responses_by_type(arg)
     print(get_statistics(arg))
