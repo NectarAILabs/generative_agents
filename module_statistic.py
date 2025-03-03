@@ -1,5 +1,6 @@
 import sys  
 import os
+import json
 # Extract the logs by response type, add to module_logs folder
 def extract_responses_by_type(log_file_path):
     responses_dict = {}
@@ -84,8 +85,50 @@ def get_statistics(log_file_path):
     print(f"Time taken: {time_taken}")
     return response_counts
 
+def extract_chat_conversations(nodes_file_path):
+    # Read the JSON file
+    with open(nodes_file_path, 'r') as file:
+        nodes = json.load(file)
+    
+    conversations = []
+    
+    # Iterate through nodes to find chat conversations
+    for node in nodes:
+        if node.get('predicate') == 'chat with':
+            conversation = {
+                'subject': node.get('subject', ''),
+                'object': node.get('object', ''),
+                'timestamp': node.get('created', ''),
+                'content': node.get('description', '')
+            }
+            conversations.append(conversation)
+    
+    # Sort conversations by timestamp
+    conversations.sort(key=lambda x: x['timestamp'])
+    
+    # Create output directory and file
+    persona_name = nodes_file_path.split('/')[-4]  # Get persona name from path
+    sim_name = nodes_file_path.split('/storage/')[-1].split('/')[0]  # Get simulation name
+    
+    output_dir = f"./module_logs/conversations/{sim_name}"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Write conversations to file
+    output_file = f"{output_dir}/{persona_name}_chats.txt"
+    with open(output_file, 'w') as f:
+        for conv in conversations:
+            f.write(f"=== Conversation ===\n")
+            f.write(f"Time: {conv['timestamp']}\n")
+            f.write(f"Between: {conv['subject']} and {conv['object']}\n")
+            f.write(f"Content: {conv['content']}\n")
+            f.write("="*50 + "\n\n")
+    
+    return conversations
 
 if __name__ == "__main__":
     arg = sys.argv[1]
     extract_responses_by_type(arg)
     print(get_statistics(arg))
+    nodes_file_path = sys.argv[2]
+    conversations = extract_chat_conversations(nodes_file_path)
+    print(f"Extracted {len(conversations)} conversations")

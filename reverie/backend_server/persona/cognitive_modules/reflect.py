@@ -109,9 +109,9 @@ async def generate_poig_score(persona, event_type, description):
       )
 
 
-async def generate_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas):
+async def generate_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas,retrieved):
   if debug: print ("GNS FUNCTION: <generate_planning_thought_on_convo>")
-  return (await run_gpt_prompt_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas))[0]
+  return (await run_gpt_prompt_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas,retrieved))[0]
 
 
 async def generate_memo_on_convo(persona, all_utt):
@@ -247,8 +247,18 @@ async def reflect(persona, maze, personas):
       # print (persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id)
       
       evidence = [persona.a_mem.get_last_chat(persona.scratch.chatting_with).node_id]
-      planning_thought = await generate_planning_thought_on_convo(persona, target_persona, all_utt,maze,personas)
+      retrieved = await new_retrieve(persona, [f"{target_persona.scratch.name}'s planning"],8)
+      retrieved_target = await new_retrieve(target_persona, [f"{persona.scratch.name}'s planning"],8)
+      retrieved.update(retrieved_target)
+      planning_thought = await generate_planning_thought_on_convo(persona, target_persona, all_utt, maze, personas,retrieved)
+      # Avoid conflict between 2 planning thoughts
+      if hasattr(target_persona,"chat_planning_thought"):
+        planning_thought = target_persona.chat_planning_thought
+      persona.chat_planning_thought = planning_thought
       #Generate new schedule for the day based on the convo (added function)
+
+
+      #First need to retrieve the planning thoughts of both persona and target persona
       min_sum = 0 
       for i in range (persona.scratch.get_f_daily_schedule_hourly_org_index()): 
         min_sum += persona.scratch.f_daily_schedule_hourly_org[i][1]
@@ -303,7 +313,7 @@ async def reflect(persona, maze, personas):
           f.write(f"New hourly schedule: {persona.scratch.f_daily_schedule_hourly_org}\n")
           f.write(f"New schedule: {persona.scratch.f_daily_schedule}\n")
           f.write("--------------------------------\n")
-
+      del persona.chat_planning_thought
       planning_thought = f"For {persona.scratch.name}'s planning: {planning_thought}"
       created = persona.scratch.curr_time
       expiration = persona.scratch.curr_time + datetime.timedelta(days=30)

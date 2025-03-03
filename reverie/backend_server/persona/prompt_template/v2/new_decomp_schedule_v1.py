@@ -17,7 +17,8 @@ def create_prompt(prompt_input: dict[str, Any]):
   new_action = prompt_input["new_action"]
   new_action_duration = prompt_input["new_action_duration"]
   new_schedule_start = prompt_input["new_schedule_start"]
-
+  if "(" in new_action:
+    new_action = new_action.split("(")[1].split(")")[0].strip()
   prompt = f"""
 Activity format:
 start_time ~ end_time -- main_task (subtask)

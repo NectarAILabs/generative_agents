@@ -64,6 +64,14 @@ _______________________________________
             "provider":{
                 "require_parameters": true
             }
+        },
+        "planning_thought_provider":{
+            "model":"deepseek/deepseek-r1",
+            "temperature": 0.7,
+            "provider":{
+                "order": ["Fireworks"],
+                "require_parameters": true
+            }
         }
     }
 }
