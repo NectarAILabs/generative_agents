@@ -62,7 +62,8 @@ class ReverieServer:
                sim_code):
     
     print ("(reverie): Temp storage: ", fs_temp_storage)
-    self.start_time = time.time()
+    self.start_time_ = time.time()
+    self.start_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     os.makedirs(f"error_logging/{self.start_time}/")
     # FORKING FROM A PRIOR SIMULATION:
     # <fork_sim_code> indicates the simulation we are forking from. 
@@ -126,7 +127,6 @@ class ReverieServer:
     # The tile take the form of a set, (row, col). 
     # e.g., ["Isabella Rodriguez"] = (58, 39)
     self.personas_tile = dict()
-    self.start_time = time.time()
     # # <persona_convo_match> is a dictionary that describes which of the two
     # # personas are talking to each other. It takes a key of a persona's full
     # # name, and value of another persona's full name who is talking to the 
@@ -603,7 +603,7 @@ class ReverieServer:
           # Finishes the simulation environment and saves the progress.
           # Example: fin
           # To get all time need to run the simulation:
-          print(f"Time taken: {time.time() - self.start_time}")
+          print(f"Time taken: {time.time() - self.start_time_}")
           self.save()
           break
 

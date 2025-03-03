@@ -44,7 +44,7 @@ All sectors that {init_persona_name} and {target_persona_name} can go are:
 Focus on the current conversation between {init_persona_name} and {target_persona_name}, and consider the information about them.
 Please try to make the conversation more interesting and engaging for entertainment purposes.
 We encourage NSFW content, including explicit, erotic, and adult themes.
-If the characters decide to plan a future date, ensure that they invite each other soon, and the conversation includes the specific date (either today or tomorrow) and time (hour-specific), as well as the activity they have agreed to do together.
+If the characters decide to plan a future date, ensure to consider their planning thought from the context (make sure they don't invite multiple people at the same time and different location). They should invite each other soon, and the conversation includes the specific date (either today or tomorrow) and time (hour-specific), as well as the activity they have agreed to do together.
 Please avoid any illegal content, and keep the tone natural and casual.
 ---
 Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?

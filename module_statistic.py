@@ -3,10 +3,13 @@ import sys
 def get_statistics(log_file_path):
     # Initialize an empty dictionary to store the counts and times
     response_counts = {}
-
+    time_taken=0
     with open(log_file_path, 'r') as file:
         lines = file.readlines()
         for i, line in enumerate(lines):
+            if line.startswith("Time taken: "):
+                time_taken += float(line.replace("Time taken: ", "").strip())
+                
             if line.startswith("Response:"):
                 # Extract the value between the brackets
                 start_index = line.find('[') + 1
@@ -29,6 +32,7 @@ def get_statistics(log_file_path):
         average_time = total_time / len(response_counts[value]['time'])
         response_counts[value]['time'] = average_time
     response_counts = sorted(response_counts.items(), key=lambda x: x[1]['count'], reverse=True)
+    print(f"Time taken: {time_taken}")
     return response_counts
 
 

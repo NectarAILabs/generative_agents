@@ -25,11 +25,13 @@ start_time ~ end_time -- main_task (subtask)
 Here was {persona_name}'s originally planned schedule from {start_hour} to {end_hour}:
 {original_plan}
 
-But {persona_name} unexpectedly ended up {new_action} for {new_action_duration} minutes. Revise {persona_name}'s schedule from {start_hour} to {end_hour} accordingly (it has to end by {end_hour}). Use present progressive tense (e.g., "working on the lesson plan").
+But {persona_name} unexpectedly ended up {new_action} for {new_action_duration} minutes. Revise {persona_name}'s schedule from {start_hour} to {end_hour} accordingly (it has to end by {end_hour}). You need to generate a new schedule after finishing the interrupted activity. Use present progressive tense (e.g., "working on the lesson plan").
 
 Revised schedule:
 {new_schedule_start}
 Remember to keep the revised original schedule, don't change anything. 
+Also focus on the interruped activity to change the schedule. This is very important.
+Each activity should be clear and can understand by the reader.
 """
   return prompt
 
@@ -108,10 +110,10 @@ async def run_gpt_prompt_new_decomp_schedule(
 
   def __func_clean_up(gpt_response: NewSchedule, prompt=""):
     # Keep the revised schedule, just add the rest of the plan.
-    #new_schedule = truncated_act_dur
-    #truncated_minute_pass = sum([i[1] for i in truncated_act_dur])
-    #hour_start_time = start_time_hour + datetime.timedelta(minutes=truncated_minute_pass)
-    new_schedule = []
+    new_schedule = truncated_act_dur
+    truncated_minute_pass = sum([i[1] for i in truncated_act_dur])
+    hour_start_time = start_time_hour + datetime.timedelta(minutes=truncated_minute_pass)
+    #new_schedule = []
     for activity in gpt_response.schedule:
       start_time = activity.start_time
       end_time = activity.end_time
@@ -122,8 +124,8 @@ async def run_gpt_prompt_new_decomp_schedule(
       if delta_min < 0:
         delta_min = 0
       action = activity.main_task + f" ({activity.subtask})"
-      #if hour_start_time <= datetime.datetime.strptime(start_time, "%H:%M"):
-      new_schedule += [[action, delta_min]]
+      if hour_start_time <= datetime.datetime.strptime(start_time, "%H:%M"):
+        new_schedule += [[action, delta_min]]
 
     return new_schedule
 
