@@ -110,10 +110,10 @@ async def run_gpt_prompt_new_decomp_schedule(
 
   def __func_clean_up(gpt_response: NewSchedule, prompt=""):
     # Keep the revised schedule, just add the rest of the plan.
-    new_schedule = truncated_act_dur
-    truncated_minute_pass = sum([i[1] for i in truncated_act_dur])
-    hour_start_time = start_time_hour + datetime.timedelta(minutes=truncated_minute_pass)
-    #new_schedule = []
+    #new_schedule = truncated_act_dur
+    #truncated_minute_pass = sum([i[1] for i in truncated_act_dur])
+    #hour_start_time = start_time_hour + datetime.timedelta(minutes=truncated_minute_pass)
+    new_schedule = []
     for activity in gpt_response.schedule:
       start_time = activity.start_time
       end_time = activity.end_time
@@ -124,8 +124,8 @@ async def run_gpt_prompt_new_decomp_schedule(
       if delta_min < 0:
         delta_min = 0
       action = activity.main_task + f" ({activity.subtask})"
-      if hour_start_time <= datetime.datetime.strptime(start_time, "%H:%M"):
-        new_schedule += [[action, delta_min]]
+      #if hour_start_time <= datetime.datetime.strptime(start_time, "%H:%M"):
+      new_schedule += [[action, delta_min]]
 
     return new_schedule
 
