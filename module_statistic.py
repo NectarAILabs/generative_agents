@@ -129,6 +129,6 @@ if __name__ == "__main__":
     arg = sys.argv[1]
     extract_responses_by_type(arg)
     print(get_statistics(arg))
-    nodes_file_path = sys.argv[2]
-    conversations = extract_chat_conversations(nodes_file_path)
-    print(f"Extracted {len(conversations)} conversations")
+    #nodes_file_path = sys.argv[2]
+    #conversations = extract_chat_conversations(nodes_file_path)
+    #print(f"Extracted {len(conversations)} conversations")

@@ -177,7 +177,7 @@ async def ChatGPT_request(prompt):
     traceback.print_exc()
     return "LLM ERROR"
 
-async def ChatGPT_structured_request(prompt, response_format, provider_parameter=None):
+async def ChatGPT_structured_request(prompt, response_format, provider_parameter=None,sysprompt=None):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -194,7 +194,7 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
   global client
   try: 
     if provider_parameter is not None:
-      client_used = setup_client("openai", {'key': provider_parameter["api_key"], "base_url": provider_parameter["base_url"]})
+      client_used = setup_client("openai", {'key': provider_parameter.get("api_key", openai_config["model-key"]), "base_url": provider_parameter.get("base_url", openai_config["base_provider"])})
       model = provider_parameter.get("model", openai_config["model"])
       provider_parameter = {k: v for k, v in provider_parameter.items() if k not in ["model", "api_key", "base_url"]}
     else:
@@ -207,10 +207,14 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
     #For supported parameters of vLLM
     extra_body, provider_parameter = {k:v for k,v in provider_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}, {k:v for k,v in provider_parameter.items() if k not in ["min_p","top_k","repetition_penalty","provider"]}
     start_time = time.time()
+    if sysprompt != None:
+      messages = [{"role": "system", "content": sysprompt}, {"role": "user", "content": prompt}]
+    else:
+      messages = [{"role": "user", "content": prompt}]
     completion = await client_used.beta.chat.completions.parse(
       model=model,
       response_format=response_format,
-      messages=[{"role": "user", "content": prompt}],
+      messages=messages,
       timeout=30,
       extra_body=extra_body,
       **provider_parameter
@@ -223,8 +227,8 @@ async def ChatGPT_structured_request(prompt, response_format, provider_parameter
 
     cost_logger.update_cost(
       completion,
-      input_cost=openai_config["model-costs"]["input"],
-      output_cost=openai_config["model-costs"]["output"],
+      input_cost=provider_parameter.get("input_cost", openai_config["model-costs"]["input"]),
+      output_cost=provider_parameter.get("output_cost", openai_config["model-costs"]["output"]),
     )
     if message.parsed:
       return message.parsed
@@ -351,6 +355,7 @@ async def ChatGPT_safe_generate_structured_response(
   func_clean_up=None,
   verbose=False,
   provider_parameter=None,
+  sysprompt=None,
 ):
   if func_validate and func_clean_up:
     # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
@@ -370,7 +375,7 @@ async def ChatGPT_safe_generate_structured_response(
       
     for i in range(repeat):
       try:
-        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format, provider_parameter)
+        curr_gpt_response = await ChatGPT_structured_request(prompt, response_format, provider_parameter,sysprompt)
         print("Attempt", i + 1, flush=True)
         if not curr_gpt_response:
           raise ValueError("Error: No valid response from LLM.")
@@ -490,7 +495,11 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
     print("Response: ", response.choices[0].message, flush=True)
     print("<Time spend>:", time.time() - start_time, flush=True)
     message = response.choices[0].message
-
+    cost_logger.update_cost(
+      response,
+      input_cost=gpt_parameter.get("input_cost", openai_config["model-costs"]["input"]),
+      output_cost=gpt_parameter.get("output_cost", openai_config["model-costs"]["output"]),
+    )
     if message.parsed:
       return message.parsed
     if message.refusal:

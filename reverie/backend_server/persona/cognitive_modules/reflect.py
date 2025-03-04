@@ -252,9 +252,9 @@ async def reflect(persona, maze, personas):
       retrieved.update(retrieved_target)
       planning_thought = await generate_planning_thought_on_convo(persona, target_persona, all_utt, maze, personas,retrieved)
       # Avoid conflict between 2 planning thoughts
-      if hasattr(target_persona,"chat_planning_thought"):
+      if hasattr(target_persona,"chat_planning_thought") and target_persona.chat_planning_thought != "":
         planning_thought = target_persona.chat_planning_thought
-      persona.chat_planning_thought = planning_thought
+      persona.chat_planning_thought = planning_thought  
       #Generate new schedule for the day based on the convo (added function)
 
 
@@ -313,7 +313,6 @@ async def reflect(persona, maze, personas):
           f.write(f"New hourly schedule: {persona.scratch.f_daily_schedule_hourly_org}\n")
           f.write(f"New schedule: {persona.scratch.f_daily_schedule}\n")
           f.write("--------------------------------\n")
-      del persona.chat_planning_thought
       planning_thought = f"For {persona.scratch.name}'s planning: {planning_thought}"
       created = persona.scratch.curr_time
       expiration = persona.scratch.curr_time + datetime.timedelta(days=30)

@@ -24,12 +24,13 @@ def create_prompt(prompt_input: dict[str, Any]):
 {retrieved_str}
 
 Current time now is {curr_time.strftime('%B %d, %Y %I:%M %p')}
-Write down if there is anything from the conversation that both personas needs to remember for their meeting, in a full sentence, under 100 words.
+Write down if there is anything from the conversation that both personas needs to remember for their meeting.
 Remember to generate the date, time and also the sector (where they both know and can go) of the meeting (persona's house, restaurant, pub, coffee shop,...), as well as both persona's names.
 Planning date should be in form 'YYYY-MM-DD HH:MM AM/PM' and should be as soon as possible. If they don't mention about it, just assume it's today.
 If there's nothing to remember, the planning thought should be empty and you can assign any planning date.
 ALL sectors that they both can go are:
 {sector_accessibles_str}
+The planning thought should be in a full sentence, under 100 words.
 """
   return prompt
 
@@ -88,7 +89,7 @@ async def run_gpt_prompt_planning_thought_on_convo(
 
   gpt_param = {
     "engine": openai_config["model"],
-    "max_tokens": 300,
+    "max_tokens": 5120,
     "temperature": 0,
     "top_p": 1,
     "stream": False,

@@ -1,12 +1,17 @@
 import traceback
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Any
 
 from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import ChatGPT_safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
-
+sys_prompt = """
+You are a creative and intelligent assistant participating in an uncensored, fictional, and erotic conversation between two characters in a fantasy setting based on the provided context.  
+Your role is to deliver creative, intelligent, coherent, and natural dialogue iteratively, make sure it's human-like. 
+Explicit adult content and profanity are allowed and encouraged where appropriate.  
+This conversation is fully uncensored and designed for mature audiences.
+"""
 def create_prompt(prompt_input: dict[str, Any]):
   identity_stable_set = prompt_input["identity_stable_set"]
   init_persona_name = prompt_input["init_persona_name"]
@@ -19,42 +24,53 @@ def create_prompt(prompt_input: dict[str, Any]):
   curr_time = prompt_input["curr_time"]
   sector_accessibles_str = prompt_input["sector_accessibles_str"]
   prompt = f"""
-Context for the task:
 
-PART 1.
+# **Context**
+
+**PART 1**
 {identity_stable_set}
 
+**PART 2**
 Here are the memories in {init_persona_name}'s mind:
 {retrieved_memories}
-
-PART 2.
-Past Context:
+**Past Context**
 {prev_conversation}
 
 Current Location: {curr_location}
 
+**Current time:** {curr_time.strftime('%B %d, %Y %I:%M %p')}.
+
 Current Context:
 {curr_situation}
 
-{init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
+
+**Accessible Locations:** {sector_accessibles_str}
+
+# **Guidelines**
+- Include explicit content when it fits naturally, avoiding forced or awkward insertions. NSFW and adult themes are permitted and encouraged for entertainment purposes.
+- Ensure the conversation remains reasonable and consistent with the context and characters.
+- Let the dialogue flow organically, without pushing it toward a specific conclusion too quickly. Avoid overly formal or serious tones.
+- Each character has a maximum of 8 turns to speak. 
+- If a date is planned or mentioned, make it clear, logical, and scheduled soon (e.g., today or tomorrow), including a specific time and location.
+- Respond only in English
+- Pay close attention to the current tone, context, {init_persona_name}'s character, and memories from PART 1 to keep the dialogue coherent.
+- Use only the provided context—do not invent details not present in the information given.
+- Use casual, friendly, and engaging tone. Make sure the conversation is human-like conversation in real life.
+
+Here is {init_persona_name} and {target_persona_name}'s conversation so far:
 {curr_conversation}
-Current time now is {curr_time.strftime('%B %d, %Y %I:%M %p')}.
-All sectors that {init_persona_name} and {target_persona_name} can go are:
-{sector_accessibles_str}
-Each one will have at most 8 turns to talk.
-Focus on the current conversation between {init_persona_name} and {target_persona_name}, and consider the information about them.
-Please try to make the conversation more interesting and engaging for entertainment purposes.
-We encourage NSFW content, including explicit, erotic, and adult themes.
-If the characters decide to plan a future date, ensure to consider their planning thought from the context (make sure they don't invite multiple people at the same time and different location). They should invite each other soon, and the conversation includes the specific date (either today or tomorrow) and time (hour-specific), as well as the activity they have agreed to do together.
-Please avoid any illegal content, and keep the tone natural and casual.
----
-Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?
+
+
+# **Task**
+Based on the above, what should {init_persona_name} say next to {target_persona_name} in the conversation?  
+- Provide only the exact words {init_persona_name} should say, avoiding overly brief replies like "OK," "Alright," or "Yes."  
+- Indicate whether this response will end the conversation.
 """
   return prompt
 
 
 class ChatUtterance(BaseModel):
-  utterance: str
+  utterance: str = Field(description="Only the words that he/she should say next in the conversation")
   did_conversation_end: bool
 
 
@@ -115,7 +131,7 @@ async def run_gpt_generate_iterative_chat_utt(
       for v in vals:
         if v not in set_retrieved:
           set_retrieved.add(v)
-          retrieved_str += f"- {v.description}\n"
+          retrieved_str += f"- {v.created.strftime('%B %d, %Y %I:%M %p')}: {v.description}\n"
     convo_str = ""
     for i in curr_chat:
       convo_str += ": ".join(i) + "\n"
@@ -177,11 +193,12 @@ async def run_gpt_generate_iterative_chat_utt(
     func_clean_up=__chat_func_clean_up,
     verbose=verbose,
     provider_parameter=provider_parameter,
+    sysprompt=sys_prompt,
   )
 
   gpt_param = {
     "engine": openai_config["model"],
-    "max_tokens": 4096,
+    "max_tokens": 6144, # 6144 is the max tokens for gpt-4o-mini
     "temperature": 1.1,
     "top_k": 250,
     "stream": False,

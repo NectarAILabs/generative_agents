@@ -65,15 +65,15 @@ async def generate_summarize_agent_relationship(init_persona,
   for i in all_embedding_keys: 
     all_embedding_key_str += f"{i}\n"
 
-    response = await run_gpt_prompt_agent_chat_summarize_relationship(
-      init_persona, target_persona, all_embedding_key_str
-    )
-    if response:
-      summarized_relationship = response[0]
-    else:
-      print("ERROR: Could not get summarized relationship")
-      summarized_relationship = ""
-    return summarized_relationship
+  response = await run_gpt_prompt_agent_chat_summarize_relationship(
+    init_persona, target_persona, all_embedding_key_str
+  )
+  if response:
+    summarized_relationship = response[0]
+  else:
+    print("ERROR: Could not get summarized relationship")
+    summarized_relationship = ""
+  return summarized_relationship
 
 
 # def generate_agent_chat(

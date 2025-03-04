@@ -429,7 +429,11 @@ class ReverieServer:
                 await persona.reflect(self.maze,self.personas)
                 await task_queue.put((persona_name, "execute", self.personas[persona_name].scratch.act_address))
               elif task_type == "execute":
-                #Make sure all persona have a plan before executing to avoid conflict        
+                #Make sure all persona have a plan before executing to avoid conflict
+
+                # Remove conversation planning thought after replanning.
+                if hasattr(persona,"chat_planning_thought"):
+                  del persona.chat_planning_thought
                 if all("plan" in results[persona_name].keys() for persona_name in self.personas.keys()):
                   result = await persona.execute(self.maze, self.personas, self.personas[persona_name].scratch.act_address)
                   results[persona_name]["execution"] = result

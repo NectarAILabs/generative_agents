@@ -188,7 +188,7 @@ async def perceive(persona, maze):
       if is_obj_event:
         event_poignancy = 2
       else:
-        event_poignancy = await generate_poig_score(persona, "chat", desc_embedding_in)
+        event_poignancy = await generate_poig_score(persona, "event", desc_embedding_in)
 
       # If we observe the persona's self chat, we include that in the memory
       # of the persona here.
@@ -217,7 +217,8 @@ async def perceive(persona, maze):
           chat_embedding_pair,
           persona.scratch.chat,
         )
-        chat_node_ids = [chat_node.node_id]
+        if chat_node != None:
+          chat_node_ids = [chat_node.node_id]
 
       # Finally, we add the current event to the agent's memory.
       ret_events += [ 
