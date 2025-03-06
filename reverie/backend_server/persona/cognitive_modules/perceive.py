@@ -107,7 +107,7 @@ async def perceive(persona, maze):
   for tile in nearby_tiles:
     tile_details = maze.access_tile(tile)
     if tile_details["events"]:
-      if maze.get_tile_path(tile, "sector") == curr_sector_path:
+      if maze.get_tile_path(tile, "arena") == curr_arena_path:
         # This calculates the distance between the persona's current tile,
         # and the target tile.
         dist = math.dist(
@@ -153,15 +153,16 @@ async def perceive(persona, maze):
       desc = "idle"
     desc = f"{s.split(':')[-1]} is {desc}" if not desc.startswith(s) else desc
     p_event = (s, p, o)
-
+    if s != persona.name and "talking to" in desc:
+      continue
     # We retrieve the latest persona.scratch.retention events. If there is
     # something new that is happening (that is, p_event not in latest_events),
     # then we add that event to the a_mem and return it.
     latest_events = persona.a_mem.get_summarized_latest_events(
       persona.scratch.retention
     )
+
     if p_event not in latest_events:
-      # We start by managing keywords.
       keywords = set()
       sub = p_event[0]
       obj = p_event[2]

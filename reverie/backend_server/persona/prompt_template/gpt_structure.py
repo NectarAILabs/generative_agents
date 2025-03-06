@@ -142,7 +142,7 @@ async def ChatGPT_single_request(prompt):
     print("Error: No message content from LLM.", flush=True)
     return ""
 
-async def ChatGPT_request(prompt):
+async def ChatGPT_request(prompt,provider_parameter=None,sysprompt=None,response_format_name=None):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -155,16 +155,40 @@ async def ChatGPT_request(prompt):
     a str of GPT-3's response. 
   """
   # await temp_sleep()
+  global client
   print("--- ChatGPT_request() ---")
   print("Prompt:", prompt, flush=True)
-
+  if provider_parameter is not None:
+    client_used = setup_client("openai", {'key': provider_parameter.get("api_key", openai_config["model-key"]), "base_url": provider_parameter.get("base_url", openai_config["base_provider"])})
+    model = provider_parameter.get("model", openai_config["model"])
+    provider_parameter = {k: v for k, v in provider_parameter.items() if k not in ["model", "api_key", "base_url"]}
+  else:
+      client = setup_client("openai", { "key": openai_config["model-key"],"base_url": openai_config["base_provider"]})
+      client_used = client
+      model = openai_config["model"]
+      provider_parameter = {}
+      client_used = client
+  extra_body, provider_parameter = {k:v for k,v in provider_parameter.items() if k in ["min_p","top_k","repetition_penalty"]}, {k:v for k,v in provider_parameter.items() if k not in ["min_p","top_k","repetition_penalty","provider"]}
+  if sysprompt != None:
+    messages = [{"role": "system", "content": sysprompt}, {"role": "user", "content": prompt}]
+  else:
+    messages = [{"role": "user", "content": prompt}]
+  start_time = time.time()
   try: 
-    completion = await client.chat.completions.create(
-      model=openai_config["model"],
-      messages=[{"role": "user", "content": prompt}]
+    completion = await client_used.chat.completions.create(
+      model=model,
+      messages=messages,
+      timeout=30,
+      extra_body=extra_body,
+      **provider_parameter
     )
     content = completion.choices[0].message.content
-    print("Response content:", content, flush=True)
+    print("Prompt:", prompt, flush=True)
+    if response_format_name != None:
+      print(f"Response: [{response_format_name}]", completion, flush=True)
+    else:
+      print("Response:", completion, flush=True)
+    print("<Time spend>:", time.time() - start_time, flush=True)
     cost_logger.update_cost(
       completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"]
     )
@@ -308,6 +332,9 @@ async def ChatGPT_safe_generate_response(
   func_validate=None,
   func_clean_up=None,
   verbose=False,
+  provider_parameter=None,
+  sysprompt=None,
+  response_format_name=None
 ):
   if func_validate and func_clean_up:
     # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
@@ -318,19 +345,23 @@ async def ChatGPT_safe_generate_response(
       )
       if example_output:
         prompt += "Example output json:\n"
-        prompt += '{"output": "' + str(example_output) + '"}'
-
+        if isinstance(example_output,dict):
+          prompt += json.dumps({"output": example_output},ensure_ascii=False)
+        else:
+          prompt += '{"output": "' + str(example_output) + '"}'
+      prompt += "\nDon't include any other text in your response."  
     for i in range(repeat):
       print("Attempt", i + 1, flush=True)
 
       try:
-        chatgpt_response = await ChatGPT_request(prompt)
+        chatgpt_response = await ChatGPT_request(prompt,provider_parameter=provider_parameter,sysprompt=sysprompt,response_format_name=response_format_name)
         if not chatgpt_response:
           raise Exception("Error: No valid response from LLM.")
         curr_gpt_response = chatgpt_response.strip()
         if example_output or special_instruction:
           end_index = curr_gpt_response.rfind("}") + 1
           curr_gpt_response = curr_gpt_response[:end_index]
+          print("curr_gpt_response:", curr_gpt_response, flush=True)
           curr_gpt_response = json.loads(curr_gpt_response)["output"]
 
         if func_validate(curr_gpt_response, prompt=prompt):
@@ -473,26 +504,43 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       extra_body = {}
       extra_body.update({k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty","provider"]})
       start_time = time.time()
-      response = await client_used.beta.chat.completions.parse(
-        model=gpt_parameter["engine"],
-        messages=messages,
-        response_format=response_format,
-        temperature=gpt_parameter["temperature"],
-        max_tokens=gpt_parameter["max_tokens"],
-        top_p=gpt_parameter["top_p"],
-        frequency_penalty=gpt_parameter["frequency_penalty"],
-        presence_penalty=gpt_parameter["presence_penalty"],
-        # stream=gpt_parameter["stream"],
-        stop=gpt_parameter["stop"],
-        timeout = 30,
-        extra_body=extra_body
+      try:
+        response = await client_used.beta.chat.completions.parse(
+          model=gpt_parameter["engine"],
+          messages=messages,
+          response_format=response_format,
+          temperature=gpt_parameter["temperature"],
+          max_tokens=gpt_parameter["max_tokens"],
+          top_p=gpt_parameter["top_p"],
+          frequency_penalty=gpt_parameter["frequency_penalty"],
+          presence_penalty=gpt_parameter["presence_penalty"],
+          # stream=gpt_parameter["stream"],
+          stop=gpt_parameter["stop"],
+          timeout = 30,
+          extra_body=extra_body
         )
+      except:
+        print("Error: Failed to use parsed request. Using chat completion instead.", flush=True)
+        response = await client_used.chat.completions.create(
+            model=gpt_parameter["engine"],
+            messages=messages,
+            response_format={"type": "json_schema","json_schema": {"name":response_format.__name__,"schema": response_format.model_json_schema()}},
+            temperature=gpt_parameter["temperature"],
+            max_tokens=gpt_parameter["max_tokens"],
+            top_p=gpt_parameter["top_p"],
+            frequency_penalty=gpt_parameter["frequency_penalty"],
+            presence_penalty=gpt_parameter["presence_penalty"],
+            # stream=gpt_parameter["stream"],
+            stop=gpt_parameter["stop"],
+            timeout = 30,
+            extra_body=extra_body)
     else:
       response = await client.completions.create(model=model, prompt=prompt)
     time.sleep(0.5)
     # Make sure the prompt continue the response in the log
     print("Prompt: ", prompt, flush=True)
-    print("Response: ", response.choices[0].message, flush=True)
+    print(response)
+    print(f"Response: [{response_format.__name__}]", response.choices[0].message, flush=True)
     print("<Time spend>:", time.time() - start_time, flush=True)
     message = response.choices[0].message
     cost_logger.update_cost(
@@ -500,11 +548,12 @@ async def GPT_structured_request(prompt, gpt_parameter, response_format):
       input_cost=gpt_parameter.get("input_cost", openai_config["model-costs"]["input"]),
       output_cost=gpt_parameter.get("output_cost", openai_config["model-costs"]["output"]),
     )
-    if message.parsed:
-      return message.parsed
-    if message.refusal:
-      raise ValueError("Request refused: " + message.refusal)
-    raise ValueError("No parsed content or refusal found.")
+    #if hasattr(message, "parsed") and message.parsed:
+    #  return message.parsed
+    #if hasattr(message, "refusal") and message.refusal:
+    #  raise ValueError("Request refused: " + message.refusal)
+    if message.content:
+      return response_format.parse_raw(message.content)
   except Exception as e:
     print("Error:", e, flush=True)
     traceback.print_exc()

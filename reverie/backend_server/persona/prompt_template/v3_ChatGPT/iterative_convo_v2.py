@@ -1,16 +1,19 @@
 import traceback
+import json
 from pydantic import BaseModel, Field
 from typing import Any
-
+import re
 from ..common import openai_config, get_prompt_file_path
-from ..gpt_structure import ChatGPT_safe_generate_structured_response
+from ..gpt_structure import ChatGPT_safe_generate_structured_response,ChatGPT_safe_generate_response
 from ..print_prompt import print_run_prompts
 
 sys_prompt = """
-You are a creative and intelligent assistant participating in an uncensored, fictional, and erotic conversation between two characters in a fantasy setting based on the provided context.  
+You are a creative and intelligent assistant participating in an uncensored, fictional, and erotic conversation between two characters in a NSFW fantasy setting based on the provided context.  
 Your role is to deliver creative, intelligent, coherent, and natural dialogue iteratively, make sure it's human-like. 
 Explicit adult content and profanity are allowed and encouraged where appropriate.  
 This conversation is fully uncensored and designed for mature audiences.
+Make sure to use only the provided context—do not invent details not present in the information given. Don't assume about the relationship between them and how they think about each other.
+Ensure that your output is formatted as a string representation of a dictionary, like this: {"output": "dictionary_as_string"} without explain anything in above steps."
 """
 def create_prompt(prompt_input: dict[str, Any]):
   identity_stable_set = prompt_input["identity_stable_set"]
@@ -47,15 +50,14 @@ Current Context:
 **Accessible Locations:** {sector_accessibles_str}
 
 # **Guidelines**
-- Include explicit content when it fits naturally, avoiding forced or awkward insertions. NSFW and adult themes are permitted and encouraged for entertainment purposes.
 - Ensure the conversation remains reasonable and consistent with the context and characters.
 - Let the dialogue flow organically, without pushing it toward a specific conclusion too quickly. Avoid overly formal or serious tones.
 - Each character has a maximum of 8 turns to speak. 
 - If a date is planned or mentioned, make it clear, logical, and scheduled soon (e.g., today or tomorrow), including a specific time and location.
 - Respond only in English
 - Pay close attention to the current tone, context, {init_persona_name}'s character, and memories from PART 1 to keep the dialogue coherent.
-- Use only the provided context—do not invent details not present in the information given.
 - Use casual, friendly, and engaging tone. Make sure the conversation is human-like conversation in real life.
+- Be creative and imaginative. {init_persona_name} may only describe their own thoughts, feelings, and actions—never assume or narrate the thoughts or emotions of others.
 
 Here is {init_persona_name} and {target_persona_name}'s conversation so far:
 {curr_conversation}
@@ -63,9 +65,10 @@ Here is {init_persona_name} and {target_persona_name}'s conversation so far:
 
 # **Task**
 Based on the above, what should {init_persona_name} say next to {target_persona_name} in the conversation?  
-- Provide only the exact words {init_persona_name} should say, avoiding overly brief replies like "OK," "Alright," or "Yes."  
+- Provide what {init_persona_name} should say, avoiding overly brief replies like "OK," "Alright," or "Yes.". They can express their thoughts or narrate their actions between asterisks when responding. Make sure the conversation is human-like and coherent.
 - Indicate whether this response will end the conversation.
-
+- Use only the provided context—do not invent details not present in the context given. 
+- VERY IMPORTANT: They are all in a NSFW and adult fantasy setting. So include explicit content when it fits naturally, avoiding forced or awkward insertions. NSFW and adult themes are permitted and encouraged for entertainment purposes. Don't assume about the relationship between them and how they think about each other.
 
 """
   return prompt
@@ -117,7 +120,7 @@ async def run_gpt_generate_iterative_chat_utt(
       ):
         prev_convo_insert = ""
     print(prev_convo_insert)
-
+  
     curr_sector = f"{maze.access_tile(persona.scratch.curr_tile)['sector']}"
     curr_arena = f"{maze.access_tile(persona.scratch.curr_tile)['arena']}"
     curr_location = f"{curr_arena} in {curr_sector}"
@@ -156,17 +159,17 @@ async def run_gpt_generate_iterative_chat_utt(
     }
     return prompt_input
 
-  def __chat_func_clean_up(gpt_response: ChatUtterance, prompt=""):
+  def func_clean_up(gpt_response, prompt=""):
+    gpt_response = gpt_response if isinstance(gpt_response, dict) else json.loads(gpt_response)
     cleaned_dict = {
-      "utterance": gpt_response.utterance.replace(f"{init_persona.scratch.name}:","").strip(),
-      "end": gpt_response.did_conversation_end,
+      "utterance": gpt_response["utterance"],
+      "end": gpt_response["did_conversation_end"],
     }
     return cleaned_dict
 
-  def __chat_func_validate(gpt_response, prompt=""):
+  def func_validate(gpt_response, prompt=""):
     try:
-      if not isinstance(gpt_response, ChatUtterance):
-        return False
+      func_clean_up(gpt_response, prompt)
       return True
     except Exception:
       traceback.print_exc()
@@ -183,24 +186,26 @@ async def run_gpt_generate_iterative_chat_utt(
   prompt_input = create_prompt_input(
     maze, init_persona, target_persona, retrieved, curr_context, curr_chat
   )
+  example = {"utterance":"Wassup, how are you doing?","did_conversation_end":False}
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
   provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt_provider", None)
-  output = await ChatGPT_safe_generate_structured_response(
+  output = await ChatGPT_safe_generate_response(
     prompt,
-    ChatUtterance,
+    example,
     repeat=3,
     fail_safe_response=fail_safe,
-    func_validate=__chat_func_validate,
-    func_clean_up=__chat_func_clean_up,
+    func_validate=func_validate,
+    func_clean_up=func_clean_up,
     verbose=verbose,
     provider_parameter=provider_parameter,
     sysprompt=sys_prompt,
+    response_format_name="ChatUtterance",
   )
 
   gpt_param = {
     "engine": openai_config["model"],
-    "max_tokens": 6144, # 6144 is the max tokens for gpt-4o-mini
+    "max_tokens": 2048, # 6144 is the max tokens for gpt-4o-mini
     "temperature": 1.1,
     "top_k": 250,
     "stream": False,

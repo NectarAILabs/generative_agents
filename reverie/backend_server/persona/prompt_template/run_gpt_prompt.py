@@ -36,10 +36,10 @@ from .v2.whisper_inner_thought_v1 import run_gpt_prompt_generate_whisper_inner_t
 from .v3_ChatGPT.generate_focal_pt_v1 import run_gpt_prompt_focal_pt  # noqa: F401
 from .v3_ChatGPT.generate_obj_event_v1 import run_gpt_prompt_act_obj_desc  # noqa: F401
 from .v3_ChatGPT.generate_pronunciatio_v1 import run_gpt_prompt_pronunciatio  # noqa: F401
-from .v3_ChatGPT.iterative_convo_v1 import run_gpt_generate_iterative_chat_utt  # noqa: F401
+from .v3_ChatGPT.iterative_convo_v2 import run_gpt_generate_iterative_chat_utt  # noqa: F401
 from .v3_ChatGPT.memo_on_convo_v1 import run_gpt_prompt_memo_on_convo  # noqa: F401
 from .v3_ChatGPT.poignancy_chat_v1 import run_gpt_prompt_chat_poignancy  # noqa: F401
-from .v3_ChatGPT.poignancy_event_v1 import run_gpt_prompt_event_poignancy  # noqa: F401
+from .v3_ChatGPT.poignancy_event_v2 import run_gpt_prompt_event_poignancy  # noqa: F401
 from .v3_ChatGPT.summarize_chat_ideas_v1 import (
   run_gpt_prompt_agent_chat_summarize_ideas,  # noqa: F401
 )
