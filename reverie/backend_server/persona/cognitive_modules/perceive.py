@@ -7,7 +7,7 @@ Description: This defines the "Perceive" module for generative agents.
 
 import sys
 import math
-
+import asyncio
 sys.path.append("../../")
 
 from operator import itemgetter
@@ -144,86 +144,83 @@ async def perceive(persona, maze):
   # <ret_events> is a list of <ConceptNode> instances from the persona's
   # associative memory.
   ret_events = []
-  for p_event in perceived_events:
-    s, p, o, desc = p_event
-    if not p:
-      # If the object is not present, then we default the event to "idle".
-      p = "is"
-      o = "idle"
-      desc = "idle"
-    desc = f"{s.split(':')[-1]} is {desc}" if not desc.startswith(s) else desc
-    p_event = (s, p, o)
-    if s != persona.name and "talking to" in desc:
-      continue
-    # We retrieve the latest persona.scratch.retention events. If there is
-    # something new that is happening (that is, p_event not in latest_events),
-    # then we add that event to the a_mem and return it.
-    latest_events = persona.a_mem.get_summarized_latest_events(
-      persona.scratch.retention
-    )
+  async def process_perceived_events():
+    async def process_event(p_event):
+      s, p, o, desc = p_event
+      if not p:
+        # If the object is not present, then we default the event to "idle".
+        p = "is"
+        o = "idle"
+        desc = "idle"
+      desc = f"{s.split(':')[-1]} is {desc}" if not desc.startswith(s) else desc
+      p_event = (s, p, o)
+      # We retrieve the latest persona.scratch.retention events. If there is
+      # something new that is happening (that is, p_event not in latest_events),
+      # then we add that event to the a_mem and return it.
+      latest_events = persona.a_mem.get_summarized_latest_events(
+        persona.scratch.retention
+      )
+      if p_event not in latest_events:
+        keywords = set()
+        sub = p_event[0]
+        obj = p_event[2]
+        is_obj_event = False
+        if ":" in p_event[0]:
+          sub = p_event[0].split(":")[-1]
+          is_obj_event= True
+        if ":" in p_event[2]:
+          obj = p_event[2].split(":")[-1]
+        keywords.update([sub, obj])
 
-    if p_event not in latest_events:
-      keywords = set()
-      sub = p_event[0]
-      obj = p_event[2]
-      is_obj_event = False
-      if ":" in p_event[0]:
-        sub = p_event[0].split(":")[-1]
-        is_obj_event= True
-      if ":" in p_event[2]:
-        obj = p_event[2].split(":")[-1]
-      keywords.update([sub, obj])
-
-      # Get event embedding
-      desc_embedding_in = desc
-      if "(" in desc:
-        desc_embedding_in = (
-          desc_embedding_in.split("(")[1].split(")")[0].strip()
-        )
-      if desc_embedding_in in persona.a_mem.embeddings:
-        event_embedding = persona.a_mem.embeddings[desc_embedding_in]
-      else:
-        event_embedding = await get_embedding(desc_embedding_in)
-      event_embedding_pair = (desc_embedding_in, event_embedding)
-      # Get event poignancy.
-      if is_obj_event:
-        event_poignancy = 2
-      else:
-        event_poignancy = await generate_poig_score(persona, "event", desc_embedding_in)
-
-      # If we observe the persona's self chat, we include that in the memory
-      # of the persona here.
-      chat_node_ids = []
-      if p_event[0] == f"{persona.name}" and p_event[1] == "chat with":
-        curr_event = persona.scratch.act_event
-        if persona.scratch.act_description in persona.a_mem.embeddings:
-          chat_embedding = persona.a_mem.embeddings[
-            persona.scratch.act_description
-          ]
+        # Get event embedding
+        desc_embedding_in = desc
+        if "(" in desc:
+          desc_embedding_in = (
+            desc_embedding_in.split("(")[1].split(")")[0].strip()
+          )
+        if desc_embedding_in in persona.a_mem.embeddings:
+          event_embedding = persona.a_mem.embeddings[desc_embedding_in]
         else:
-          chat_embedding = await get_embedding(persona.scratch.act_description)
-        chat_embedding_pair = (persona.scratch.act_description, chat_embedding)
-        chat_poignancy = await generate_poig_score(
-          persona, "chat", persona.scratch.act_description
-        )
-        chat_node = persona.a_mem.add_chat(
-          persona.scratch.curr_time,
-          None,
-          curr_event[0],
-          curr_event[1],
-          curr_event[2],
-          persona.scratch.act_description,
-          keywords,
-          chat_poignancy,
-          chat_embedding_pair,
-          persona.scratch.chat,
-        )
-        if chat_node != None:
-          chat_node_ids = [chat_node.node_id]
+          event_embedding = await get_embedding(desc_embedding_in)
+        event_embedding_pair = (desc_embedding_in, event_embedding)
+        # Get event poignancy.
+        if is_obj_event:
+          event_poignancy = 2
+        else:
+          event_poignancy = await generate_poig_score(persona, "event", desc_embedding_in)
 
-      # Finally, we add the current event to the agent's memory.
-      ret_events += [ 
-        persona.a_mem.add_event(
+        # If we observe the persona's self chat, we include that in the memory
+        # of the persona here.
+        chat_node_ids = []
+        if p_event[0] == f"{persona.name}" and p_event[1] == "chat with":
+          curr_event = persona.scratch.act_event
+          if persona.scratch.act_description in persona.a_mem.embeddings:
+            chat_embedding = persona.a_mem.embeddings[
+              persona.scratch.act_description
+            ]
+          else:
+            chat_embedding = await get_embedding(persona.scratch.act_description)
+          chat_embedding_pair = (persona.scratch.act_description, chat_embedding)
+          chat_poignancy = await generate_poig_score(
+            persona, "chat", persona.scratch.act_description
+          )
+          chat_node = persona.a_mem.add_chat(
+            persona.scratch.curr_time,
+            None,
+            curr_event[0],
+            curr_event[1],
+            curr_event[2],
+            persona.scratch.act_description,
+            keywords,
+            chat_poignancy,
+            chat_embedding_pair,
+            persona.scratch.chat,
+          )
+          if chat_node != None:
+            chat_node_ids = [chat_node.node_id]
+
+        # Finally, we add the current event to the agent's memory.
+        ret_events = persona.a_mem.add_event(
           persona.scratch.curr_time,
           None,
           s,
@@ -235,9 +232,15 @@ async def perceive(persona, maze):
           event_embedding_pair,
           chat_node_ids,
         )
-      ]
-      if ret_events[-1] != None:  
-        persona.scratch.importance_trigger_curr -= event_poignancy
-        persona.scratch.importance_ele_n += 1
+        if ret_events != None:  
+          persona.scratch.importance_trigger_curr -= event_poignancy
+          persona.scratch.importance_ele_n += 1
+        return ret_events
+
+    tasks = [process_event(p_event) for p_event in list(set(perceived_events))]
+    ret_events = await asyncio.gather(*tasks)
+    return ret_events
+
+  ret_events = await process_perceived_events()
 
   return [x for x in ret_events if x != None]

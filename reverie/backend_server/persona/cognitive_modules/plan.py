@@ -415,7 +415,6 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
   # Fix for the case when the curr_time is round to minute.
   today_min_pass = (int(persona.scratch.curr_time.hour) * 60
                     + int(persona.scratch.curr_time.minute) + (1 if persona.scratch.curr_time.second > 0 else 0))
-  
   # Step 2: We need to create <main_act_dur> and <truncated_act_dur>. 
   # These are basically a sub-component of <f_daily_schedule> of the persona,
   # but focusing on the current decomposition. 
@@ -452,20 +451,27 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
     # Add duration first to avoid adding the duration of the last act.
     dur_sum += dur
     if (dur_sum > start_hour * 60) and (dur_sum <= end_hour * 60): 
-      main_act_dur += [[act, dur]]
+      # Must check if one action start before start_hour but end after start_hour (like from 7:58 to 8:02 with start hour is 8:00)
+      if len(main_act_dur) == 0:
+        # Calculate the time from start_hour to the end of the action
+        main_act_dur += [[act,dur_sum-start_hour*60]]
+        # Calculate the time from the start of the action to start_hour
+        minute_left = dur - (dur_sum-start_hour*60)
+      else:
+        main_act_dur += [[act, dur]]
       if dur_sum <= today_min_pass:
         truncated_act_dur += [[act, dur]]
       # Check if the action is interupted.
       elif dur_sum > today_min_pass and not truncated_fin: 
         # We need to insert that last act, duration list like this one: 
         # e.g., ['wakes up and completes her morning routine (wakes up...)', 2]
+        truncated_fin = True
         truncated_act_dur += [[persona.scratch.f_daily_schedule[count][0],
                                today_min_pass - dur_sum + dur]] 
         #truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
         #truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass + 1) ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
 
         # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
-        truncated_fin = True
     count +=1 
 
   x = truncated_act_dur[-1][0].split("(")[0].strip() + " (on the way to " + truncated_act_dur[-1][0].split("(")[-1][:-1] + ")"
@@ -492,7 +498,9 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
                                                     end_time_hour,
                                                     inserted_act,
                                                     inserted_act_dur)
-  return result[0]
+  result = result[0]
+  result[0][1] += minute_left
+  return result
 
 
 ##############################################################################
@@ -937,11 +945,11 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
   start_index = None
   end_index = None
   for act, dur in p.scratch.f_daily_schedule: 
-    if dur_sum >= start_hour * 60 and start_index == None:
-      start_index = count
-    if dur_sum >= end_hour * 60 and end_index == None: 
-      end_index = count
     dur_sum += dur
+    if dur_sum > start_hour * 60 and start_index == None:
+      start_index = count
+    if dur_sum > end_hour * 60 and end_index == None: 
+      end_index = count
     count += 1
   # Let all async functions done before we update the action description for the persona.
   ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,

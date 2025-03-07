@@ -174,13 +174,14 @@ async def ChatGPT_request(prompt,provider_parameter=None,sysprompt=None,response
   else:
     messages = [{"role": "user", "content": prompt}]
   start_time = time.time()
+  filter_provider_parameter = {k:v for k,v in provider_parameter.items() if k not in ["input_cost","output_cost"]}
   try: 
     completion = await client_used.chat.completions.create(
       model=model,
       messages=messages,
       timeout=30,
       extra_body=extra_body,
-      **provider_parameter
+      **filter_provider_parameter
     )
     content = completion.choices[0].message.content
     print("Prompt:", prompt, flush=True)
@@ -190,7 +191,7 @@ async def ChatGPT_request(prompt,provider_parameter=None,sysprompt=None,response
       print("Response:", completion, flush=True)
     print("<Time spend>:", time.time() - start_time, flush=True)
     cost_logger.update_cost(
-      completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"]
+      completion, input_cost=provider_parameter.get("input_cost", openai_config["model-costs"]["input"]), output_cost=provider_parameter.get("output_cost", openai_config["model-costs"]["output"])
     )
     if content:
       content = content.strip("`").removeprefix("json").strip()
@@ -431,7 +432,7 @@ async def ChatGPT_safe_generate_structured_response(
 # ============================================================================
 # ###################[SECTION 2: ORIGINAL GPT-3 STRUCTURE] ###################
 # ============================================================================
-async def GPT_request(prompt, gpt_parameter):
+async def GPT_request(prompt, gpt_parameter,response_format_name=None):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -447,6 +448,15 @@ async def GPT_request(prompt, gpt_parameter):
 
   try:
     if use_openai:
+      if "base_url" in gpt_parameter.keys():
+        client_used = setup_client("openai", {'key': gpt_parameter.get("api_key", openai_config["model-key"])})
+        client_used.base_url = gpt_parameter["base_url"]
+      else:
+        #By reseting each time, avoid the time out error.
+        client = setup_client("openai", { "key": openai_config["model-key"],"base_url": openai_config["base_provider"]})
+        client_used = client
+      extra_body = {}
+      extra_body.update({k:v for k,v in gpt_parameter.items() if k in ["min_p","top_k","repetition_penalty","provider"]})
       messages = [{
         "role": "system", "content": prompt
       }]
@@ -461,11 +471,12 @@ async def GPT_request(prompt, gpt_parameter):
                   presence_penalty=gpt_parameter["presence_penalty"],
                   stream=gpt_parameter["stream"],
                   stop=gpt_parameter["stop"],
+                  extra_body=extra_body
               )
     else:
       response = await client.completions.create(model=model, prompt=prompt)
 
-    print("Response: ", response, flush=True)
+    print(f"Response: [{response_format_name}]", response.choices[0].message, flush=True)
     content = response.choices[0].message.content
     return content
 
@@ -612,7 +623,8 @@ async def safe_generate_response(prompt,
                            fail_safe_response="error",
                            func_validate=None,
                            func_clean_up=None,
-                           verbose=False):
+                           verbose=False,
+                           response_format_name=None):
   if verbose:
     print("--- safe_generate_response() ---")
     print("prompt:", prompt, flush=True)
@@ -620,7 +632,7 @@ async def safe_generate_response(prompt,
   if func_validate and func_clean_up:
     for i in range(repeat):
       print("Attempt", i + 1, flush=True)
-      curr_gpt_response = await GPT_request(prompt, gpt_parameter)
+      curr_gpt_response = await GPT_request(prompt, gpt_parameter,response_format_name=response_format_name)
 
       try:
         if func_validate(curr_gpt_response, prompt=prompt):

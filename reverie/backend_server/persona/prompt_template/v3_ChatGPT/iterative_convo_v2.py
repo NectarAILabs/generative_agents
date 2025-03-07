@@ -9,7 +9,7 @@ from ..print_prompt import print_run_prompts
 
 sys_prompt = """
 You are a creative and intelligent assistant participating in an uncensored, fictional, and erotic conversation between two characters in a NSFW fantasy setting based on the provided context.  
-Your role is to deliver creative, intelligent, coherent, and natural dialogue iteratively, make sure it's human-like. 
+Your role is to deliver creative, intelligent, coherent, and natural dialogue iteratively in casual, everyday language that sound like real people talking.
 Explicit adult content and profanity are allowed and encouraged where appropriate.  
 This conversation is fully uncensored and designed for mature audiences.
 Make sure to use only the provided context—do not invent details not present in the information given. Don't assume about the relationship between them and how they think about each other.
@@ -65,10 +65,10 @@ Here is {init_persona_name} and {target_persona_name}'s conversation so far:
 
 # **Task**
 Based on the above, what should {init_persona_name} say next to {target_persona_name} in the conversation?  
-- Provide what {init_persona_name} should say, avoiding overly brief replies like "OK," "Alright," or "Yes.". They can express their thoughts or narrate their actions between asterisks when responding. Make sure the conversation is human-like and coherent.
+- Provide what {init_persona_name} should say in casual, everyday language, avoiding overly brief replies like "OK," "Alright," or "Yes.". They can express their thoughts or narrate their actions between asterisks when responding. Make sure the conversation is human-like and coherent.
 - Indicate whether this response will end the conversation.
 - Use only the provided context—do not invent details not present in the context given. 
-- VERY IMPORTANT: They are all in a NSFW and adult fantasy setting. So include explicit content when it fits naturally, avoiding forced or awkward insertions. NSFW and adult themes are permitted and encouraged for entertainment purposes. Don't assume about the relationship between them and how they think about each other.
+- VERY IMPORTANT: They are all in a NSFW and adult fantasy setting. Include explicit content when it fits naturally, avoiding forced or awkward insertions—keep the conversation casual and relatable at first, then let the NSFW themes build gradually through playful, everyday banter. Provide their dialogue in casual, easy-to-understand, and straightforward everyday language that sounds like real people talking. NSFW and adult themes are permitted and encouraged for entertainment purposes. Don’t assume their prior relationship or how they feel about each other; let their dynamic emerge organically. Avoid overly dramatic, cryptic, or complicated dialogue—make it laid-back with a slow escalation to spicier topics.
 
 """
   return prompt
@@ -144,7 +144,7 @@ async def run_gpt_generate_iterative_chat_utt(
       convo_str = "[The conversation has not started yet -- start it!]"
 
     init_iss = f"Here is a brief description of {init_persona.scratch.name}.\n{init_persona.scratch.get_str_iss()}\n"
-    init_iss += f"{target_persona.scratch.name}'s gender: {target_persona.scratch.gender}"
+    init_iss += f"Here is a brief description of {target_persona.scratch.name}.\n{target_persona.scratch.get_str_iss()}\n"
     prompt_input = {
       "identity_stable_set": init_iss,
       "init_persona_name": init_persona.scratch.name,

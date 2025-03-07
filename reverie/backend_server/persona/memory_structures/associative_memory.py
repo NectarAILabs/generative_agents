@@ -163,7 +163,7 @@ class AssociativeMemory:
                      + " " 
                      +  description.split("(")[-1][:-1])
     # only add if the description is not already in the memory
-    if description not in [x.description for x in self.seq_event]:
+    if (s,p,o) not in [(x.subject,x.predicate,x.object) for x in self.seq_event]:
     # Creating the <ConceptNode> object.
       node = ConceptNode(node_id, node_count, type_count, node_type, depth,
                         created, expiration, 
@@ -195,7 +195,7 @@ class AssociativeMemory:
     else: 
       #Update the last_accessed and expiration
       for node in self.seq_event: 
-        if node.description == description: 
+        if (node.subject,node.predicate,node.object) == (s,p,o): 
           node.last_accessed = created
           node.expiration = expiration
           #move to front

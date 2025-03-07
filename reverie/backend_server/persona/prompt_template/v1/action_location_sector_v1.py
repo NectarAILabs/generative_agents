@@ -17,7 +17,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   specific_action = prompt_input["specific_action"]
 
   prompt = f"""
-Task -- choose an appropriate area from the area options for a task at hand.
+Task -- choose an appropriate area from the area options for a task at hand. Avoid going to other one's living area instead there is permission in the action.
 
 Sam Kim lives in [Sam Kim's house] that has [Sam Kim's room, bathroom, kitchen].
 Sam Kim is currently in [Sam Kim's house] that has [Sam Kim's room, bathroom, kitchen].
