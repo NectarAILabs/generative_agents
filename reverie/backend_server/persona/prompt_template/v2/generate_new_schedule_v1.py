@@ -31,8 +31,8 @@ Statement: {convo_schedule_memory}
 ===
 Finishing the schedule for the rest of the day (start from {start_hour_str} to the end of the day), follow the format:
 {schedule_format}
+VERY IMPORTANT: The statement is the only information you have, so modify the schedule only when the statement explicitly refers to a specific appointment with date and activity.  Don't speculate about the events happening behind what is stated in the statement.
 Your schedule should assume that their task is ONLY "sleeping" after their bedtime and before they wake up.
-The statement is the only information you have, so modify the schedule only when the statement explicitly refers to a specific appointment with date and activity. 
 Do not create or assume a schedule with uncertain or unspecified plans with particular individuals, it can make their schedules conflict with each other. If the date mentioned in the statement is earlier than today's date at the time specified by {start_hour_str}, just ignore the statement and don't change anything in the schedule.
 You should not remove or change a meeting with an another specific individual in the hourly schedule. Otherwise, you can merge the new activity with the existing activities in the action (e.g. "meeting with [name_1] and [name_2] at [time]")
 Please do not modify the schedule of {init_persona_name} in relation to other specific individuals (who have names), as this could lead to conflicts in their schedules. Or having a new plan that doesn't relate to the statement.

@@ -14,9 +14,9 @@ _______________________________________
 ```json
 {
     "client": "openai", 
-    "base_provider": "https://openrouter.ai/api/v1" (for openrouter) or "https://api.openai.com/v1" (for openai),
+    "base_provider": "https://api.openai.com/v1 or https://openrouter.ai/api/v1 or ...",
     "model": "openai/gpt-4o-mini",
-    "model-key": "API_KEY",
+    "model-key": "<API_KEY>",
     "model-costs": {
         "input":  0.5,
         "output": 1.5
@@ -32,15 +32,13 @@ _______________________________________
     "cost-upperbound": 10,
     "other_providers":{
         "iterative_chat_utt_provider":{
-            "base_url": "<vllm_url>",
-            "api_key": "<vllm_api_key>",
-            "model": "Sao10K/L3.3-70B-Euryale-v2.3",
+            "model": "deepseek/deepseek-r1",
             "temperature": 1.1,
-            "top_p":0.1,
-            "frequency_penalty": 0.7,
+            "top_p": 0.1,
+            "frequency_penalty": 0.5,
             "presence_penalty": 0.5,
             "min_p": 0.1,
-            "repetition_penalty": 1.2
+            "repetition_penalty": 1.1
         },
         "hourly_schedule_provider":{
             "model":"openai/gpt-4o",
@@ -52,6 +50,8 @@ _______________________________________
         },
         "new_hourly_schedule_provider":{
             "model":"deepseek/deepseek-r1",
+            "input_cost": 3,
+            "output_cost": 8,
             "temperature": 0.7,
             "provider":{
                 "order": ["Fireworks"],
@@ -59,19 +59,26 @@ _______________________________________
             }
         },
         "new_decomp_schedule_provider":{
-            "model":"openai/gpt-4o",
-            "temperature": 0.7,
-            "provider":{
-                "require_parameters": true
-            }
-        },
-        "planning_thought_provider":{
             "model":"deepseek/deepseek-r1",
+            "input_cost": 3,
+            "output_cost": 8,
             "temperature": 0.7,
             "provider":{
                 "order": ["Fireworks"],
                 "require_parameters": true
             }
+        },
+        "planning_thought_provider":{
+            "model":"openai/gpt-4o-mini",
+            "input_cost": 3,
+            "output_cost": 8,
+            "temperature": 0.7
+        },
+        "poignancy_event_provider":{
+            "model":"google/gemini-2.0-flash-lite-001",
+            "input_cost": 0.075,
+            "output_cost": 0.3,
+            "temperature": 0.7
         }
     }
 }
