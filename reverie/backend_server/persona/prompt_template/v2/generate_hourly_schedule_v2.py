@@ -17,7 +17,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   existing_schedule = prompt_input["existing_schedule"]
   extra_instructions = prompt_input["extra_instructions"]
   prompt_ending = prompt_input["prompt_ending"]
-
+  persona_sector_accessibles = prompt_input["persona_sector_accessibles"]
   prompt = f"""
 {identity_stable_set}
 {instructions}
@@ -28,6 +28,8 @@ Here is the originally intended hourly breakdown of {persona_name}'s schedule to
 {existing_schedule}
 {extra_instructions}
 {prompt_ending}
+All sectors that {persona_name} can go are:
+{persona_sector_accessibles}
 ===
 Follow the hourly schedule format (from 00:00 AM to 11:00 PM). Remember to include all 24 hours of the day.:
 {schedule_format}
@@ -52,6 +54,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
   test_input=None,
   verbose=False,
   all_in_one=True,
+  persona_sector_accessibles="",
 ):
   def create_prompt_input(
     persona,
@@ -59,6 +62,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
     hour_strings,
     extra_instructions="",
     test_input=None,
+    persona_sector_accessibles="",
   ):
     if test_input:
       return test_input
@@ -109,6 +113,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
       "existing_schedule": existing_schedule,
       "extra_instructions": extra_instructions,
       "prompt_ending": prompt_ending,
+      "persona_sector_accessibles": persona_sector_accessibles
     }
 
     return prompt_input
@@ -160,7 +165,7 @@ async def run_gpt_prompt_generate_hourly_schedule(
     gpt_param["engine"] = provider_parameter["model"]
   prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(
-    persona, p_f_ds_hourly_org, hour_strings, extra_instructions, test_input
+    persona, p_f_ds_hourly_org, hour_strings, extra_instructions, test_input, persona_sector_accessibles
   )
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()

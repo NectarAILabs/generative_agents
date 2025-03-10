@@ -106,6 +106,8 @@ async def run_gpt_prompt_generate_new_schedule(
         activity = activity.removeprefix(persona.scratch.get_str_firstname()).strip()
         activity = activity.removeprefix("is ")
         activities += [activity]
+        if "11:00 PM" in item.datetime:
+          break
     return activities
 
   def __func_validate(gpt_response, prompt=""):

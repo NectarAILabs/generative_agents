@@ -58,7 +58,7 @@ async def generate_wake_up_hour(persona):
   return int(wake_up_hour[0])
 
 
-async def generate_first_daily_plan(persona, wake_up_hour):
+async def generate_first_daily_plan(persona, wake_up_hour, persona_sector_accessibles):
   """
   Generates the daily plan for the persona.
   Basically the long term planning that spans a day. Returns a list of actions
@@ -86,11 +86,11 @@ async def generate_first_daily_plan(persona, wake_up_hour):
   """
   if debug:
     print("GNS FUNCTION: <generate_first_daily_plan>")
-  result = await run_gpt_prompt_daily_plan(persona, wake_up_hour)
+  result = await run_gpt_prompt_daily_plan(persona, wake_up_hour, persona_sector_accessibles)
   return result[0]
 
 
-async def generate_hourly_schedule(persona, wake_up_hour):
+async def generate_hourly_schedule(persona, wake_up_hour, persona_sector_accessibles):
   """
   Based on the daily req, creates an hourly schedule -- one hour at a time.
   The form of the action for each of the hour is something like below:
@@ -154,12 +154,12 @@ async def generate_hourly_schedule(persona, wake_up_hour):
 
       if all_in_one:
         n_m1_activity = (await run_gpt_prompt_generate_hourly_schedule(
-          persona, n_m1_activity, hour_strings, all_in_one=True
+          persona, n_m1_activity, hour_strings, all_in_one=True, persona_sector_accessibles=persona_sector_accessibles
         ))[0]
       else:
         for _i in range(len(hour_strings)):
           n_m1_activity += [(await run_gpt_prompt_generate_hourly_schedule(
-            persona, n_m1_activity, hour_strings, all_in_one=False
+            persona, n_m1_activity, hour_strings, all_in_one=False, persona_sector_accessibles=persona_sector_accessibles
           ))[0]]
 
   # Step 1. Compressing the hourly schedule to the following format:
@@ -560,7 +560,7 @@ async def revise_identity(persona):
   persona.scratch.daily_plan_req = new_daily_req
 
 
-async def _long_term_planning(persona, new_day):
+async def _long_term_planning(persona, new_day, persona_sector_accessibles):
   """
   Formulates the persona's daily long-term plan if it is the start of a new 
   day. This basically has two components: first, we create the wake-up hour, 
@@ -582,7 +582,7 @@ async def _long_term_planning(persona, new_day):
     # daily requirement, or if we are on a new day, we want to create a new
     # set of daily requirements.
     persona.scratch.daily_req = await generate_first_daily_plan(persona,
-                                                          wake_up_hour)
+                                                          wake_up_hour, persona_sector_accessibles)
   elif new_day == "New day":
     await revise_identity(persona)
 
@@ -594,7 +594,7 @@ async def _long_term_planning(persona, new_day):
   # which is a list of todo items with a time duration (in minutes) that 
   # add up to 24 hours.
   persona.scratch.f_daily_schedule = await generate_hourly_schedule(persona,
-                                                              wake_up_hour)
+                                                              wake_up_hour, persona_sector_accessibles)
   persona.scratch.f_daily_schedule_hourly_org = (persona.scratch
                                                    .f_daily_schedule[:])
 
@@ -1076,8 +1076,10 @@ async def plan(persona, maze, personas, new_day, retrieved):
     The target action address of the persona (persona.scratch.act_address).
   """ 
   # PART 1: Generate the hourly schedule. 
+  persona_world = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
+  persona_sector_accessibles = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(persona_world).split(",")]
   if new_day: 
-    await _long_term_planning(persona, new_day)
+    await _long_term_planning(persona, new_day, persona_sector_accessibles)
 
   # PART 2: If the current action has expired, we want to create a new plan.
   if persona.scratch.act_check_finished(): 

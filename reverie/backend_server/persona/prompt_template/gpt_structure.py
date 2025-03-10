@@ -461,7 +461,7 @@ async def GPT_request(prompt, gpt_parameter,response_format_name=None):
         "role": "system", "content": prompt
       }]
       # If not OpenAI but different provider, we need to change the base_url and api_key
-      response = await client.chat.completions.create(
+      response = await client_used.chat.completions.create(
                   model=gpt_parameter["engine"],
                   messages=messages,
                   temperature=gpt_parameter["temperature"],

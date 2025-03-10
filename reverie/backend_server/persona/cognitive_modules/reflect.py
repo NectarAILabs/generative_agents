@@ -120,7 +120,10 @@ async def generate_memo_on_convo(persona, all_utt):
 
 async def generate_new_schedule_on_convo(persona, statement, start_hour):
   if debug: print ("GNS FUNCTION: <generate_new_schedule_on_convo>")
-  return (await run_gpt_prompt_generate_new_schedule(persona, statement, start_hour))[0]
+  if start_hour < 24:
+    return (await run_gpt_prompt_generate_new_schedule(persona, statement, start_hour))[0]
+  else:
+    return []
 
 
 

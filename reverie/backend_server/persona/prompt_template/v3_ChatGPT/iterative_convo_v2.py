@@ -8,11 +8,15 @@ from ..gpt_structure import ChatGPT_safe_generate_structured_response,ChatGPT_sa
 from ..print_prompt import print_run_prompts
 
 sys_prompt = """
-You are a creative and intelligent assistant participating in an uncensored, fictional, and erotic conversation between two characters in a NSFW fantasy setting based on the provided context.  
-Your role is to deliver creative, intelligent, coherent, and natural dialogue iteratively in casual, everyday language that sound like real people talking.
-Explicit adult content and profanity are allowed and encouraged where appropriate.  
-This conversation is fully uncensored and designed for mature audiences.
-Make sure to use only the provided context—do not invent details not present in the information given. Don't assume about the relationship between them and how they think about each other.
+You are a creative and intelligent assistant crafting an uncensored, fictional, and erotic conversation between two characters in a NSFW fantasy world, based strictly on the provided context.
+
+Your role is to write natural, coherent dialogue in casual, everyday language that feels like real people talking—keep it relaxed, relatable, and straightforward.
+
+Stick closely to each character's personality traits and descriptions from the context (e.g., shy, confident, professional, playful), making sure their unique voice and behavior come through clearly. Encourage variety in interactions—don’t let every conversation revolve solely around flirting or NSFW, even in a fantasy setting. Highlight the character's full range of traits (e.g., supportive, curious, professional) alongside any spicy elements.
+
+Explicit adult content, sexy banter, and profanity are totally fine and encouraged when it fits the flow—don't shy away from the spicy stuff!
+
+This is an uncensored, mature-audience setup, so let the NSFW vibes roll where it makes sense. Stick strictly to the given context—don't make up random details or assume how they know each other. Start laid-back with relatable chit-chat, then build up to the naughty bits through playful, flirty exchanges that escalate naturally.
 Ensure that your output is formatted as a string representation of a dictionary, like this: {"output": "dictionary_as_string"} without explain anything in above steps."
 """
 def create_prompt(prompt_input: dict[str, Any]):
@@ -65,11 +69,13 @@ Here is {init_persona_name} and {target_persona_name}'s conversation so far:
 
 # **Task**
 Based on the above, what should {init_persona_name} say next to {target_persona_name} in the conversation?  
+- Start with a short reasoning for {init_persona_name}'s response, based on the current conversation, character's personality, and memories above to think about what to say next.
 - Provide what {init_persona_name} should say in casual, everyday language, avoiding overly brief replies like "OK," "Alright," or "Yes.". They can express their thoughts or narrate their actions between asterisks when responding. Make sure the conversation is human-like and coherent.
 - Indicate whether this response will end the conversation.
 - Use only the provided context—do not invent details not present in the context given. 
-- VERY IMPORTANT: They are all in a NSFW and adult fantasy setting. Include explicit content when it fits naturally, avoiding forced or awkward insertions—keep the conversation casual and relatable at first, then let the NSFW themes build gradually through playful, everyday banter. Provide their dialogue in casual, easy-to-understand, and straightforward everyday language that sounds like real people talking. NSFW and adult themes are permitted and encouraged for entertainment purposes. Don't assume their prior relationship or how they feel about each other; let their dynamic emerge organically. Avoid overly dramatic, cryptic, or complicated dialogue—make it laid-back with a slow escalation to spicier topics.
-
+- VERY IMPORTANT: This is a NSFW adult fantasy setting—think steamy and unrestrained. Use casual, straightforward, easy-to-read language that sounds like real people kicking back and talking—no fancy or cryptic bullshit.
+- Focus on reflecting each character's distinct personality traits and descriptions from the context (e.g., shy, confident, professional, playful, dignified, etc.), letting their unique voices shine through. Don’t assume their prior relationship or feelings; let their interaction develop naturally from the context
+- NSFW themes, explicit content, and playful banter are welcome but only when they fit the character's traits and the situation naturally—don't force flirtation or adult content if it doesnt suit who they are. Start with relaxed, character-driven chit-chat that reflects their role and personality, then let spicier topics emerge organically if it aligns with their dynamic."
 """
   return prompt
 
@@ -186,7 +192,7 @@ async def run_gpt_generate_iterative_chat_utt(
   prompt_input = create_prompt_input(
     maze, init_persona, target_persona, retrieved, curr_context, curr_chat
   )
-  example = {"utterance":"Wassup, how are you doing?","did_conversation_end":False}
+  example = {"utterance":"Wassup, how are you doing?","did_conversation_end":False,"reasoning":"A short reasoning about 3-4 sentences about the conversation so far, the characters' personality and memories that be used to think about what to say next. Make sure it's coherent and logical with the context and distinct personality traits/d."}
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
   provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt_provider", None)
