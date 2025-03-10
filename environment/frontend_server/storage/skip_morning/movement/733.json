@@ -6,7 +6,7 @@
         18
       ],
       "pronunciatio": "\ud83d\ude34\ud83d\udca4",
-      "description": "sleeping @ the Ville:Aika Shirosaki's apartment:main room:bed",
+      "description": "sleeping peacefully @ the Ville:Aika Shirosaki's apartment:main room:bed",
       "chat": null
     },
     "Alice Caelin": {
@@ -14,7 +14,7 @@
         66,
         19
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udecf",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Alice Caelin's apartment:main room:bed",
       "chat": null
     },
@@ -23,14 +23,14 @@
         73,
         14
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Noah Walker's apartment:main room:bed",
       "chat": null
     },
     "Jennifer Robbie": {
       "movement": [
-        73,
-        74
+        68,
+        56
       ],
       "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:bed",
@@ -41,7 +41,7 @@
         21,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Tiffany Yang's house:main room:bed",
       "chat": null
     },
@@ -77,7 +77,7 @@
         29,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Amelie Dupont's house:main room:bed",
       "chat": null
     }

@@ -6,7 +6,7 @@
         18
       ],
       "pronunciatio": "\ud83d\ude34\ud83d\udca4",
-      "description": "sleeping @ the Ville:Aika Shirosaki's apartment:main room:bed",
+      "description": "sleeping peacefully @ the Ville:Aika Shirosaki's apartment:main room:bed",
       "chat": null
     },
     "Alice Caelin": {
@@ -14,7 +14,7 @@
         66,
         19
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udecf",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Alice Caelin's apartment:main room:bed",
       "chat": null
     },
@@ -23,17 +23,17 @@
         73,
         14
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Noah Walker's apartment:main room:bed",
       "chat": null
     },
     "Jennifer Robbie": {
       "movement": [
-        71,
-        74
+        61,
+        60
       ],
-      "pronunciatio": "\u2615\ud83e\uddd8\u200d\u2642",
-      "description": "getting ready for bed and unwinding (drinking herbal tea while reflecting on the day) @ the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:desk",
+      "pronunciatio": "\ud83d\udcad\ud83e\udd1d",
+      "description": "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (considering different approaches to discuss with Noah) @ the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:blackboard",
       "chat": null
     },
     "Tiffany Yang": {
@@ -41,17 +41,17 @@
         21,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Tiffany Yang's house:main room:bed",
       "chat": null
     },
     "Katie Adams": {
       "movement": [
-        54,
-        17
+        55,
+        20
       ],
-      "pronunciatio": "\ud83c\udfa5\ud83d\udcfd",
-      "description": "preparing for upcoming cheerleading event (recording a video of herself practicing to evaluate performance) @ the Ville:Katie Adams's apartment:main room:desk",
+      "pronunciatio": "\ud83c\udf79\ud83c\udf78",
+      "description": "socializing and enjoying the party (grabbing a drink from the bar) @ the Ville:The Rose and Crown Pub:pub:refrigerator",
       "chat": null
     },
     "Mina Chang": {
@@ -77,7 +77,7 @@
         29,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Amelie Dupont's house:main room:bed",
       "chat": null
     }

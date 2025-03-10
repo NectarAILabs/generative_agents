@@ -164,7 +164,7 @@ async def run_gpt_prompt_action_sector(
   y = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
   x = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(y).split(",")]
   if output not in x:
-    print("Sector not in accessible sectors", output, flush=True)
+    print("Sector not in accessible sectors: ", output, flush=True)
     # output = random.choice(x)
     output = persona.scratch.living_area.split(":")[1]
 

@@ -1,4 +1,14 @@
 {
+  "Aika Shirosaki": {
+    "maze": "the_ville",
+    "x": 93,
+    "y": 18
+  },
+  "Alice Caelin": {
+    "maze": "the_ville",
+    "x": 66,
+    "y": 19
+  },
   "Noah Walker": {
     "maze": "the_ville",
     "x": 73,
@@ -6,8 +16,8 @@
   },
   "Jennifer Robbie": {
     "maze": "the_ville",
-    "x": 72,
-    "y": 74
+    "x": 70,
+    "y": 67
   },
   "Tiffany Yang": {
     "maze": "the_ville",
@@ -17,7 +27,7 @@
   "Katie Adams": {
     "maze": "the_ville",
     "x": 54,
-    "y": 17
+    "y": 23
   },
   "Mina Chang": {
     "maze": "the_ville",
@@ -33,15 +43,5 @@
     "maze": "the_ville",
     "x": 29,
     "y": 65
-  },
-  "Aika Shirosaki": {
-    "maze": "the_ville",
-    "x": 93,
-    "y": 18
-  },
-  "Alice Caelin": {
-    "maze": "the_ville",
-    "x": 66,
-    "y": 19
   }
 }

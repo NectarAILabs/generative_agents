@@ -6,7 +6,7 @@
         18
       ],
       "pronunciatio": "\ud83d\ude34\ud83d\udca4",
-      "description": "sleeping @ the Ville:Aika Shirosaki's apartment:main room:bed",
+      "description": "sleeping peacefully @ the Ville:Aika Shirosaki's apartment:main room:bed",
       "chat": null
     },
     "Alice Caelin": {
@@ -14,7 +14,7 @@
         66,
         19
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udecf",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Alice Caelin's apartment:main room:bed",
       "chat": null
     },
@@ -23,17 +23,17 @@
         73,
         14
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Noah Walker's apartment:main room:bed",
       "chat": null
     },
     "Jennifer Robbie": {
       "movement": [
-        70,
-        65
+        77,
+        72
       ],
-      "pronunciatio": "\ud83d\udcd6\u270b",
-      "description": "engaging in personal reading or journaling (closing the book or journal) @ the Ville:Jennifer Robbie's apartment:common room:shelf",
+      "pronunciatio": "\ud83e\udde0\ud83d\udcad",
+      "description": "relaxing and reflecting on the day (revisiting any remaining thoughts or emotions from the day) @ the Ville:Jennifer Robbie's apartment:common room:common room table",
       "chat": null
     },
     "Tiffany Yang": {
@@ -41,17 +41,17 @@
         21,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Tiffany Yang's house:main room:bed",
       "chat": null
     },
     "Katie Adams": {
       "movement": [
-        56,
-        14
+        54,
+        20
       ],
-      "pronunciatio": "\ud83d\udc57\ud83d\udc5c",
-      "description": "preparing for upcoming cheerleading event (selecting outfits and accessories for the event) @ the Ville:Katie Adams's apartment:main room:closet",
+      "pronunciatio": "\ud83c\udf7f\ud83c\udf74",
+      "description": "mingling at the party (grabbing a snack from the food table) @ the Ville:The Rose and Crown Pub:pub:refrigerator",
       "chat": null
     },
     "Mina Chang": {
@@ -77,7 +77,7 @@
         29,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Amelie Dupont's house:main room:bed",
       "chat": null
     }

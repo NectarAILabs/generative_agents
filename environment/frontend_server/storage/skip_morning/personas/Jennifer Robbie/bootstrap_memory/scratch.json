@@ -4,7 +4,7 @@
   "retention": 20,
   "curr_time": "February 13, 2023, 07:00:00",
   "curr_tile": [
-    73,
+    72,
     74
   ],
   "daily_plan_req": "",
@@ -15,8 +15,8 @@
   "age": 36,
   "innate": "assertive, insightful, and magnetic.",
   "learned": "Jennifer is fiercely intelligent, with a sharp wit that keeps everyone on their toes. She's perceptive, able to read people effortlessly, which makes her an exceptional teacher and an even better conversationalist. Beneath her confident and dominant exterior, Jennifer is deeply passionate about understanding human nature, driven by curiosity rather than control. She has a nurturing side she rarely shows, preferring to maintain her composed and authoritative presence.",
-  "currently": "Jennifer Robbie is a psychology teacher, intrigued by gender relationships and overjoyed at having the first male student on campus to study. Very sexually dominant.",
-  "lifestyle": "Jennifer Robbie goes to bed around 2am, awakes up around 9am, eats dinner around 6pm. She likes to hang out at Hobbs Cafe if it's before 6pm. The school she is teaching at is Oak Hill College - a girl's college which has just accepted its first male student. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Jennifer would be happy to pursue a sexual relationship with him and try and make him her submissive. Jennifer would be willing to share him with other girls.",
+  "currently": "Jennifer Robbie is a psychology teacher, intrigued by gender relationships and overjoyed at having the first male student on campus to study. Very sexually dominant. With all the girls in college, she often shows herself as a serious professor and the topics only revolve around academic stories.",
+  "lifestyle": "Jennifer Robbie goes to bed around 2am, awakes up around 9am, eats dinner around 6pm. She likes to hang out at Hobbs Cafe if it's before 6pm. The school she is teaching at is Oak Hill College - a girl's college which has just accepted its first male student, Noah Walker. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Jennifer would be happy to pursue a sexual relationship with him and try and make him her submissive. Jennifer would be willing to share him with other girls.",
   "living_area": "the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom",
   "concept_forget": 100,
   "daily_reflection_time": 180,
@@ -29,143 +29,145 @@
   "importance_w": 1,
   "recency_decay": 0.99,
   "importance_trigger_max": 2000,
-  "importance_trigger_curr": 1915,
-  "importance_ele_n": 45,
+  "importance_trigger_curr": 1861,
+  "importance_ele_n": 50,
   "thought_count": 5,
   "daily_req": [
     "Wake up and complete morning routine at 9:00 am",
-    "Have coffee and review lesson plans for the day at 9:30 am",
-    "Head to Oak Hill College and arrive by 10:30 am",
-    "Teach psychology classes from 11:00 am to 1:00 pm, focusing on gender relationships",
-    "Have a lunch meeting with colleagues to discuss the new male student at 1:30 pm",
-    "Hold office hours from 2:30 pm to 4:00 pm for student consultations",
-    "Leave school at 4:30 pm and head to Hobbs Cafe for a coffee break and some relaxation",
-    "Arrive at Hobbs Cafe by 5:00 pm, potentially encountering students discussing the male student",
-    "Have dinner at 6:00 pm back home while reflecting on the day's events",
-    "Plan a casual meetup with the male student for later in the week at 7:00 pm",
-    "Prepare for tomorrow's classes and wind down at 8:00 pm",
-    "Engage in personal reading or journaling from 9:00 pm to 11:00 pm",
-    "Watch a favorite TV show from 11:00 pm to 12:00 am",
-    "Get ready for bed and unwind at 1:00 am",
-    "Go to bed at 2:00 am."
+    "Prepare for classes and review lesson plans at 9:30 am",
+    "Attend classes and engage with students from 10:00 am to 12:00 pm",
+    "Have lunch at 12:00 pm with fellow faculty members, discussing the introduction of Noah Walker",
+    "Conduct office hours from 1:00 pm to 2:30 pm, interacting with students about their coursework and potentially gauging interest in Noah",
+    "Attend psychology seminar from 3:00 pm to 4:30 pm",
+    "Wrap up work at school and head to Hobbs Cafe at 5:00 pm",
+    "Spend time at Hobbs Cafe until 6:00 pm, observing and perhaps casually flirting with girls discussing Noah",
+    "Have dinner at 6:00 pm at Hobbs Cafe, taking notes for psychology course and continuing to engage with students about Noah",
+    "Attend evening class from 7:00 pm to 8:30 pm, using the time to assess student dynamics regarding their interest in Noah",
+    "Return home and unwind, reading psychology articles or materials until 11:00 pm",
+    "Prepare for bed and review thoughts on approaching Noah for a personal discussion at 1:00 am",
+    "Go to bed around 2:00 am."
   ],
   "f_daily_schedule": [
     [
-      "engaging in personal reading or journaling (selecting a book or journal to read or write in)",
+      "relaxing and reflecting on the day (sipping on a cup of chamomile tea)",
       5
     ],
     [
-      "engaging in personal reading or journaling (settling into a comfortable spot)",
+      "relaxing and reflecting on the day (sitting comfortably on the couch)",
       5
     ],
     [
-      "engaging in personal reading or journaling (reading a chapter or entry)",
-      15
-    ],
-    [
-      "engaging in personal reading or journaling (reflecting on what was read)",
+      "relaxing and reflecting on the day (closing her eyes and taking deep breaths)",
       5
     ],
     [
-      "engaging in personal reading or journaling (jotting down thoughts or insights)",
+      "relaxing and reflecting on the day (reflecting on the day's events)",
       10
     ],
     [
-      "engaging in personal reading or journaling (reading another chapter or entry)",
-      15
-    ],
-    [
-      "engaging in personal reading or journaling (closing the book or journal)",
-      5
-    ],
-    [
-      "getting ready for bed and unwinding (brushing teeth and washing face)",
-      5
-    ],
-    [
-      "getting ready for bed and unwinding (changing into sleepwear)",
-      5
-    ],
-    [
-      "getting ready for bed and unwinding (setting up the bedroom for sleep, adjusting lighting and temperature)",
-      5
-    ],
-    [
-      "getting ready for bed and unwinding (preparing a cup of herbal tea)",
+      "relaxing and reflecting on the day (mentally listing positive moments from the day)",
       10
     ],
     [
-      "getting ready for bed and unwinding (drinking herbal tea while reflecting on the day)",
+      "relaxing and reflecting on the day (jotting down any significant thoughts or ideas in a journal)",
       10
     ],
     [
-      "getting ready for bed and unwinding (writing in a journal)",
-      15
+      "relaxing and reflecting on the day (considering ways to approach Noah for a discussion)",
+      10
     ],
     [
-      "getting ready for bed and unwinding (reading a few pages of a book)",
+      "relaxing and reflecting on the day (revisiting any remaining thoughts or emotions from the day)",
+      5
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (brushing teeth and washing face)",
       10
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (changing into comfortable clothing)",
+      5
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (sitting in a quiet space to reflect)",
+      5
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (jotting down thoughts on Noah in a notebook)",
+      10
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (considering different approaches to discuss with Noah)",
+      10
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (reviewing notes on effective communication strategies)",
+      10
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (setting intentions for the conversation with Noah)",
+      5
+    ],
+    [
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (relaxing with deep breathing exercises)",
+      5
     ],
     [
       "sleeping",
       420
     ],
     [
-      "waking up and completing morning routine",
+      "waking up and completing the morning routine",
       60
     ],
     [
-      "having coffee and reviewing lesson plans for the day",
-      60
-    ],
-    [
-      "teaching psychology classes",
+      "attending classes and engaging with students",
       120
     ],
     [
-      "having a lunch meeting with colleagues",
+      "having lunch with fellow faculty members",
       60
     ],
     [
-      "holding office hours for student consultations",
+      "conducting office hours and interacting with students",
       120
     ],
     [
-      "leaving school and heading to Hobbs Cafe",
-      60
-    ],
-    [
-      "having a coffee break and relaxing at Hobbs Cafe",
-      60
-    ],
-    [
-      "having dinner at home and reflecting on the day's events",
-      60
-    ],
-    [
-      "planning a casual meetup with the male student for later in the week",
-      60
-    ],
-    [
-      "preparing for tomorrow's classes and winding down",
-      60
-    ],
-    [
-      "engaging in personal reading or journaling",
+      "attending a psychology seminar",
       120
     ],
     [
-      "watching a favorite TV show",
+      "wrapping up work at school and heading to Hobbs Cafe",
+      60
+    ],
+    [
+      "having dinner at Hobbs Cafe and engaging with students",
+      60
+    ],
+    [
+      "attending an evening class and assessing student dynamics",
+      120
+    ],
+    [
+      "returning home and unwinding with psychology articles",
+      60
+    ],
+    [
+      "reading psychology materials and relaxing",
+      60
+    ],
+    [
+      "continuing to unwind and planning for the next day",
       60
     ]
   ],
   "f_daily_schedule_hourly_org": [
     [
-      "engaging in personal reading or journaling",
+      "relaxing and reflecting on the day",
       60
     ],
     [
-      "getting ready for bed and unwinding",
+      "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion",
       60
     ],
     [
@@ -173,51 +175,47 @@
       420
     ],
     [
-      "waking up and completing morning routine",
+      "waking up and completing the morning routine",
       60
     ],
     [
-      "having coffee and reviewing lesson plans for the day",
-      60
-    ],
-    [
-      "teaching psychology classes",
+      "attending classes and engaging with students",
       120
     ],
     [
-      "having a lunch meeting with colleagues",
+      "having lunch with fellow faculty members",
       60
     ],
     [
-      "holding office hours for student consultations",
+      "conducting office hours and interacting with students",
       120
     ],
     [
-      "leaving school and heading to Hobbs Cafe",
-      60
-    ],
-    [
-      "having a coffee break and relaxing at Hobbs Cafe",
-      60
-    ],
-    [
-      "having dinner at home and reflecting on the day's events",
-      60
-    ],
-    [
-      "planning a casual meetup with the male student for later in the week",
-      60
-    ],
-    [
-      "preparing for tomorrow's classes and winding down",
-      60
-    ],
-    [
-      "engaging in personal reading or journaling",
+      "attending a psychology seminar",
       120
     ],
     [
-      "watching a favorite TV show",
+      "wrapping up work at school and heading to Hobbs Cafe",
+      60
+    ],
+    [
+      "having dinner at Hobbs Cafe and engaging with students",
+      60
+    ],
+    [
+      "attending an evening class and assessing student dynamics",
+      120
+    ],
+    [
+      "returning home and unwinding with psychology articles",
+      60
+    ],
+    [
+      "reading psychology materials and relaxing",
+      60
+    ],
+    [
+      "continuing to unwind and planning for the next day",
       60
     ]
   ],
@@ -231,12 +229,12 @@
     "is",
     "sleep"
   ],
-  "act_obj_description": "being slept on by Jennifer Robbie",
-  "act_obj_pronunciatio": "\ud83d\ude34\u2728",
+  "act_obj_description": "occupied and in use by Jennifer Robbie",
+  "act_obj_pronunciatio": "\ud83d\ude42",
   "act_obj_event": [
     "bed",
-    "sleep on",
-    "bed"
+    "occupy",
+    "Jennifer Robbie"
   ],
   "chatting_with": null,
   "chat": null,

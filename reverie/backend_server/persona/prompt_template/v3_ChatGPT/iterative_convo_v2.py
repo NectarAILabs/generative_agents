@@ -192,7 +192,7 @@ async def run_gpt_generate_iterative_chat_utt(
   prompt_input = create_prompt_input(
     maze, init_persona, target_persona, retrieved, curr_context, curr_chat
   )
-  example = {"utterance":"Wassup, how are you doing?","did_conversation_end":False,"reasoning":"A short reasoning about 3-4 sentences about the conversation so far, the characters' personality and memories that be used to think about what to say next. Make sure it's coherent and logical with the context and distinct personality traits/d."}
+  example = {"reasoning":"A short reasoning about 3-4 sentences about the conversation so far, the characters' personality and memories that be used to think about what to say next. Make sure it's coherent and logical with the context and distinct personality traits/description.","utterance":"Wassup, how are you doing?","did_conversation_end":False}
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
   provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt_provider", None)

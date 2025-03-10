@@ -5,8 +5,8 @@
         94,
         18
       ],
-      "pronunciatio": "\ud83d\udeb6",
-      "description": "waking up and completing the morning routine (turning off the alarm and getting out of bed) @ the Ville:Aika Shirosaki's apartment:main room:bed",
+      "pronunciatio": "\ud83d\ude45\u200d\u2642",
+      "description": "waking up and completing morning routine (waking up and turning off the alarm) @ the Ville:Aika Shirosaki's apartment:main room:bed",
       "chat": null
     },
     "Alice Caelin": {
@@ -14,8 +14,8 @@
         65,
         19
       ],
-      "pronunciatio": "\u270b",
-      "description": "waking up and completing morning routine (waking up and turning off alarm) @ the Ville:Alice Caelin's apartment:main room:bed",
+      "pronunciatio": "\ud83d\udecc",
+      "description": "waking up and completing the morning routine (snoozing the alarm and stretching in bed) @ the Ville:Alice Caelin's apartment:main room:bed",
       "chat": null
     },
     "Noah Walker": {
@@ -23,13 +23,13 @@
         74,
         16
       ],
-      "pronunciatio": "\ud83d\udeb6\u200d\u2642\ud83c\udfdb",
-      "description": "having breakfast at the campus dining hall (walking to the dining hall) @ the Ville:Oak Hill College:hallway:<random>",
+      "pronunciatio": "\ud83d\udeaa\ud83d\udd12",
+      "description": "heading to the library for study time (leaving his dorm room and locking the door) @ the Ville:Oak Hill College:hallway:<random>",
       "chat": null
     },
     "Jennifer Robbie": {
       "movement": [
-        73,
+        72,
         74
       ],
       "pronunciatio": "\ud83d\ude34\ud83d\udecc",
@@ -41,8 +41,8 @@
         20,
         65
       ],
-      "pronunciatio": "\ud83c\udf05\ud83d\udcaa",
-      "description": "waking up and completing the morning routine (waking up and stretching) @ the Ville:Tiffany Yang's house:main room:bed",
+      "pronunciatio": "\ud83d\udecc",
+      "description": "waking up and completing the morning routine (turning off the alarm and stretching in bed) @ the Ville:Tiffany Yang's house:main room:bed",
       "chat": null
     },
     "Katie Adams": {
@@ -59,8 +59,8 @@
         126,
         46
       ],
-      "pronunciatio": "\ud83d\ude34\ud83e\uddd8\u200d\u2642",
-      "description": "waking up and completing the morning routine (slowly waking up and stretching in bed) @ the Ville:Dorm for Oak Hill College:Mina Chang's room:bed",
+      "pronunciatio": "\ud83d\ude48",
+      "description": "waking up and completing morning routine (waking up and turning off the alarm) @ the Ville:Dorm for Oak Hill College:Mina Chang's room:bed",
       "chat": null
     },
     "Iris Chang": {
@@ -68,17 +68,17 @@
         107,
         62
       ],
-      "pronunciatio": "\u270b",
-      "description": "waking up and completing the morning routine (waking up and turning off the alarm) @ the Ville:Dorm for Oak Hill College:Iris Chang's room:bed",
+      "pronunciatio": "\u2600\ud83d\udecf",
+      "description": "waking up and completing morning routine (waking up and stretching in bed) @ the Ville:Dorm for Oak Hill College:Iris Chang's room:bed",
       "chat": null
     },
     "Amelie Dupont": {
       "movement": [
-        28,
+        30,
         65
       ],
-      "pronunciatio": "\ud83d\udcc5",
-      "description": "waking up and completing the morning routine (hitting snooze on the alarm) @ the Ville:Amelie Dupont's house:main room:bed",
+      "pronunciatio": "\ud83d\ude01",
+      "description": "waking up and completing the morning routine (brushing her teeth) @ the Ville:Amelie Dupont's house:bathroom:bathroom sink",
       "chat": null
     }
   },

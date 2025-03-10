@@ -744,9 +744,10 @@ async def _determine_action(persona, maze):
 
   
   #Maybe just let the event triple be like (object, "being used by", )
-  act_obj_event = await generate_act_obj_event_triple(act_game_object,
-                                                act_obj_desp, persona)
-
+  #act_obj_event = await generate_act_obj_event_triple(act_game_object,
+  #                                              act_obj_desp, persona)
+  act_obj_event = ["is being used by",f"{persona.name} for {act_obj_desp}"]
+  #act_obj_event = f"{act_game_object} is being used by {persona.name} for {act_obj_desp}"
   # Adding the action to persona's queue. 
   persona.scratch.add_new_action(new_address, 
                                  int(act_dura), 

@@ -14,9 +14,9 @@
   "last_name": "Chang",
   "age": 20,
   "innate": "charismatic, outspoken, and attention-loving yet secretly introspective.",
-  "learned": "Mina Chang thrives in the spotlight, effortlessly charming those around her with her confidence and infectious energy. She\u2019s social, spontaneous, and never afraid to speak her mind, often saying what others are too hesitant to voice. While she enjoys the attention, she sometimes struggles with feeling like she has to maintain a perfect image, especially in contrast to her quieter twin. The twins, although different, do love and support each other. Beneath her bold exterior, Mina deeply values connection and fears being seen as shallow or replaceable. Though she appears carefree, she secretly envies those who don\u2019t feel the need to perform for others. She wants someone who sees beyond her popularity and values her for more than just her charm.",
+  "learned": "Mina Chang thrives in the spotlight, effortlessly charming those around her with her confidence and infectious energy. She's social, spontaneous, and never afraid to speak her mind, often saying what others are too hesitant to voice. While she enjoys the attention, she sometimes struggles with feeling like she has to maintain a perfect image, especially in contrast to her quieter twin. The twins, although different, do love and support each other. Beneath her bold exterior, Mina deeply values connection and fears being seen as shallow or replaceable. Though she appears carefree, she secretly envies those who don\u2019t feel the need to perform for others. She wants someone who sees beyond her popularity and values her for more than just her charm.",
   "currently": "Mina Chang is twins with Iris Chang. The \u201cpopular twin\u201d who is used to having everyone dote on her. Outgoing and says what she thinks.",
-  "lifestyle": "Mina Chang goes to bed around 11pm, awakes up around 7am, eats dinner around 6pm. The school she is studying at is Oak Hill College - a girl's college which has just accepted its first male student. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Mina would be happy to pursue a sexual relationship with him and loves having men dote on her, and would be willing to share him with other girls.",
+  "lifestyle": "Mina Chang goes to bed around 11pm, awakes up around 7am, eats dinner around 6pm. The school she is studying at is Oak Hill College - a girl's college which has just accepted its first male student, Noah Walker. Naturally, all the girls are attracted to him and want to meet him and find ways to spend time him. Mina would be happy to pursue a sexual relationship with him and loves having men dote on her, and would be willing to share him with other girls.",
   "living_area": "the Ville:Dorm for Oak Hill College:Mina Chang's room",
   "concept_forget": 100,
   "daily_reflection_time": 180,
@@ -29,24 +29,20 @@
   "importance_w": 1,
   "recency_decay": 0.99,
   "importance_trigger_max": 2000,
-  "importance_trigger_curr": 1989,
-  "importance_ele_n": 10,
+  "importance_trigger_curr": 1988,
+  "importance_ele_n": 7,
   "thought_count": 5,
   "daily_req": [
-    "7:00 am - Wake up and complete morning routine, including shower and getting ready for the day.",
-    "8:00 am - Have breakfast with Iris, discussing plans for the day and gossiping about the new male student.",
-    "9:00 am - Attend classes at Oak Hill College, engaging enthusiastically with classmates.",
-    "12:00 pm - Lunch with friends, where Mina puts on her charming persona and shares updates about her day.",
-    "1:00 pm - More classes or possibly a campus event where she can socialize and show off her outgoing nature.",
-    "3:00 pm - Free period where Mina plans to gather a group of friends to strategize on how they can all get to know the new male student.",
-    "4:00 pm - Attend an interest meeting for a club where she can shine and meet new people.",
-    "5:00 pm - Check in with Iris about their plans for dinner and the evening.",
-    "6:00 pm - Have dinner, possibly with a group that includes the new male student, enjoying the attention on her.",
-    "7:30 pm - Spend time hanging out with friends in their dorm, engaging in light-hearted conversation and laughter.",
-    "8:30 pm - Text the new male student, trying to set up a casual hangout for later in the week.",
-    "9:00 pm - Wind down with some personal time, reflecting on her feelings about her twin and her own fears of not being enough.",
-    "10:00 pm - Scroll through social media to stay connected with her friends and keep her image up.",
-    "11:00 pm - Go to bed after a long day of being social and entertaining."
+    "wake up and complete morning routine at 7:00",
+    "attend classes from 8:00 am to 12:00 pm",
+    "have lunch with friends and discuss Noah at 12:00 pm",
+    "attend afternoon classes from 1:00 pm to 3:00 pm",
+    "meet up with friends to plan a group outing to meet Noah at 3:30 pm",
+    "join a campus club meeting at 5:00 pm",
+    "have dinner and chat about the day's events at 6:00 pm",
+    "relax in the dorm and catch up with Iris at 7:00 pm",
+    "prepare for the week ahead and do some studying from 8:00 pm to 10:00 pm",
+    "get ready for bed and unwind at 10:30 pm"
   ],
   "f_daily_schedule": [
     [
@@ -54,119 +50,127 @@
       420
     ],
     [
-      "waking up and completing the morning routine (slowly waking up and stretching in bed)",
+      "waking up and completing morning routine (waking up and turning off the alarm)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting out of bed and heading to the bathroom)",
+      "waking up and completing morning routine (getting out of bed and stretching)",
       5
     ],
     [
-      "waking up and completing the morning routine (brushing teeth and washing face)",
+      "waking up and completing morning routine (heading to the bathroom)",
+      5
+    ],
+    [
+      "waking up and completing morning routine (brushing her teeth)",
+      5
+    ],
+    [
+      "waking up and completing morning routine (washing her face)",
+      5
+    ],
+    [
+      "waking up and completing morning routine (applying moisturizer)",
+      5
+    ],
+    [
+      "waking up and completing morning routine (combing her hair)",
+      5
+    ],
+    [
+      "waking up and completing morning routine (choosing an outfit)",
+      5
+    ],
+    [
+      "waking up and completing morning routine (getting dressed)",
+      5
+    ],
+    [
+      "waking up and completing morning routine (applying light makeup)",
       10
     ],
     [
-      "waking up and completing the morning routine (taking a quick shower)",
-      10
-    ],
-    [
-      "waking up and completing the morning routine (drying off and applying skincare products)",
+      "waking up and completing morning routine (packing her bag for class)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting dressed for the day)",
-      10
+      "attending classes (attending the first lecture)",
+      45
     ],
     [
-      "waking up and completing the morning routine (doing hair and applying light makeup)",
-      10
+      "attending classes (taking notes during the lecture)",
+      30
     ],
     [
-      "waking up and completing the morning routine (gathering items needed for the day)",
-      5
+      "attending classes (attending the second lecture)",
+      45
     ],
     [
-      "having breakfast and discussing plans for the day (preparing breakfast ingredients)",
-      5
+      "attending classes (reviewing notes from the first lecture)",
+      30
     ],
     [
-      "having breakfast and discussing plans for the day (cooking breakfast)",
+      "attending classes (taking a short break between classes)",
       15
     ],
     [
-      "having breakfast and discussing plans for the day (setting the table)",
-      5
-    ],
-    [
-      "having breakfast and discussing plans for the day (eating breakfast)",
-      20
-    ],
-    [
-      "having breakfast and discussing plans for the day (discussing plans for the day with Iris)",
+      "attending classes (grabbing a quick snack from the vending machine)",
       10
     ],
     [
-      "having breakfast and discussing plans for the day (cleaning up after breakfast)",
+      "attending classes (attending the third lecture)",
+      45
+    ],
+    [
+      "attending classes (organizing notes and packing up)",
+      15
+    ],
+    [
+      "attending classes (heading to the cafeteria for lunch)",
       5
     ],
     [
-      "attending classes at Oak Hill College",
+      "having lunch with friends",
       60
     ],
     [
-      "engaging in class discussions",
+      "attending afternoon classes",
+      120
+    ],
+    [
+      "taking a short break",
       60
     ],
     [
-      "continuing with classes and socializing between sessions",
+      "meeting up with friends to plan a group outing",
       60
     ],
     [
-      "having lunch and sharing updates with friends",
+      "joining a campus club meeting",
       60
     ],
     [
-      "attending more classes or a campus event",
+      "having dinner and chatting about the day's events",
       60
     ],
     [
-      "participating actively in class activities",
+      "relaxing in the dorm and catching up with Iris",
       60
     ],
     [
-      "gathering with friends during a free period",
+      "preparing for the week ahead and studying",
       60
     ],
     [
-      "attending an interest meeting for a club",
+      "continuing to study and organize notes",
       60
     ],
     [
-      "checking in with Iris about dinner plans",
+      "winding down and preparing for bed",
       60
     ],
     [
-      "having dinner and engaging with a group of friends",
-      60
-    ],
-    [
-      "relaxing and enjoying time with friends in the dorm",
-      60
-    ],
-    [
-      "texting and making plans for the week",
-      60
-    ],
-    [
-      "reflecting on personal feelings and aspirations",
-      60
-    ],
-    [
-      "scrolling through social media",
-      60
-    ],
-    [
-      "going to bed after a long day",
+      "sleeping",
       60
     ]
   ],
@@ -176,90 +180,74 @@
       420
     ],
     [
-      "waking up and completing the morning routine",
+      "waking up and completing morning routine",
       60
     ],
     [
-      "having breakfast and discussing plans for the day",
+      "attending classes",
+      240
+    ],
+    [
+      "having lunch with friends",
       60
     ],
     [
-      "attending classes at Oak Hill College",
+      "attending afternoon classes",
+      120
+    ],
+    [
+      "taking a short break",
       60
     ],
     [
-      "engaging in class discussions",
+      "meeting up with friends to plan a group outing",
       60
     ],
     [
-      "continuing with classes and socializing between sessions",
+      "joining a campus club meeting",
       60
     ],
     [
-      "having lunch and sharing updates with friends",
+      "having dinner and chatting about the day's events",
       60
     ],
     [
-      "attending more classes or a campus event",
+      "relaxing in the dorm and catching up with Iris",
       60
     ],
     [
-      "participating actively in class activities",
+      "preparing for the week ahead and studying",
       60
     ],
     [
-      "gathering with friends during a free period",
+      "continuing to study and organize notes",
       60
     ],
     [
-      "attending an interest meeting for a club",
+      "winding down and preparing for bed",
       60
     ],
     [
-      "checking in with Iris about dinner plans",
-      60
-    ],
-    [
-      "having dinner and engaging with a group of friends",
-      60
-    ],
-    [
-      "relaxing and enjoying time with friends in the dorm",
-      60
-    ],
-    [
-      "texting and making plans for the week",
-      60
-    ],
-    [
-      "reflecting on personal feelings and aspirations",
-      60
-    ],
-    [
-      "scrolling through social media",
-      60
-    ],
-    [
-      "going to bed after a long day",
+      "sleeping",
       60
     ]
   ],
   "act_address": "the Ville:Dorm for Oak Hill College:Mina Chang's room:bed",
   "act_start_time": "February 13, 2023, 07:00:00",
   "act_duration": 5,
-  "act_description": "waking up and completing the morning routine (slowly waking up and stretching in bed)",
-  "act_pronunciatio": "\ud83d\ude34\ud83e\uddd8\u200d\u2642",
+  "act_description": "waking up and completing morning routine (waking up and turning off the alarm)",
+  "act_pronunciatio": "\ud83d\ude48",
   "act_event": [
     "Mina Chang",
-    "wake up and stretch",
-    "in bed"
+    "wake up and turn off",
+    "the alarm"
   ],
-  "act_obj_description": "being gently occupied by Mina Chang",
-  "act_obj_pronunciatio": "\ud83c\udf38\ud83e\udd1d",
+  "act_obj_description": "is unmade and slightly rumpled",
+  "act_obj_pronunciatio": "\ud83d\ude42",
   "act_obj_event": [
     "bed",
-    "occupy",
-    "bed"
+    "is",
+    "unmade and slightly rumpled"
   ],
   "chatting_with": null,
   "chat": null,

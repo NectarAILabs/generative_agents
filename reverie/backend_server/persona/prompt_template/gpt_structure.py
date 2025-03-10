@@ -460,6 +460,7 @@ async def GPT_request(prompt, gpt_parameter,response_format_name=None):
       messages = [{
         "role": "system", "content": prompt
       }]
+      start_time = time.time()
       # If not OpenAI but different provider, we need to change the base_url and api_key
       response = await client_used.chat.completions.create(
                   model=gpt_parameter["engine"],
@@ -475,8 +476,9 @@ async def GPT_request(prompt, gpt_parameter,response_format_name=None):
               )
     else:
       response = await client.completions.create(model=model, prompt=prompt)
-
+    print(f"Prompt: {prompt}", flush=True)
     print(f"Response: [{response_format_name}]", response.choices[0].message, flush=True)
+    print("<Time spend>:", time.time() - start_time, flush=True)
     content = response.choices[0].message.content
     return content
 

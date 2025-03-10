@@ -6,7 +6,7 @@
         18
       ],
       "pronunciatio": "\ud83d\ude34\ud83d\udca4",
-      "description": "sleeping @ the Ville:Aika Shirosaki's apartment:main room:bed",
+      "description": "sleeping peacefully @ the Ville:Aika Shirosaki's apartment:main room:bed",
       "chat": null
     },
     "Alice Caelin": {
@@ -14,7 +14,7 @@
         66,
         19
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udecf",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Alice Caelin's apartment:main room:bed",
       "chat": null
     },
@@ -23,17 +23,17 @@
         73,
         14
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
       "description": "sleeping @ the Ville:Noah Walker's apartment:main room:bed",
       "chat": null
     },
     "Jennifer Robbie": {
       "movement": [
-        71,
-        73
+        80,
+        67
       ],
-      "pronunciatio": "\ud83d\udecf\ud83c\udf19",
-      "description": "getting ready for bed and unwinding (setting up the bedroom for sleep, adjusting lighting and temperature) @ the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:bed",
+      "pronunciatio": "\ud83d\udc55\ud83d\udc56",
+      "description": "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (changing into comfortable clothing) @ the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:closet",
       "chat": null
     },
     "Tiffany Yang": {
@@ -41,17 +41,17 @@
         21,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Tiffany Yang's house:main room:bed",
       "chat": null
     },
     "Katie Adams": {
       "movement": [
-        54,
-        17
+        61,
+        25
       ],
-      "pronunciatio": "\ud83d\udcf9\ud83d\udcfa",
-      "description": "preparing for upcoming cheerleading event (watching videos of previous cheerleading events for inspiration) @ the Ville:Katie Adams's apartment:main room:desk",
+      "pronunciatio": "\ud83d\udc83\ud83c\udfb6",
+      "description": "socializing and enjoying the party (dancing to the music) @ the Ville:The Rose and Crown Pub:pub:microphone",
       "chat": null
     },
     "Mina Chang": {
@@ -77,7 +77,7 @@
         29,
         65
       ],
-      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
       "description": "sleeping @ the Ville:Amelie Dupont's house:main room:bed",
       "chat": null
     }

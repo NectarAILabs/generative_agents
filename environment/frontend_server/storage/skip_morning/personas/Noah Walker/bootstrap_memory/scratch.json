@@ -29,23 +29,21 @@
   "importance_w": 1,
   "recency_decay": 0.995,
   "importance_trigger_max": 2000,
-  "importance_trigger_curr": 1960,
-  "importance_ele_n": 33,
+  "importance_trigger_curr": 1961,
+  "importance_ele_n": 23,
   "thought_count": 5,
   "daily_req": [
-    "6:00 am - Wake up and complete morning routine",
-    "7:00 am - Have breakfast with friends at the campus dining hall",
-    "8:00 am - Attend first class of the day: Introduction to Psychology",
-    "10:00 am - Meet up with a group of girls for study session at the library",
-    "12:00 pm - Have lunch with a couple of classmates and discuss weekend plans",
-    "1:00 pm - Attend second class of the day: Creative Writing",
-    "3:00 pm - Free period, join friends for a game of frisbee outside on the campus lawn",
-    "5:00 pm - Grab coffee with a girl he met during class, discussing interests and passions",
-    "6:30 pm - Attend a club meeting for adventure activities and plan future events",
-    "8:00 pm - Have dinner with a small group of girls, enjoying lively conversation",
-    "9:30 pm - Hang out in the common room, play games, and socialize with a larger crowd",
-    "10:30 pm - Wind down, reflect on the day, and maybe have a quiet moment with a special girl before bed",
-    "11:00 pm - Go to bed."
+    "6:00 am - Wake up and complete morning routine: shower, breakfast, and prep for the day.",
+    "7:00 am - Head to the library for some study time before classes start.",
+    "9:00 am - Attend morning classes, engaging with female classmates and contributing to discussions.",
+    "12:00 pm - Have lunch with a group of girls from class, enjoying light-hearted banter and flirting.",
+    "1:00 pm - Attend afternoon classes, making connections with more students and getting to know them better.",
+    "3:00 pm - Join a campus club meeting that interests him, where he meets more girls and can socialize.",
+    "5:00 pm - Go for a walk around campus or hit the gym, maintaining his active lifestyle.",
+    "6:00 pm - Head to dinner at the campus dining hall, where he gets approached by more ladies.",
+    "7:00 pm - Spend time in the common room, playing games and hanging out with a group of girls, sharing stories and laughter.",
+    "9:00 pm - Watch a movie or attend a campus event with a few of his closest girlfriends, enjoying their company.",
+    "11:00 pm - Wind down and reflect on the day, before heading to bed."
   ],
   "f_daily_schedule": [
     [
@@ -53,167 +51,127 @@
       360
     ],
     [
-      "waking up and completing the morning routine (turning off the alarm)",
+      "waking up and completing the morning routine (lying in bed for a moment)",
       5
     ],
     [
-      "waking up and completing the morning routine (stretching in bed)",
+      "waking up and completing the morning routine (stretching)",
       5
     ],
     [
-      "waking up and completing the morning routine (getting out of bed)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (heading to the bathroom)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (brushing teeth)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (washing face)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (combing hair)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (shaving)",
-      5
-    ],
-    [
-      "waking up and completing the morning routine (applying deodorant)",
-      5
+      "waking up and completing the morning routine (showering)",
+      10
     ],
     [
       "waking up and completing the morning routine (getting dressed)",
+      5
+    ],
+    [
+      "waking up and completing the morning routine (preparing breakfast)",
       10
     ],
     [
-      "waking up and completing the morning routine (checking phone for messages)",
+      "waking up and completing the morning routine (eating breakfast)",
+      25
+    ],
+    [
+      "heading to the library for study time (leaving his dorm room and locking the door)",
       5
     ],
     [
-      "having breakfast at the campus dining hall (walking to the dining hall)",
-      5
+      "heading to the library for study time (walking through the campus to the library)",
+      15
     ],
     [
-      "having breakfast at the campus dining hall (entering the dining hall and finding a seat)",
-      5
-    ],
-    [
-      "having breakfast at the campus dining hall (greeting friends and acquaintances)",
-      5
-    ],
-    [
-      "having breakfast at the campus dining hall (picking up a tray and utensils)",
-      5
-    ],
-    [
-      "having breakfast at the campus dining hall (choosing breakfast items)",
+      "heading to the library for study time (entering the library and finding a study spot)",
       10
     ],
     [
-      "having breakfast at the campus dining hall (sitting down at a table)",
+      "heading to the library for study time (arranging his study materials on the desk)",
       5
     ],
     [
-      "having breakfast at the campus dining hall (eating breakfast)",
-      20
+      "heading to the library for study time (checking his study plan and organizing tasks)",
+      15
     ],
     [
-      "having breakfast at the campus dining hall (chatting with friends)",
-      5
-    ],
-    [
-      "attending first class of the day (walking to class)",
-      5
-    ],
-    [
-      "attending first class of the day (finding a seat)",
-      5
-    ],
-    [
-      "attending first class of the day (taking out notebook and pen)",
-      5
-    ],
-    [
-      "attending first class of the day (listening to the professor's introduction)",
+      "heading to the library for study time (settling down and preparing to start his study session)",
       10
     ],
     [
-      "attending first class of the day (taking notes on the lecture)",
+      "continuing study session at the library (gathering study materials and settling at a library desk)",
+      5
+    ],
+    [
+      "continuing study session at the library (reviewing notes from previous study session)",
       10
     ],
     [
-      "attending first class of the day (asking a question)",
-      5
+      "continuing study session at the library (reading a chapter from the textbook)",
+      15
     ],
     [
-      "attending first class of the day (listening to classmates' questions)",
+      "continuing study session at the library (taking brief notes on key concepts)",
       10
     ],
     [
-      "attending first class of the day (reviewing notes quickly)",
-      5
+      "continuing study session at the library (summarizing information in own words)",
+      10
     ],
     [
-      "attending first class of the day (packing up materials)",
-      5
+      "continuing study session at the library (organizing notes and materials for next study session)",
+      10
     ],
     [
-      "continuing with class activities",
+      "attending morning classes and engaging in discussions",
       60
     ],
     [
-      "joining a study session at the library",
+      "participating in class activities and taking notes",
       60
     ],
     [
-      "studying and reviewing notes",
+      "finishing up morning classes and preparing for lunch",
       60
     ],
     [
-      "having lunch and discussing plans",
+      "having lunch and enjoying conversations",
       60
     ],
     [
-      "attending second class of the day",
+      "attending afternoon classes and making connections",
       60
     ],
     [
-      "participating in class discussions",
+      "engaging in class discussions and activities",
       60
     ],
     [
-      "joining outdoor activities",
+      "joining a campus club meeting and socializing",
       60
     ],
     [
-      "relaxing and unwinding outdoors",
+      "participating in club activities and meeting new people",
       60
     ],
     [
-      "enjoying coffee and conversation",
+      "going for a walk around campus or hitting the gym",
       60
     ],
     [
-      "engaging in casual discussions",
+      "heading to dinner at the campus dining hall",
       60
     ],
     [
-      "planning future events at a club meeting",
+      "spending time in the common room, playing games and hanging out",
       60
     ],
     [
-      "having dinner and socializing",
+      "continuing to relax and enjoy socializing",
       60
     ],
     [
-      "enjoying social games in the common room",
+      "watching a movie or attending a campus event",
       60
     ],
     [
@@ -221,7 +179,7 @@
       60
     ],
     [
-      "going to bed",
+      "sleeping",
       60
     ]
   ],
@@ -235,63 +193,63 @@
       60
     ],
     [
-      "having breakfast at the campus dining hall",
+      "heading to the library for study time",
       60
     ],
     [
-      "attending first class of the day",
+      "continuing study session at the library",
       60
     ],
     [
-      "continuing with class activities",
+      "attending morning classes and engaging in discussions",
       60
     ],
     [
-      "joining a study session at the library",
+      "participating in class activities and taking notes",
       60
     ],
     [
-      "studying and reviewing notes",
+      "finishing up morning classes and preparing for lunch",
       60
     ],
     [
-      "having lunch and discussing plans",
+      "having lunch and enjoying conversations",
       60
     ],
     [
-      "attending second class of the day",
+      "attending afternoon classes and making connections",
       60
     ],
     [
-      "participating in class discussions",
+      "engaging in class discussions and activities",
       60
     ],
     [
-      "joining outdoor activities",
+      "joining a campus club meeting and socializing",
       60
     ],
     [
-      "relaxing and unwinding outdoors",
+      "participating in club activities and meeting new people",
       60
     ],
     [
-      "enjoying coffee and conversation",
+      "going for a walk around campus or hitting the gym",
       60
     ],
     [
-      "engaging in casual discussions",
+      "heading to dinner at the campus dining hall",
       60
     ],
     [
-      "planning future events at a club meeting",
+      "spending time in the common room, playing games and hanging out",
       60
     ],
     [
-      "having dinner and socializing",
+      "continuing to relax and enjoy socializing",
       60
     ],
     [
-      "enjoying social games in the common room",
+      "watching a movie or attending a campus event",
       60
     ],
     [
@@ -299,26 +257,26 @@
       60
     ],
     [
-      "going to bed",
+      "sleeping",
       60
     ]
   ],
   "act_address": "the Ville:Oak Hill College:hallway:<random>",
   "act_start_time": "February 13, 2023, 07:00:00",
   "act_duration": 5,
-  "act_description": "having breakfast at the campus dining hall (walking to the dining hall)",
-  "act_pronunciatio": "\ud83d\udeb6\u200d\u2642\ud83c\udfdb",
+  "act_description": "heading to the library for study time (leaving his dorm room and locking the door)",
+  "act_pronunciatio": "\ud83d\udeaa\ud83d\udd12",
   "act_event": [
     "Noah Walker",
-    "walk",
-    "dining hall"
+    "leave",
+    "dorm room"
   ],
-  "act_obj_description": "being carried by Noah Walker",
-  "act_obj_pronunciatio": "\ud83d\udc64\ud83c\udfcb",
+  "act_obj_description": "currently unused and in his dorm room",
+  "act_obj_pronunciatio": "\ud83d\ude42",
   "act_obj_event": [
     "<random>",
-    "be carried by",
-    "Noah Walker"
+    "is",
+    "unused and in his dorm room"
   ],
   "chatting_with": null,
   "chat": null,
@@ -567,55 +525,7 @@
       32
     ],
     [
-      113,
-      32
-    ],
-    [
-      114,
-      32
-    ],
-    [
-      115,
-      32
-    ],
-    [
-      116,
-      32
-    ],
-    [
-      117,
-      32
-    ],
-    [
-      118,
-      32
-    ],
-    [
-      119,
-      32
-    ],
-    [
-      120,
-      32
-    ],
-    [
-      121,
-      32
-    ],
-    [
-      122,
-      32
-    ],
-    [
-      123,
-      32
-    ],
-    [
-      124,
-      32
-    ],
-    [
-      124,
+      112,
       33
     ]
   ]
