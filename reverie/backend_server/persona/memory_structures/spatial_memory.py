@@ -43,7 +43,7 @@ class MemoryTree:
   def get_str_accessible_sectors(self, curr_world): 
     """
     Returns a summary string of all the arenas that the persona can access 
-    within the current sector. 
+    within the current world. 
 
     Note that there are places a given persona cannot enter. This information
     is provided in the persona sheet. We account for this in this function. 
@@ -51,9 +51,9 @@ class MemoryTree:
     INPUT
       None
     OUTPUT 
-      A summary string of all the arenas that the persona can access. 
+      A summary string of all the sectors that the persona can access. 
     EXAMPLE STR OUTPUT
-      "bedroom, kitchen, dining room, office, bathroom"
+      "library, college, park, pub,..."
     """
     x = ", ".join(list(self.tree[curr_world].keys()))
     return x

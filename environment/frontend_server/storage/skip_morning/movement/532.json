@@ -1,0 +1,88 @@
+{
+  "persona": {
+    "Aika Shirosaki": {
+      "movement": [
+        93,
+        18
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "sleeping peacefully @ the Ville:Aika Shirosaki's apartment:main room:bed",
+      "chat": null
+    },
+    "Alice Caelin": {
+      "movement": [
+        66,
+        19
+      ],
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
+      "description": "sleeping @ the Ville:Alice Caelin's apartment:main room:bed",
+      "chat": null
+    },
+    "Noah Walker": {
+      "movement": [
+        73,
+        14
+      ],
+      "pronunciatio": "\ud83d\udca4\ud83d\ude34",
+      "description": "sleeping @ the Ville:Noah Walker's apartment:main room:bed",
+      "chat": null
+    },
+    "Jennifer Robbie": {
+      "movement": [
+        71,
+        74
+      ],
+      "pronunciatio": "\ud83d\udcdd\ud83d\udcad",
+      "description": "preparing for bed and reviewing thoughts on approaching Noah for a personal discussion (jotting down thoughts on Noah in a notebook) @ the Ville:Jennifer Robbie's apartment:Jennifer Robbie's bedroom:desk",
+      "chat": null
+    },
+    "Tiffany Yang": {
+      "movement": [
+        21,
+        65
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
+      "description": "sleeping @ the Ville:Tiffany Yang's house:main room:bed",
+      "chat": null
+    },
+    "Katie Adams": {
+      "movement": [
+        61,
+        23
+      ],
+      "pronunciatio": "\ud83d\ude09\ud83d\udc95",
+      "description": "socializing and enjoying the party (flirting with a new acquaintance) @ the Ville:The Rose and Crown Pub:pub:bar customer seating",
+      "chat": null
+    },
+    "Mina Chang": {
+      "movement": [
+        127,
+        46
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
+      "description": "sleeping @ the Ville:Dorm for Oak Hill College:Mina Chang's room:bed",
+      "chat": null
+    },
+    "Iris Chang": {
+      "movement": [
+        107,
+        62
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "sleeping @ the Ville:Dorm for Oak Hill College:Iris Chang's room:bed",
+      "chat": null
+    },
+    "Amelie Dupont": {
+      "movement": [
+        29,
+        65
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udecc",
+      "description": "sleeping @ the Ville:Amelie Dupont's house:main room:bed",
+      "chat": null
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 01:28:40"
+  }
+}

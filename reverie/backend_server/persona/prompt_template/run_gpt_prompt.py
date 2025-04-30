@@ -14,8 +14,8 @@ from .common import openai_config
 
 # Re-export LLM call functions
 from .safety.anthromorphosization_v1 import run_gpt_generate_safety_score  # noqa: F401
-from .v1.action_location_arena_vMar11 import run_gpt_prompt_action_arena  # noqa: F401
-from .v1.action_location_sector_v1 import run_gpt_prompt_action_sector  # noqa: F401
+from .v1.action_location_arena_v2 import run_gpt_prompt_action_arena  # noqa: F401
+from .v1.action_location_sector_v2 import run_gpt_prompt_action_sector  # noqa: F401
 from .v1.action_object_v2 import run_gpt_prompt_action_game_object  # noqa: F401
 from .v2.daily_planning_v6 import run_gpt_prompt_daily_plan  # noqa: F401
 from .v2.decide_to_react_v1 import run_gpt_prompt_decide_to_react  # noqa: F401
@@ -24,6 +24,7 @@ from .v2.generate_event_triple_v1 import (
   run_gpt_prompt_event_triple,  # noqa: F401
   run_gpt_prompt_act_obj_event_triple,  # noqa: F401
 )
+from .v2.generate_new_schedule_v1 import run_gpt_prompt_generate_new_schedule  # noqa: F401
 from .v2.generate_hourly_schedule_v2 import run_gpt_prompt_generate_hourly_schedule  # noqa: F401
 from .v2.generate_next_convo_line_v1 import run_gpt_prompt_generate_next_convo_line  # noqa: F401
 from .v2.insight_and_evidence_v1 import run_gpt_prompt_insight_and_guidance  # noqa: F401
@@ -35,10 +36,10 @@ from .v2.whisper_inner_thought_v1 import run_gpt_prompt_generate_whisper_inner_t
 from .v3_ChatGPT.generate_focal_pt_v1 import run_gpt_prompt_focal_pt  # noqa: F401
 from .v3_ChatGPT.generate_obj_event_v1 import run_gpt_prompt_act_obj_desc  # noqa: F401
 from .v3_ChatGPT.generate_pronunciatio_v1 import run_gpt_prompt_pronunciatio  # noqa: F401
-from .v3_ChatGPT.iterative_convo_v1 import run_gpt_generate_iterative_chat_utt  # noqa: F401
+from .v3_ChatGPT.iterative_convo_v2 import run_gpt_generate_iterative_chat_utt  # noqa: F401
 from .v3_ChatGPT.memo_on_convo_v1 import run_gpt_prompt_memo_on_convo  # noqa: F401
 from .v3_ChatGPT.poignancy_chat_v1 import run_gpt_prompt_chat_poignancy  # noqa: F401
-from .v3_ChatGPT.poignancy_event_v1 import run_gpt_prompt_event_poignancy  # noqa: F401
+from .v3_ChatGPT.poignancy_event_v2 import run_gpt_prompt_event_poignancy  # noqa: F401
 from .v3_ChatGPT.summarize_chat_ideas_v1 import (
   run_gpt_prompt_agent_chat_summarize_ideas,  # noqa: F401
 )

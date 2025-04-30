@@ -35,7 +35,6 @@ from utils import maze_assets_loc, fs_storage, fs_temp_storage
 from maze import Maze
 from persona.persona import Persona
 from persona.cognitive_modules.converse import load_history_via_whisper
-from persona.prompt_template.gpt_structure import client, setup_client, openai_config
 from persona.prompt_template.run_gpt_prompt import run_plugin
 from logging_util import setup_logging, log_info
 
@@ -63,6 +62,7 @@ class ReverieServer:
                sim_code):
     
     print ("(reverie): Temp storage: ", fs_temp_storage)
+    self.start_time_ = time.time()
     self.start_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     os.makedirs(f"error_logging/{self.start_time}/")
     # FORKING FROM A PRIOR SIMULATION:
@@ -127,7 +127,6 @@ class ReverieServer:
     # The tile take the form of a set, (row, col). 
     # e.g., ["Isabella Rodriguez"] = (58, 39)
     self.personas_tile = dict()
-    
     # # <persona_convo_match> is a dictionary that describes which of the two
     # # personas are talking to each other. It takes a key of a persona's full
     # # name, and value of another persona's full name who is talking to the 
@@ -139,7 +138,7 @@ class ReverieServer:
     # # Note that the key pairs are *ordered alphabetically*. 
     # # e.g., dict[("Adam Abraham", "Zane Xu")] = "Adam: baba \n Zane:..."
     # self.persona_convo = dict()
-
+  
     # Loading in all personas. 
     init_env_file = f"{sim_folder}/environment/{str(self.step)}.json"
     init_env = json.load(open(init_env_file))
@@ -411,7 +410,6 @@ class ReverieServer:
           async def run_all_move():
             task_queue = asyncio.Queue() #Process the task to add to the queue
             results = {} #Dictionary to track the results of each agents
-            client = setup_client("openai", { "key": openai_config["model-key"] })
             async def process_task(persona_name, task_type, input_data=None):
               #log_info(f"Starting task: {task_type} for persona: {persona_name}")
               persona = self.personas[persona_name]
@@ -428,11 +426,19 @@ class ReverieServer:
                 results[persona_name]["plan"] = result
                 await task_queue.put((persona_name, "reflect", None))
               elif task_type == "reflect":
-                await persona.reflect()
-                await task_queue.put((persona_name, "execute", results[persona_name]["plan"]))
+                await persona.reflect(self.maze,self.personas)
+                await task_queue.put((persona_name, "execute", self.personas[persona_name].scratch.act_address))
               elif task_type == "execute":
-                result = await persona.execute(self.maze, self.personas, input_data)
-                results[persona_name]["execution"] = result
+                #Make sure all persona have a plan before executing to avoid conflict
+
+                # Remove conversation planning thought after replanning.
+                if hasattr(persona,"chat_planning_thought"):
+                  del persona.chat_planning_thought
+                if all("plan" in results[persona_name].keys() for persona_name in self.personas.keys()):
+                  result = await persona.execute(self.maze, self.personas, self.personas[persona_name].scratch.act_address)
+                  results[persona_name]["execution"] = result
+                else:
+                  await task_queue.put((persona_name, "execute", self.personas[persona_name].scratch.act_address))
               #log_info(f"Completed task: {task_type} for persona: {persona_name}")
             # Main pipeline
             for persona_name, persona in self.personas.items():
@@ -600,6 +606,8 @@ class ReverieServer:
         if sim_command.lower() in ["f", "fin", "finish", "save and finish"]:
           # Finishes the simulation environment and saves the progress.
           # Example: fin
+          # To get all time need to run the simulation:
+          print(f"Time taken: {time.time() - self.start_time_}")
           self.save()
           break
 
@@ -756,7 +764,7 @@ class ReverieServer:
           # anything to the agent's memory.
           # Ex: call -- analysis Isabella Rodriguez
           persona_name = sim_command[len("call -- analysis") :].strip()
-          self.personas[persona_name].open_convo_session("analysis")
+          asyncio.run(self.personas[persona_name].open_convo_session("analysis"))
 
         elif "call -- load history" in sim_command.lower():
           # Loads the agent history from a file.

@@ -17,7 +17,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   specific_action = prompt_input["specific_action"]
 
   prompt = f"""
-Task -- choose an appropriate area from the area options for a task at hand.
+Task -- choose an appropriate area from the area options for a task at hand. Avoid going to other one's living area instead there is permission in the action.
 
 Sam Kim lives in [Sam Kim's house] that has [Sam Kim's room, bathroom, kitchen].
 Sam Kim is currently in [Sam Kim's house] that has [Sam Kim's room, bathroom, kitchen].
@@ -65,10 +65,6 @@ async def run_gpt_prompt_action_sector(
     curr = accessible_sector_str.split(", ")
     fin_accessible_sectors = []
     for i in curr:
-      if "'s house" in i:
-        if persona.scratch.last_name in i:
-          fin_accessible_sectors += [i]
-      else:
         fin_accessible_sectors += [i]
     accessible_sector_str = ", ".join(fin_accessible_sectors)
 

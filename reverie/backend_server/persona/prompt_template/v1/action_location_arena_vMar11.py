@@ -1,6 +1,6 @@
 from utils import debug
 from typing import Any
-
+import random
 from ..common import ActionLoc, openai_config, get_prompt_file_path
 from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
@@ -53,11 +53,8 @@ async def run_gpt_prompt_action_arena(
     fin_accessible_arenas = []
 
     for i in curr:
-      if "'s room" in i:
-        if persona.scratch.last_name in i:
-          fin_accessible_arenas += [i]
-      else:
-        fin_accessible_arenas += [i]
+      # Can join every arena, not only the persona's room
+      fin_accessible_arenas += [i]
     accessible_arena_str = ", ".join(fin_accessible_arenas)
 
     action_description_1 = action_description
@@ -119,10 +116,10 @@ async def run_gpt_prompt_action_arena(
     verbose=False,
   )
 
-  # y = f"{act_world}:{act_sector}"
-  # x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
-  # if output not in x:
-  #   output = random.choice(x)
+  y = f"{act_world}:{act_sector}"
+  x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
+  if output not in x:
+    output = random.choice(x)
 
   if debug or verbose:
     print_run_prompts(prompt_file, persona, gpt_param, prompt_input, prompt, output)

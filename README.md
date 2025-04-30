@@ -7,7 +7,85 @@
 </p>
 
 This repository is an evolution of the repository based on the paper "[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)."
+_______________________________________
 
+## Update from duke
+## Openai config
+```json
+{
+    "client": "openai", 
+    "base_provider": "https://api.openai.com/v1 or https://openrouter.ai/api/v1 or ...",
+    "model": "openai/gpt-4o-mini",
+    "model-key": "<API_KEY>",
+    "model-costs": {
+        "input":  0.5,
+        "output": 1.5
+    },
+    "embeddings-client": "openai",
+    "embeddings": "text-embedding-3-small",
+    "embeddings-key": "<OPENAI_API_KEY>",
+    "embeddings-costs": {
+        "input": 0.02,
+        "output": 0.0
+    },
+    "experiment-name": "simulacra-test",
+    "cost-upperbound": 10,
+    "other_providers":{
+        "iterative_chat_utt_provider":{
+            "model": "deepseek/deepseek-r1",
+            "temperature": 1.1,
+            "top_p": 0.1,
+            "frequency_penalty": 0.5,
+            "presence_penalty": 0.5,
+            "min_p": 0.1,
+            "repetition_penalty": 1.1
+        },
+        "hourly_schedule_provider":{
+            "model":"openai/gpt-4o",
+            "temperature": 0.7
+        },
+        "task_decomp_provider":{
+            "model":"openai/gpt-4o",
+            "temperature": 0.7
+        },
+        "new_hourly_schedule_provider":{
+            "model":"deepseek/deepseek-r1",
+            "input_cost": 3,
+            "output_cost": 8,
+            "temperature": 0.7,
+            "provider":{
+                "order": ["Fireworks"],
+                "require_parameters": true
+            }
+        },
+        "new_decomp_schedule_provider":{
+            "model":"deepseek/deepseek-r1",
+            "input_cost": 3,
+            "output_cost": 8,
+            "temperature": 0.7,
+            "provider":{
+                "order": ["Fireworks"],
+                "require_parameters": true
+            }
+        },
+        "planning_thought_provider":{
+            "model":"openai/gpt-4o-mini",
+            "input_cost": 3,
+            "output_cost": 8,
+            "temperature": 0.7
+        },
+        "poignancy_event_provider":{
+            "model":"google/gemini-2.0-flash-lite-001",
+            "input_cost": 0.075,
+            "output_cost": 0.3,
+            "temperature": 0.7
+        }
+    }
+}
+```
+## Environment
+- base_simulation_v1
+- skip_morning (forked from base_simulation_v1, have ran 2520 steps (7am))
 _______________________________________
 ## Index:
 1. [Setup](#setting-up-the-environment)
@@ -15,7 +93,6 @@ _______________________________________
 3. [Cost-Tracking](#cost-tracking)
 4. [Customizing the Map](#customizing-the-map)
 _______________________________________
-
 ## Setting Up The Environment
 
 ### Step 1. Conda Env

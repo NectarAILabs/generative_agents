@@ -258,7 +258,7 @@ async def new_retrieve(persona, focal_points, n_count=30):
 
     master_out = top_highest_x_values(master_out, len(master_out.keys()))
 
-    print("\n-------- focal_pt: ", focal_pt, flush=True)
+    print("\n-------- focal_pt: ", focal_pt.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore'), flush=True)
     for key, val in master_out.items():
       print("key: ", persona.a_mem.id_to_node[key].embedding_key, " val: ", val)
       print(

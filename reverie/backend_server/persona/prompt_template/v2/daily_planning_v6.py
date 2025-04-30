@@ -14,11 +14,12 @@ def create_prompt(prompt_input: dict[str, Any]):
   curr_date = prompt_input["curr_date"]
   persona_name = prompt_input["persona_name"]
   wake_up_hour = prompt_input["wake_up_hour"]
-
+  persona_sector_accessibles = prompt_input["persona_sector_accessibles"]
   prompt = f"""
 {identity_stable_set}
-
 In general, {lifestyle}
+All sectors that {persona_name} can go are:
+{persona_sector_accessibles}
 Today is {curr_date}. Describe {persona_name}'s plan for the whole day, from morning 'til night, in broad-strokes. Include the time of the day. e.g., "wake up and complete their morning routine at {wake_up_hour}", "have lunch at 12:00 pm", "watch TV from 7 to 8 pm".
 """
   return prompt
@@ -28,7 +29,7 @@ class DailyPlan(BaseModel):
   daily_plan: list[str]
 
 
-async def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verbose=False):
+async def run_gpt_prompt_daily_plan(persona, wake_up_hour, persona_sector_accessibles, test_input=None, verbose=False):
   """
   Basically the long term planning that spans a day. Returns a list of actions
   that the persona will take today. Usually comes in the following form:
@@ -42,7 +43,7 @@ async def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verb
     a list of daily actions in broad strokes.
   """
 
-  def create_prompt_input(persona, wake_up_hour, test_input=None):
+  def create_prompt_input(persona, wake_up_hour, persona_sector_accessibles, test_input=None):
     if test_input:
       return test_input
 
@@ -52,6 +53,7 @@ async def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verb
       "curr_date": persona.scratch.get_str_curr_date_str(),
       "persona_name": persona.scratch.get_str_firstname(),
       "wake_up_hour": f"{str(wake_up_hour)}:00",
+      "persona_sector_accessibles": persona_sector_accessibles,
     }
 
     return prompt_input
@@ -90,7 +92,7 @@ async def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verb
     "stop": None,
   }
   prompt_file = get_prompt_file_path(__file__)
-  prompt_input = create_prompt_input(persona, wake_up_hour, test_input)
+  prompt_input = create_prompt_input(persona, wake_up_hour, persona_sector_accessibles, test_input)
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
 

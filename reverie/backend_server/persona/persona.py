@@ -165,7 +165,7 @@ class Persona:
     return await execute(self, maze, personas, plan)
 
 
-  async def reflect(self):
+  async def reflect(self, maze, personas):
     """
     Reviews the persona's memory and create new thoughts based on it. 
 
@@ -174,7 +174,7 @@ class Persona:
     OUTPUT: 
       None
     """
-    await reflect(self)
+    await reflect(self, maze, personas)
 
 
   async def move(self, maze, personas, curr_tile, curr_time):
@@ -215,7 +215,7 @@ class Persona:
     perceived = await self.perceive(maze)
     retrieved = await self.retrieve(perceived)
     plan = await self.plan(maze, personas, new_day, retrieved)
-    await self.reflect()
+    await self.reflect(maze,personas)
 
     # <execution> is a triple set that contains the following components: 
     # <next_tile> is a x,y coordinate. e.g., (58, 9)

@@ -27,7 +27,7 @@ Right now, it is {curr_time}.
 {target_persona_name} is {target_persona_action}.
 
 Question: Would {init_persona_name} initiate a conversation with {target_persona_name}?
-Let's think step by step.
+Let's think step by step. Your reasoning should be concise, fitting within 15-30 words..
 """
   return prompt
 

@@ -245,7 +245,7 @@ if __name__ == '__main__':
             else:
                 curr_stepbacks = 0
 
-            if step > 0:
+            if int(step) > 0:
                 origin, current_step, idx = save_checkpoint(rs, idx)
 
             print(f"(Auto-Exec): Error at step {current_step}", flush=True)
@@ -267,7 +267,7 @@ if __name__ == '__main__':
                 pid = None
 
     print(f"(Auto-Exec): EXPERIMENT FINISHED: {exp_name}")
+    print(f"(Auto-Exec): Execution time: {datetime.now() - start_time}")
     OpenAICostLoggerViz.print_experiment_cost(experiment=exp_name, path=log_path)
     OpenAICostLoggerViz.print_total_cost(path=log_path)
-    print(f"(Auto-Exec): Execution time: {datetime.now() - start_time}")
     sys.exit(0)

@@ -11,7 +11,7 @@ from ..print_prompt import print_run_prompts
 def create_prompt(prompt_input: dict[str, Any]):
   name = prompt_input["name"]
   action = prompt_input["action"]
-
+  action = f"{name} is {action}" if not action.startswith(name) else action
   prompt = f"""
 Task: Turn the input into (subject, predicate, object).
 
@@ -33,7 +33,7 @@ Output: (Percy Liang, teach, students)
 Input: Merrie Morris is running on a treadmill.
 Output: (Merrie Morris, run, treadmill)
 ---
-Input: {name} is {action}.
+Input: {action}.
 Output:
 """
   return prompt

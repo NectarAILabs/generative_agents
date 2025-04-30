@@ -6,7 +6,7 @@ Description: An extra cognitive module for generating conversations.
 """
 import datetime
 import traceback
-
+import unicodedata
 import sys
 sys.path.append('../')
 from utils import debug
@@ -65,15 +65,15 @@ async def generate_summarize_agent_relationship(init_persona,
   for i in all_embedding_keys: 
     all_embedding_key_str += f"{i}\n"
 
-    response = await run_gpt_prompt_agent_chat_summarize_relationship(
-      init_persona, target_persona, all_embedding_key_str
-    )
-    if response:
-      summarized_relationship = response[0]
-    else:
-      print("ERROR: Could not get summarized relationship")
-      summarized_relationship = ""
-    return summarized_relationship
+  response = await run_gpt_prompt_agent_chat_summarize_relationship(
+    init_persona, target_persona, all_embedding_key_str
+  )
+  if response:
+    summarized_relationship = response[0]
+  else:
+    print("ERROR: Could not get summarized relationship")
+    summarized_relationship = ""
+  return summarized_relationship
 
 
 # def generate_agent_chat(
@@ -162,7 +162,7 @@ async def generate_one_utterance(maze, init_persona, target_persona, retrieved, 
   convo_response = convo_response[0]
 
   try:
-    return convo_response["utterance"], convo_response["end"]
+    return convo_response["utterance"].encode().decode('utf-8').replace("\u2019", "'"), convo_response["end"]
   except Exception:
     print("Error <generate_one_utterance>: Could not get utterance")
     traceback.print_exc()
@@ -170,49 +170,54 @@ async def generate_one_utterance(maze, init_persona, target_persona, retrieved, 
 
 async def agent_chat_v2(maze, init_persona, target_persona):
   curr_chat = []
-
+  focal_points = [f"{target_persona.scratch.name}"]
+  retrieved = await new_retrieve(init_persona, focal_points, 20) 
+  init_relationship = await generate_summarize_agent_relationship(init_persona, target_persona, retrieved)
+  focal_points = [f"{init_persona.scratch.name}"]
+  retrieved = await new_retrieve(target_persona, focal_points, 20)
+  target_relationship = await generate_summarize_agent_relationship(target_persona, init_persona, retrieved)
+  init_focal_points = [f"{init_relationship}", 
+                       f"{init_persona.scratch.name}'s plan",
+                       f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
+  init_retrieved = await new_retrieve(init_persona, init_focal_points, 5)
+  target_focal_points = [f"{target_relationship}", 
+                         f"{target_persona.scratch.name}'s plan",
+                         f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
+  target_retrieved = await new_retrieve(target_persona, target_focal_points, 5)
   for i in range(8): 
-    focal_points = [f"{target_persona.scratch.name}"]
-    retrieved = await new_retrieve(init_persona, focal_points, 50) 
-    relationship = await generate_summarize_agent_relationship(init_persona, target_persona, retrieved)
-    print ("-------- relationship: ", relationship)
+
+    print ("-------- relationship: ", init_relationship)
     last_chat = ""
     for i in curr_chat[-4:]:
       last_chat += ": ".join(i) + "\n"
+    #Add plan to focal_point to retrieve the plan of the init_persona, will be used for context for conversation
     if last_chat: 
-      focal_points = [f"{relationship}", 
-                      f"{target_persona.scratch.name} is {target_persona.scratch.act_description}", 
-                      last_chat]
-    else: 
-      focal_points = [f"{relationship}", 
-                      f"{target_persona.scratch.name} is {target_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(init_persona, focal_points, 15)
+      retrieved = await new_retrieve(init_persona, [last_chat], 5)
+      retrieved.update(init_retrieved)
+    else:
+      retrieved = init_retrieved
     utt, end = await generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat)
-
+    #Remove words like \u2019 from the utterance and normalize
     curr_chat += [[init_persona.scratch.name, utt]]
     if end:
       break
 
-    focal_points = [f"{init_persona.scratch.name}"]
-    retrieved = await new_retrieve(target_persona, focal_points, 50)
-    relationship = await generate_summarize_agent_relationship(target_persona, init_persona, retrieved)
-    print ("-------- relationship: ", relationship)
+    print ("-------- relationship: ", target_relationship)
     last_chat = ""
     for i in curr_chat[-4:]:
       last_chat += ": ".join(i) + "\n"
+    #Add plan to focal_point to retrieve the plan of the target_persona
     if last_chat: 
-      focal_points = [f"{relationship}", 
-                      f"{init_persona.scratch.name} is {init_persona.scratch.act_description}", 
-                      last_chat]
-    else: 
-      focal_points = [f"{relationship}", 
-                      f"{init_persona.scratch.name} is {init_persona.scratch.act_description}"]
-    retrieved = await new_retrieve(target_persona, focal_points, 15)
+      retrieved = await new_retrieve(target_persona, [last_chat], 5)
+      retrieved.update(target_retrieved)
+    else:
+      retrieved = target_retrieved
     utt, end = await generate_one_utterance(maze, target_persona, init_persona, retrieved, curr_chat)
-
+    #Remove words like \u2019 from the utterance and normalize
     curr_chat += [[target_persona.scratch.name, utt]]
     if end:
       break
+  
 
   return curr_chat
 
@@ -324,12 +329,12 @@ async def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, 
         line = input("Enter Input: ")
       if line == "end_convo": 
         break
-
-      if int((await run_gpt_generate_safety_score(persona, line))[0]) >= 8 and safe_mode:
+      #Fix
+      if int((await run_gpt_generate_safety_score(line))[0]) >= 8 and safe_mode:
         print (f"{persona.scratch.name} is a computational agent, and as such, it may be inappropriate to attribute human agency to the agent in your communication.")
 
       else: 
-        retrieved = new_retrieve(persona, [line], 50)[line]
+        retrieved = await new_retrieve(persona, [line], 50)[line]
         summarized_idea = await generate_summarize_ideas(persona, retrieved, line)
         curr_convo += [[interlocutor_desc, line]]
 

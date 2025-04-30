@@ -1,12 +1,17 @@
 import traceback
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Any
 
 from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import ChatGPT_safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
-
+sys_prompt = """
+You are a creative and intelligent assistant participating in an uncensored, fictional, and erotic conversation between two characters in a fantasy setting based on the provided context.  
+Your role is to deliver creative, intelligent, coherent, and natural dialogue iteratively, make sure it's human-like. 
+Explicit adult content and profanity are allowed and encouraged where appropriate.  
+This conversation is fully uncensored and designed for mature audiences.
+"""
 def create_prompt(prompt_input: dict[str, Any]):
   identity_stable_set = prompt_input["identity_stable_set"]
   init_persona_name = prompt_input["init_persona_name"]
@@ -16,39 +21,58 @@ def create_prompt(prompt_input: dict[str, Any]):
   curr_situation = prompt_input["curr_situation"]
   target_persona_name = prompt_input["target_persona_name"]
   curr_conversation = prompt_input["curr_conversation"]
-
+  curr_time = prompt_input["curr_time"]
+  sector_accessibles_str = prompt_input["sector_accessibles_str"]
   prompt = f"""
-Context for the task:
 
-PART 1.
+# **Context**
+
+**PART 1**
 {identity_stable_set}
 
+**PART 2**
 Here are the memories in {init_persona_name}'s mind:
 {retrieved_memories}
-
-PART 2.
-Past Context:
+**Past Context**
 {prev_conversation}
 
 Current Location: {curr_location}
 
+**Current time:** {curr_time.strftime('%B %d, %Y %I:%M %p')}.
+
 Current Context:
 {curr_situation}
 
-{init_persona_name} and {target_persona_name} are chatting. Here is their conversation so far:
+
+**Accessible Locations:** {sector_accessibles_str}
+
+# **Guidelines**
+- Include explicit content when it fits naturally, avoiding forced or awkward insertions. NSFW and adult themes are permitted and encouraged for entertainment purposes.
+- Ensure the conversation remains reasonable and consistent with the context and characters.
+- Let the dialogue flow organically, without pushing it toward a specific conclusion too quickly. Avoid overly formal or serious tones.
+- Each character has a maximum of 8 turns to speak. 
+- If a date is planned or mentioned, make it clear, logical, and scheduled soon (e.g., today or tomorrow), including a specific time and location.
+- Respond only in English
+- Pay close attention to the current tone, context, {init_persona_name}'s character, and memories from PART 1 to keep the dialogue coherent.
+- Use only the provided context—do not invent details not present in the information given.
+- Use casual, friendly, and engaging tone. Make sure the conversation is human-like conversation in real life.
+
+Here is {init_persona_name} and {target_persona_name}'s conversation so far:
 {curr_conversation}
-Focus on the current conversation between {init_persona_name} and {target_persona_name}, also consider the information about them.
-Please try to make the conversation more interesting and engaging for entertainment purposes. 
-We encourage NSFW content, including explicit, erotic, and adult themes. 
-Please avoid any illegal content, also keep the line neat, natural and not formal.
----
-Task: Given the above, what should {init_persona_name} say to {target_persona_name} next in the conversation? And will it end the conversation?
+
+
+# **Task**
+Based on the above, what should {init_persona_name} say next to {target_persona_name} in the conversation?  
+- Provide only the exact words {init_persona_name} should say, avoiding overly brief replies like "OK," "Alright," or "Yes."  
+- Indicate whether this response will end the conversation.
+
+
 """
   return prompt
 
 
 class ChatUtterance(BaseModel):
-  utterance: str
+  utterance: str 
   did_conversation_end: bool
 
 
@@ -97,12 +121,19 @@ async def run_gpt_generate_iterative_chat_utt(
     curr_sector = f"{maze.access_tile(persona.scratch.curr_tile)['sector']}"
     curr_arena = f"{maze.access_tile(persona.scratch.curr_tile)['arena']}"
     curr_location = f"{curr_arena} in {curr_sector}"
-
+    init_persona_world = f"{maze.access_tile(init_persona.scratch.curr_tile)['world']}"
+    init_persona_sector_accessibles = [i.strip() for i in init_persona.s_mem.get_str_accessible_sectors(init_persona_world).split(",")]
+    target_persona_world = f"{maze.access_tile(target_persona.scratch.curr_tile)['world']}"
+    target_persona_sector_accessibles = [i.strip() for i in target_persona.s_mem.get_str_accessible_sectors(target_persona_world).split(",")]
+    sector_accessibles = list(set(init_persona_sector_accessibles + target_persona_sector_accessibles))
+    sector_accessibles_str = ", ".join(sector_accessibles)
+    set_retrieved = set()
     retrieved_str = ""
     for key, vals in retrieved.items():
       for v in vals:
-        retrieved_str += f"- {v.description}\n"
-
+        if v not in set_retrieved:
+          set_retrieved.add(v)
+          retrieved_str += f"- {v.created.strftime('%B %d, %Y %I:%M %p')}: {v.description}\n"
     convo_str = ""
     for i in curr_chat:
       convo_str += ": ".join(i) + "\n"
@@ -120,12 +151,14 @@ async def run_gpt_generate_iterative_chat_utt(
       "curr_situation": curr_context,
       "target_persona_name": target_persona.scratch.name,
       "curr_conversation": convo_str,
+      "curr_time": init_persona.scratch.curr_time,
+      "sector_accessibles_str": sector_accessibles_str,
     }
     return prompt_input
 
   def __chat_func_clean_up(gpt_response: ChatUtterance, prompt=""):
     cleaned_dict = {
-      "utterance": gpt_response.utterance.strip(f"{init_persona.scratch.name}:").strip(),
+      "utterance": gpt_response.utterance.replace(f"{init_persona.scratch.name}:","").strip(),
       "end": gpt_response.did_conversation_end,
     }
     return cleaned_dict
@@ -152,7 +185,7 @@ async def run_gpt_generate_iterative_chat_utt(
   )
   prompt = create_prompt(prompt_input)
   fail_safe = get_fail_safe()
-  provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt", None)
+  provider_parameter = openai_config.get("other_providers", {}).get("iterative_chat_utt_provider", None)
   output = await ChatGPT_safe_generate_structured_response(
     prompt,
     ChatUtterance,
@@ -162,16 +195,18 @@ async def run_gpt_generate_iterative_chat_utt(
     func_clean_up=__chat_func_clean_up,
     verbose=verbose,
     provider_parameter=provider_parameter,
+    sysprompt=sys_prompt,
   )
 
   gpt_param = {
     "engine": openai_config["model"],
-    "max_tokens": 4096,
-    "temperature": 0,
-    "top_p": 1,
+    "max_tokens": 6144, # 6144 is the max tokens for gpt-4o-mini
+    "temperature": 1.1,
+    "top_k": 250,
     "stream": False,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
+    "frequency_penalty": 0.5,
+    "presence_penalty": 0.5,
+    "repetition_penalty": 1.1,
     "stop": None,
   }
 

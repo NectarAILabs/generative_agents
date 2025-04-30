@@ -17,6 +17,7 @@ def create_prompt(prompt_input: dict[str, Any]):
 [End of conversation]
 
 Summarize the conversation above in one sentence, using {persona_name} as the subject.
+The summarization should include information for {persona_name} to plan for their future activities. Like "meeting with [name] at [time] right after the conversation" or like that.
 Start the sentence with "{persona_name} is talking to"
 """
   return prompt

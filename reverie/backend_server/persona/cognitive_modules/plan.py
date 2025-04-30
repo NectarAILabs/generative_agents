@@ -58,7 +58,7 @@ async def generate_wake_up_hour(persona):
   return int(wake_up_hour[0])
 
 
-async def generate_first_daily_plan(persona, wake_up_hour):
+async def generate_first_daily_plan(persona, wake_up_hour, persona_sector_accessibles):
   """
   Generates the daily plan for the persona.
   Basically the long term planning that spans a day. Returns a list of actions
@@ -86,11 +86,11 @@ async def generate_first_daily_plan(persona, wake_up_hour):
   """
   if debug:
     print("GNS FUNCTION: <generate_first_daily_plan>")
-  result = await run_gpt_prompt_daily_plan(persona, wake_up_hour)
+  result = await run_gpt_prompt_daily_plan(persona, wake_up_hour, persona_sector_accessibles)
   return result[0]
 
 
-async def generate_hourly_schedule(persona, wake_up_hour):
+async def generate_hourly_schedule(persona, wake_up_hour, persona_sector_accessibles):
   """
   Based on the daily req, creates an hourly schedule -- one hour at a time.
   The form of the action for each of the hour is something like below:
@@ -154,12 +154,12 @@ async def generate_hourly_schedule(persona, wake_up_hour):
 
       if all_in_one:
         n_m1_activity = (await run_gpt_prompt_generate_hourly_schedule(
-          persona, n_m1_activity, hour_strings, all_in_one=True
+          persona, n_m1_activity, hour_strings, all_in_one=True, persona_sector_accessibles=persona_sector_accessibles
         ))[0]
       else:
         for _i in range(len(hour_strings)):
           n_m1_activity += [(await run_gpt_prompt_generate_hourly_schedule(
-            persona, n_m1_activity, hour_strings, all_in_one=False
+            persona, n_m1_activity, hour_strings, all_in_one=False, persona_sector_accessibles=persona_sector_accessibles
           ))[0]]
 
   # Step 1. Compressing the hourly schedule to the following format:
@@ -310,6 +310,8 @@ async def generate_action_pronunciatio(act_desp, persona):
     response = await run_gpt_prompt_pronunciatio(act_desp, persona)
     if response:
       emoji = response[0]
+    else:
+      emoji = None
   except Exception:
     traceback.print_exc()
     emoji = "🙂"
@@ -410,9 +412,9 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
   # Step 1: Setting up the core variables for the function. 
 
   # <today_min_pass> indicates the number of minutes that have passed today. 
+  # Fix for the case when the curr_time is round to minute.
   today_min_pass = (int(persona.scratch.curr_time.hour) * 60
-                    + int(persona.scratch.curr_time.minute) + 1)
-  
+                    + int(persona.scratch.curr_time.minute) + (1 if persona.scratch.curr_time.second > 0 else 0))
   # Step 2: We need to create <main_act_dur> and <truncated_act_dur>. 
   # These are basically a sub-component of <f_daily_schedule> of the persona,
   # but focusing on the current decomposition. 
@@ -446,22 +448,31 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
   truncated_fin = False 
 
   for act, dur in persona.scratch.f_daily_schedule:
-    if (dur_sum >= start_hour * 60) and (dur_sum < end_hour * 60): 
-      main_act_dur += [[act, dur]]
+    # Add duration first to avoid adding the duration of the last act.
+    dur_sum += dur
+    if (dur_sum > start_hour * 60) and (dur_sum <= end_hour * 60): 
+      # Must check if one action start before start_hour but end after start_hour (like from 7:58 to 8:02 with start hour is 8:00)
+      if len(main_act_dur) == 0:
+        # Calculate the time from start_hour to the end of the action
+        main_act_dur += [[act,dur_sum-start_hour*60]]
+        # Calculate the time from the start of the action to start_hour
+        minute_left = dur - (dur_sum-start_hour*60)
+      else:
+        main_act_dur += [[act, dur]]
       if dur_sum <= today_min_pass:
         truncated_act_dur += [[act, dur]]
+      # Check if the action is interupted.
       elif dur_sum > today_min_pass and not truncated_fin: 
         # We need to insert that last act, duration list like this one: 
         # e.g., ['wakes up and completes her morning routine (wakes up...)', 2]
+        truncated_fin = True
         truncated_act_dur += [[persona.scratch.f_daily_schedule[count][0],
-                               dur_sum - today_min_pass]] 
-        truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
-        # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass + 1) ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
+                               today_min_pass - dur_sum + dur]] 
+        #truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
+        #truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass + 1) ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
 
         # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
-        truncated_fin = True
-    dur_sum += dur
-    count += 1
+    count +=1 
 
   x = truncated_act_dur[-1][0].split("(")[0].strip() + " (on the way to " + truncated_act_dur[-1][0].split("(")[-1][:-1] + ")"
   truncated_act_dur[-1][0] = x
@@ -487,7 +498,9 @@ async def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur, 
                                                     end_time_hour,
                                                     inserted_act,
                                                     inserted_act_dur)
-  return result[0]
+  result = result[0]
+  result[0][1] += minute_left
+  return result
 
 
 ##############################################################################
@@ -547,7 +560,7 @@ async def revise_identity(persona):
   persona.scratch.daily_plan_req = new_daily_req
 
 
-async def _long_term_planning(persona, new_day):
+async def _long_term_planning(persona, new_day, persona_sector_accessibles):
   """
   Formulates the persona's daily long-term plan if it is the start of a new 
   day. This basically has two components: first, we create the wake-up hour, 
@@ -569,7 +582,7 @@ async def _long_term_planning(persona, new_day):
     # daily requirement, or if we are on a new day, we want to create a new
     # set of daily requirements.
     persona.scratch.daily_req = await generate_first_daily_plan(persona,
-                                                          wake_up_hour)
+                                                          wake_up_hour, persona_sector_accessibles)
   elif new_day == "New day":
     await revise_identity(persona)
 
@@ -581,7 +594,7 @@ async def _long_term_planning(persona, new_day):
   # which is a list of todo items with a time duration (in minutes) that 
   # add up to 24 hours.
   persona.scratch.f_daily_schedule = await generate_hourly_schedule(persona,
-                                                              wake_up_hour)
+                                                              wake_up_hour, persona_sector_accessibles)
   persona.scratch.f_daily_schedule_hourly_org = (persona.scratch
                                                    .f_daily_schedule[:])
 
@@ -700,7 +713,7 @@ async def _determine_action(persona, maze):
 
   if 1440 - x_emergency > 0: 
     print ("x_emergency__AAA", x_emergency)
-  persona.scratch.f_daily_schedule += [["idle", 1440 - x_emergency]]
+    persona.scratch.f_daily_schedule += [["idle", 1440 - x_emergency]]
   
 
 
@@ -725,10 +738,16 @@ async def _determine_action(persona, maze):
   act_obj_desp = await generate_act_obj_desc(act_game_object, act_desp, persona)
   #act_obj_desp = act_obj_desp_response[0] if act_obj_desp_response else None
 
-  act_obj_pron = await generate_action_pronunciatio(act_obj_desp, persona)
-  act_obj_event = await generate_act_obj_event_triple(act_game_object,
-                                                act_obj_desp, persona)
+  # I don't know what they are doing with the act_obj_pron, so just use a default value
+  #act_obj_pron = await generate_action_pronunciatio(act_obj_desp, persona)
+  act_obj_pron = "🙂"
 
+  
+  #Maybe just let the event triple be like (object, "being used by", )
+  #act_obj_event = await generate_act_obj_event_triple(act_game_object,
+  #                                              act_obj_desp, persona)
+  act_obj_event = ["is being used by",f"{persona.name} for {act_obj_desp}"]
+  #act_obj_event = f"{act_game_object} is being used by {persona.name} for {act_obj_desp}"
   # Adding the action to persona's queue. 
   persona.scratch.add_new_action(new_address, 
                                  int(act_dura), 
@@ -854,7 +873,8 @@ async def _should_react(persona, retrieved, personas):
       return False
     if init_persona.scratch.planned_path == []:
       return False
-
+    # Only reacting when 2 of the personas is going to the same object
+    # There will be a case that one is using bathroom sink, one is using the bathroom (maybe need to changed ???)
     if (init_persona.scratch.act_address 
         != target_persona.scratch.act_address): 
       return False
@@ -886,12 +906,14 @@ async def _should_react(persona, retrieved, personas):
   curr_event = retrieved["curr_event"]
 
   if ":" not in curr_event.subject: 
-    # this is a persona event. 
-    if await lets_talk(persona, personas[curr_event.subject], retrieved):
-      return f"chat with {curr_event.subject}"
-    react_mode = await lets_react(persona, personas[curr_event.subject], 
+    if persona.scratch.chatting_with is None and persona.scratch.act_event[1] != "waiting to start":
+      # this is a persona event. 
+      if personas[curr_event.subject].scratch.chatting_with is None:
+        if await lets_talk(persona, personas[curr_event.subject], retrieved):
+          return f"chat with {curr_event.subject}"
+      react_mode = await lets_react(persona, personas[curr_event.subject], 
                             retrieved)
-    return react_mode
+      return react_mode
   return False
 
 
@@ -924,11 +946,11 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
   start_index = None
   end_index = None
   for act, dur in p.scratch.f_daily_schedule: 
-    if dur_sum >= start_hour * 60 and start_index == None:
-      start_index = count
-    if dur_sum >= end_hour * 60 and end_index == None: 
-      end_index = count
     dur_sum += dur
+    if dur_sum > start_hour * 60 and start_index == None:
+      start_index = count
+    if dur_sum > end_hour * 60 and end_index == None: 
+      end_index = count
     count += 1
   # Let all async functions done before we update the action description for the persona.
   ret = await generate_new_decomp_schedule(p, inserted_act, inserted_act_dur,
@@ -936,7 +958,15 @@ async def _create_react(persona, inserted_act, inserted_act_dur,
   #Logic handling before actually adding the react action to the persona's schedule
   if p.scratch.chatting_with is None:
     if wait_for is None or personas[wait_for].scratch.act_event[1] != "waiting to start":
-      p.scratch.f_daily_schedule[start_index:end_index] = ret
+      with open("react_log.txt", "a") as f:
+        f.write("------------------------------------")
+        f.write(f"{p.scratch.curr_time.strftime('%B %d, %Y, %H:%M:%S')}\n")
+        f.write(f"inserted_act: {inserted_act}\n")
+        f.write(f"inserted_act_dur: {inserted_act_dur}\n")
+        f.write(f"Schedule before modified: {p.scratch.f_daily_schedule}\n")
+        p.scratch.f_daily_schedule[start_index:end_index] = ret
+        f.write(f"Schedule after modified: {p.scratch.f_daily_schedule}\n")
+        f.write("------------------------------------\n")
       p.scratch.add_new_action(act_address,
                               inserted_act_dur,
                               inserted_act,
@@ -961,7 +991,9 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   # Actually creating the conversation here.
   convo, duration_min = await generate_convo(maze, init_persona, target_persona)
   convo_summary = await generate_convo_summary(init_persona, convo)
+  target_inserted_act =  await generate_convo_summary(target_persona, convo)
   inserted_act = convo_summary
+
   inserted_act_dur = duration_min
 
   act_start_time = target_persona.scratch.act_start_time
@@ -972,7 +1004,7 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
     chatting_end_time = temp_curr_time + datetime.timedelta(minutes=inserted_act_dur)
   else: 
     chatting_end_time = curr_time + datetime.timedelta(minutes=inserted_act_dur)
-
+  
   for role, p in [("init", init_persona), ("target", target_persona)]: 
     if role == "init": 
       act_address = f"<persona> {target_persona.name}"
@@ -982,8 +1014,7 @@ async def _chat_react(maze, persona, focused_event, reaction_mode, personas):
       chatting_with_buffer[target_persona.name] = 800
     elif role == "target": 
       # Generate the action description for target persona
-      inserted_act =  await generate_convo_summary(target_persona, convo)
-
+      inserted_act = target_inserted_act
       act_address = f"<persona> {init_persona.name}"
       act_event = (p.name, "chat with", init_persona.name)
       chatting_with = init_persona.name
@@ -1046,8 +1077,10 @@ async def plan(persona, maze, personas, new_day, retrieved):
     The target action address of the persona (persona.scratch.act_address).
   """ 
   # PART 1: Generate the hourly schedule. 
+  persona_world = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
+  persona_sector_accessibles = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(persona_world).split(",")]
   if new_day: 
-    await _long_term_planning(persona, new_day)
+    await _long_term_planning(persona, new_day, persona_sector_accessibles)
 
   # PART 2: If the current action has expired, we want to create a new plan.
   if persona.scratch.act_check_finished(): 
@@ -1075,7 +1108,7 @@ async def plan(persona, maze, personas, new_day, retrieved):
   if focused_event: 
     reaction_mode = await _should_react(persona, focused_event, personas)
     if reaction_mode: 
-      print(reaction_mode)
+      print(f"Reaction mode:reaction_mode")
       # If we do want to chat, then we generate conversation 
       if reaction_mode[:9] == "chat with":
         await _chat_react(maze, persona, focused_event, reaction_mode, personas)
@@ -1099,5 +1132,4 @@ async def plan(persona, maze, personas, new_day, retrieved):
   for persona_name, buffer_count in curr_persona_chat_buffer.items():
     if persona_name != persona.scratch.chatting_with: 
       persona.scratch.chatting_with_buffer[persona_name] -= 1
-
-  return persona.scratch.act_address
+  return persona.scratch.act_address                                                                                                                                               

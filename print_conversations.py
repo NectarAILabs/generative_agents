@@ -15,7 +15,7 @@ def get_unique_conversations(simulation_name):
 
     # Iterate over all matching files
     for filepath in filepaths:
-        with open(filepath, "r") as file:
+        with open(filepath, "r",encoding="utf-8") as file:
             data = json.load(file)
             personas = data.get("persona", {})
 
@@ -38,13 +38,14 @@ def get_unique_conversations(simulation_name):
 
 def write_conversations_to_file(conversations, simulation_name):
    output_directory = "logs/conversations"
+   conversations = sorted(conversations, key=lambda x: x["meta"]["curr_time"])
    if not os.path.exists(output_directory):
         os.makedirs(output_directory)
    output_filename = f"{simulation_name}_highlights.json"
    full_path = os.path.join(output_directory, output_filename);
-   with open(full_path, "w") as file:
+   with open(full_path, "w",encoding="utf-8") as file:
         for conversation in conversations:
-            json.dump(conversation, file, indent=4)
+            json.dump(conversation, file, ensure_ascii=False,indent=2)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

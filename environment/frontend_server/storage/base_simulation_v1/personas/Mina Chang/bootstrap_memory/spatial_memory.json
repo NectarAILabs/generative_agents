@@ -28,6 +28,20 @@
     },
     "Hobbs Cafe": {
       "cafe": ["refrigerator", "cafe customer seating", "cooking area", "kitchen sink", "behind the cafe counter", "piano"]
+    },
+    "Noah Walker's apartment": {
+      "main room": [
+        "bed",
+        "desk",
+        "refrigerator",
+        "closet",
+        "shelf"
+      ],
+      "bathroom": [
+        "shower",
+        "bathroom sink",
+        "toilet"
+      ]
     }
   }
 }
